@@ -7,8 +7,6 @@
 ;; Plugins
 ;;
 
-(def-package! emacs-snippets :after yasnippet)
-
 
 ;;
 ;; Config
