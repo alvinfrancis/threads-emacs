@@ -222,11 +222,6 @@ extension, try to guess one."
   (setq command-log-mode-auto-show t
         command-log-mode-open-log-turns-on-mode t))
 
-
-(def-package! help-fns+ ; Improved help commands
-  :commands (describe-buffer describe-command describe-file
-             describe-keymap describe-option describe-option-of-type))
-
 (def-package! pcre2el
   :commands rxt-quote-pcre)
 
