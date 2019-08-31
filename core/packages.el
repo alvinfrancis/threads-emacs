@@ -28,7 +28,6 @@
 (package! avy)
 (package! command-log-mode)
 (package! editorconfig)
-(package! expand-region)
 (package! pcre2el)
 (package! smart-forward)
 (package! smartparens)

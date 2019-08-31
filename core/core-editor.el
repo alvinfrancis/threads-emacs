@@ -222,8 +222,6 @@ extension, try to guess one."
   (setq command-log-mode-auto-show t
         command-log-mode-open-log-turns-on-mode t))
 
-(def-package! expand-region
-  :commands (er/expand-region er/contract-region er/mark-symbol er/mark-word))
 
 (def-package! help-fns+ ; Improved help commands
   :commands (describe-buffer describe-command describe-file
