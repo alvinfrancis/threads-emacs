@@ -4,10 +4,10 @@
 ;; available keybindings. All built into one powerful macro: `map!'. If evil is
 ;; never loaded, then evil bindings set with `map!' will be ignored.
 
-(defvar doom-leader-key "SPC"
+(defvar doom-leader-key ","
   "The leader prefix key, for global commands.")
 
-(defvar doom-localleader-key "SPC m"
+(defvar doom-localleader-key "\\"
   "The localleader prefix key, for major-mode specific commands.")
 
 (defvar doom-evil-state-alist
