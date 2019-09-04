@@ -5,17 +5,14 @@
   :mode ("\\.cljs$" . clojurescript-mode)
   :config
   (map! :map clojure-mode-map
+        [remap eval-last-sexp]       #'cider-eval-last-sexp
+        [remap eval-print-last-sexp] #'cider-eval-print-last-sexp
+        [remap eval-defun]           #'cider-eval-defun-at-point
+        [remap eval-region]          #'cider-eval-region
+        [remap eval-buffer]          #'cider-eval-buffer
         (:localleader
-         :n  "'"      #'cider-jack-in
-         :n  "\""     #'cider-jack-in-clojurescript
-         :n  "B"      #'cider-switch-to-repl-buffer
-         :n  "b"      #'cider-eval-buffer
-         :n  "n"      #'cider-repl-set-ns
-         :n  "j"      #'cider-find-var
-         :n  "d"      #'cider-doc
-         :n  "c"      #'cider-repl-clear-buffer
-         :n  "p"      #'cider-eval-sexp-at-point
-         :n  "r"      #'cider-eval-region)))
+          :n "c" #'cider-jack-in
+          :n "b" #'cider-swith-to-repl-buffer)))
 
 
 (def-package! cider
