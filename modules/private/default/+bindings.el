@@ -87,6 +87,13 @@
         :desc "Universal argument"      :nv "u"  #'universal-argument
         :desc "window"                  :n "w"  evil-window-map
 
+        (:desc "Eval" :prefix "x"
+          :desc "Eval expression"           :n "e" #'eval-last-sexp
+          :desc "Evan and print expression" :n "p" #'eval-print-last-sexp
+          :desc "Eval block"                :n "x" #'eval-defun
+          :desc "Eval region"               :n "r" #'eval-region
+          :desc "Eval buffer"               :n "b" #'eval-buffer)
+
         (:desc "previous..." :prefix "["
           :desc "Text size"             :nv "[" #'text-scale-decrease
           :desc "Buffer"                :nv "b" #'doom/previous-buffer
