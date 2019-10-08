@@ -263,7 +263,7 @@ fish-shell style.
 Example:
 ~/Projects/FOSS/emacs/lisp/comint.el => ~/P/F/emacs/lisp/comint.el"
   (let* ((project-root (doom-project-root))
-         (file-name-split (shrink-path-file-mixed project-root
+         (file-name-split (shrink-path-file-mixed (or project-root "")
                                                   (file-name-directory buffer-file-truename)
                                                   buffer-file-truename))
          (active (active)))
