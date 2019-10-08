@@ -84,7 +84,7 @@
         :desc "Jump to bookmark"        :n "RET" #'bookmark-jump
 
         ;; C-u is used by evil
-        :desc "Universal argument"      :n "u"  #'universal-argument
+        :desc "Universal argument"      :nv "u"  #'universal-argument
         :desc "window"                  :n "w"  evil-window-map
 
         (:desc "previous..." :prefix "["
