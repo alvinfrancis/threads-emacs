@@ -20,9 +20,6 @@
         helm-M-x-fuzzy-match nil
         helm-recentf-fuzzy-match nil
         helm-projectile-fuzzy-match nil
-        ;; Display extraineous helm UI elements
-        helm-display-header-line nil
-        helm-ff-auto-update-initial-value nil
         helm-find-files-doc-header nil
         ;; Don't override evil-ex's completion
         helm-mode-handle-completion-in-region nil
