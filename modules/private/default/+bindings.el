@@ -5,6 +5,8 @@
 (map! [remap evil-jump-to-tag] #'projectile-find-tag
       [remap find-tag]         #'projectile-find-tag
 
+      (:map minibuffer-inactive-mode-map [mouse-1] nil)
+
       ;; Ensure there are no conflicts
       :nmvo doom-leader-key nil
       :nmvo doom-localleader-key nil
@@ -24,58 +26,54 @@
       "M--"       #'text-scale-decrease
 
       ;; Simple window navigation/manipulation
-      "C-`"       #'doom/popup-toggle
+      "C-q"       #'doom/popup-toggle
       "C-~"       #'doom/popup-raise
-      "M-t"       #'+workspace/new
-      "M-T"       #'+workspace/display
       "M-w"       #'delete-window
       "M-W"       #'+workspace/close-workspace-or-frame
       "M-n"       #'evil-buffer-new
       "M-N"       #'make-frame
-      "M-1"       (λ! (+workspace/switch-to 0))
-      "M-2"       (λ! (+workspace/switch-to 1))
-      "M-3"       (λ! (+workspace/switch-to 2))
-      "M-4"       (λ! (+workspace/switch-to 3))
-      "M-5"       (λ! (+workspace/switch-to 4))
-      "M-6"       (λ! (+workspace/switch-to 5))
-      "M-7"       (λ! (+workspace/switch-to 6))
-      "M-8"       (λ! (+workspace/switch-to 7))
-      "M-9"       (λ! (+workspace/switch-to 8))
-      "M-0"       #'+workspace/switch-to-last
 
       ;; Other sensible, textmate-esque global bindings
-      :ne "M-r"   #'+eval/buffer
-      :ne "M-R"   #'+eval/region-and-replace
-      :ne "M-b"   #'+eval/build
-      :ne "M-a"   #'mark-whole-buffer
-      :ne "M-c"   #'evil-yank
-      :ne "M-q"   (if (daemonp) #'delete-frame #'save-buffers-kill-emacs)
-      :ne "M-f"   #'swiper
-      :ne "C-M-f" #'doom/toggle-fullscreen
+      ;; :ne "M-r"   #'+eval/buffer
+      ;; :ne "M-R"   #'+eval/region-and-replace
+      ;; :ne "M-b"   #'+eval/build
+      ;; :ne "M-a"   #'mark-whole-buffer
+      ;; :ne "M-c"   #'evil-yank
+      ;; :ne "M-q"   (if (daemonp) #'delete-frame #'save-buffers-kill-emacs)
+      ;; :ne "M-f"   #'swiper
+      :ne "<f9>"  #'doom/toggle-fullscreen
       :n  "M-s"   #'save-buffer
       :m  "A-j"   #'+default:multi-next-line
       :m  "A-k"   #'+default:multi-previous-line
       :nv "C-SPC" #'+evil:fold-toggle
       :gnvimer "M-v" #'clipboard-yank
       ;; Easier window navigation
-      :en "C-h"   #'evil-window-left
-      :en "C-j"   #'evil-window-down
-      :en "C-k"   #'evil-window-up
-      :en "C-l"   #'evil-window-right
+      ;; :en "C-h"   #'evil-window-left
+      ;; :en "C-j"   #'evil-window-down
+      ;; :en "C-k"   #'evil-window-up
+      ;; :en "C-l"   #'evil-window-right
 
-      "C-x p"     #'doom/other-popup
+      :m "-"       #'evil-jump-up
+      :m "SPC"     #'evil-jump-down
 
+      :nv ";"      #'evil-ex
+      :n "<left>"  #'evil-prev-buffer
+      :n "<right>" #'evil-next-buffer
+      "C-x p"      #'doom/other-popup
+
+      :n "H"       #'+tabs/switch-left
+      :n "L"       #'+tabs/switch-right
+      :m ":"       #'evil-repeat-find-char
 
       ;; --- <leader> -------------------------------------
       (:leader
-        :desc "Ex command"              :nv ";"  #'evil-ex
-        :desc "M-x"                     :nv ":"  #'execute-extended-command
-        :desc "Pop up scratch buffer"   :nv "x"  #'doom/open-scratch-buffer
+        ;; :desc "Ex command"              :nv ":"  #'evil-ex
+        :desc "M-x"                     :nv ";"  #'execute-extended-command
+        ;; :desc "Pop up scratch buffer"   :nv "x"  #'doom/open-scratch-buffer
         :desc "Org Capture"             :nv "X"  #'+org-capture/open
 
         ;; Most commonly used
         :desc "Find file in project"    :n "SPC" #'projectile-find-file
-        :desc "Switch workspace buffer" :n ","   #'persp-switch-to-buffer
         :desc "Switch buffer"           :n "<"   #'switch-to-buffer
         :desc "Browse files"            :n "."   #'find-file
         :desc "Toggle last popup"       :n "~"   #'doom/popup-toggle
@@ -120,36 +118,43 @@
           :desc "Swiper"                :nv "/" #'swiper
           :desc "Imenu"                 :nv "i" #'imenu
           :desc "Imenu across buffers"  :nv "I" #'imenu-anywhere
-          :desc "Online providers"      :nv "o" #'+jump/online-select)
+          :desc "Online providers"      :nv "o" #'+jump/online-select
+          :desc "Project"               :nv "p" #'helm-projectile-ag)
 
-        (:desc "workspace" :prefix "TAB"
-          :desc "Display tab bar"          :n "TAB" #'+workspace/display
-          :desc "New workspace"            :n "n"   #'+workspace/new
-          :desc "Load workspace from file" :n "l"   #'+workspace/load
-          :desc "Load last session"        :n "L"   (λ! (+workspace/load-session))
-          :desc "Save workspace to file"   :n "s"   #'+workspace/save
-          :desc "Autosave current session" :n "S"   #'+workspace/save-session
-          :desc "Switch workspace"         :n "."   #'+workspace/switch-to
-          :desc "Kill all buffers"         :n "x"   #'doom/kill-all-buffers
-          :desc "Delete session"           :n "X"   #'+workspace/kill-session
-          :desc "Delete this workspace"    :n "d"   #'+workspace/delete
-          :desc "Load session"             :n "L"   #'+workspace/load-session
-          :desc "Next workspace"           :n "]"   #'+workspace/switch-right
-          :desc "Previous workspace"       :n "["   #'+workspace/switch-left
-          :desc "Switch to 1st workspace"  :n "1"   (λ! (+workspace/switch-to 0))
-          :desc "Switch to 2nd workspace"  :n "2"   (λ! (+workspace/switch-to 1))
-          :desc "Switch to 3rd workspace"  :n "3"   (λ! (+workspace/switch-to 2))
-          :desc "Switch to 4th workspace"  :n "4"   (λ! (+workspace/switch-to 3))
-          :desc "Switch to 5th workspace"  :n "5"   (λ! (+workspace/switch-to 4))
-          :desc "Switch to 6th workspace"  :n "6"   (λ! (+workspace/switch-to 5))
-          :desc "Switch to 7th workspace"  :n "7"   (λ! (+workspace/switch-to 6))
-          :desc "Switch to 8th workspace"  :n "8"   (λ! (+workspace/switch-to 7))
-          :desc "Switch to 9th workspace"  :n "9"   (λ! (+workspace/switch-to 8))
-          :desc "Switch to last workspace" :n "0"   #'+workspace/switch-to-last)
+
+        (:desc "tabs" :prefix "TAB"
+          :desc "Display tab bar" :n "TAB" #'+tabs/display
+          :desc "New tab"         :n "n"   #'+tabs/new
+          :desc "Close tab"       :n "c"   #'+tabs/close)
+
+        ;; (:desc "workspace" :prefix "TAB"
+        ;;   :desc "Display tab bar"          :n "TAB" #'+workspace/display
+        ;;   :desc "New workspace"            :n "n"   #'+workspace/new
+        ;;   :desc "Load workspace from file" :n "l"   #'+workspace/load
+        ;;   :desc "Load last session"        :n "L"   (λ! (+workspace/load-session))
+        ;;   :desc "Save workspace to file"   :n "s"   #'+workspace/save
+        ;;   :desc "Autosave current session" :n "S"   #'+workspace/save-session
+        ;;   :desc "Switch workspace"         :n "."   #'+workspace/switch-to
+        ;;   :desc "Kill all buffers"         :n "x"   #'doom/kill-all-buffers
+        ;;   :desc "Delete session"           :n "X"   #'+workspace/kill-session
+        ;;   :desc "Delete this workspace"    :n "d"   #'+workspace/delete
+        ;;   :desc "Load session"             :n "L"   #'+workspace/load-session
+        ;;   :desc "Next workspace"           :n "]"   #'+workspace/switch-right
+        ;;   :desc "Previous workspace"       :n "["   #'+workspace/switch-left
+        ;;   :desc "Switch to 1st workspace"  :n "1"   (λ! (+workspace/switch-to 0))
+        ;;   :desc "Switch to 2nd workspace"  :n "2"   (λ! (+workspace/switch-to 1))
+        ;;   :desc "Switch to 3rd workspace"  :n "3"   (λ! (+workspace/switch-to 2))
+        ;;   :desc "Switch to 4th workspace"  :n "4"   (λ! (+workspace/switch-to 3))
+        ;;   :desc "Switch to 5th workspace"  :n "5"   (λ! (+workspace/switch-to 4))
+        ;;   :desc "Switch to 6th workspace"  :n "6"   (λ! (+workspace/switch-to 5))
+        ;;   :desc "Switch to 7th workspace"  :n "7"   (λ! (+workspace/switch-to 6))
+        ;;   :desc "Switch to 8th workspace"  :n "8"   (λ! (+workspace/switch-to 7))
+        ;;   :desc "Switch to 9th workspace"  :n "9"   (λ! (+workspace/switch-to 8))
+        ;;   :desc "Switch to last workspace" :n "0"   #'+workspace/switch-to-last)
 
         (:desc "buffer" :prefix "b"
           :desc "New empty buffer"        :n "n" #'evil-buffer-new
-          :desc "Switch workspace buffer" :n "b" #'persp-switch-to-buffer
+          :desc "Switch buffer"           :n "b" #'helm-buffers-list ; TODO: feature namespace buffer actions
           :desc "Switch buffer"           :n "B" #'switch-to-buffer
           :desc "Kill buffer"             :n "k" #'doom/kill-this-buffer
           :desc "Kill other buffers"      :n "o" #'doom/kill-other-buffers
@@ -245,6 +250,7 @@
           :desc "APP: email"            :n "M" #'=email
           :desc "APP: twitter"          :n "T" #'=twitter
           :desc "APP: regex"            :n "X" #'=regex
+          :desc "APP: docker"           :n "D" #'docker
 
           ;; macos
           (:when IS-MAC
@@ -287,7 +293,6 @@
           :desc "Flyspell"               :n "s" #'flyspell-mode
           :desc "Flycheck"               :n "f" #'flycheck-mode
           :desc "Line numbers"           :n "l" #'doom/toggle-line-numbers
-          :desc "Fullscreen"             :n "f" #'doom/toggle-fullscreen
           :desc "Indent guides"          :n "i" #'highlight-indentation-mode
           :desc "Indent guides (column)" :n "I" #'highlight-indentation-current-column-mode
           :desc "Impatient mode"         :n "h" #'+impatient-mode/toggle
@@ -319,7 +324,7 @@
       :v  "<"  #'+evil/visual-dedent  ; vnoremap < <gv
       :v  ">"  #'+evil/visual-indent  ; vnoremap > >gv
       ;; paste from recent yank register (which isn't overwritten)
-      :v  "C-p" "\"0p"
+      ;; :v  "C-p" "\"0p"
 
       (:map evil-window-map ; prefix "C-w"
         ;; Navigation
@@ -338,7 +343,7 @@
         "u"       #'winner-undo
         "C-u"     #'winner-undo
         "C-r"     #'winner-redo
-        "o"       #'doom/window-enlargen
+        ;; "o"       #'doom/window-enlargen
         ;; Delete window
         "c"       #'+workspace/close-window-or-workspace
         "C-C"     #'ace-delete-window)
@@ -346,8 +351,8 @@
 
       ;; --- Plugin bindings ------------------------------
       ;; auto-yasnippet
-      :i  [C-tab] #'aya-expand
-      :nv [C-tab] #'aya-create
+      ;; :i  [C-tab] #'aya-expand
+      ;; :nv [C-tab] #'aya-create
 
       ;; company-mode (vim-like omnicompletion)
       :i "C-SPC"  #'+company/complete
@@ -457,10 +462,6 @@
       :v  "S"  #'evil-surround-region
       :o  "s"  #'evil-surround-edit
       :o  "S"  #'evil-Surround-edit
-
-      ;; expand-region
-      :v  "v"  #'er/expand-region
-      :v  "V"  #'er/contract-region
 
       ;; flycheck
       :m  "]e" #'next-error
@@ -648,12 +649,12 @@
         :n "n"   #'debugger-step-through
         :n "c"   #'debugger-continue)
 
-      (:map help-mode-map
-        :n "[["  #'help-go-back
-        :n "]]"  #'help-go-forward
-        :n "o"   #'ace-link-help
-        :n "q"   #'quit-window
-        :n "Q"   #'+ivy-quit-and-resume)
+      ;; (:map help-mode-map
+      ;;   :n "[["  #'help-go-back
+      ;;   :n "]]"  #'help-go-forward
+      ;;   :n "o"   #'ace-link-help
+      ;;   :n "q"   #'quit-window
+      ;;   :n "Q"   #'+ivy-quit-and-resume)
 
       (:after vc-annotate
         :map vc-annotate-mode-map
@@ -690,19 +691,19 @@
       :i [M-return]     #'evil-open-below
       :i [S-M-return]   #'evil-open-above
       ;; textmate-esque deletion
-      [M-backspace]     #'doom/backward-kill-to-bol-and-indent
-      :i [backspace]    #'delete-backward-char
-      :i [M-backspace]  #'doom/backward-kill-to-bol-and-indent
-      ;; Emacsien motions for insert mode
-      :i "C-b" #'backward-word
-      :i "C-f" #'forward-word
+      ;; [M-backspace]     #'doom/backward-kill-to-bol-and-indent
+      ;; :i [backspace]    #'delete-backward-char
+      ;; :i [M-backspace]  #'doom/backward-kill-to-bol-and-indent
+      ;; ;; Emacsien motions for insert mode
+      ;; :i "C-b" #'backward-word
+      ;; :i "C-f" #'forward-word
 
       ;; Highjacks space/backspace to:
       ;;   a) balance spaces inside brackets/parentheses ( | ) -> (|)
       ;;   b) delete space-indented blocks intelligently
       ;;   c) do none of this when inside a string
-      :i "SPC"                          #'doom/inflate-space-maybe
-      :i [remap delete-backward-char]   #'doom/deflate-space-maybe
+      ;; :i "SPC"                          #'doom/inflate-space-maybe
+      ;; :i [remap delete-backward-char]   #'doom/deflate-space-maybe
       :i [remap newline]                #'doom/newline-and-indent
 
       (:after org
