@@ -210,7 +210,7 @@ local value, whether or not it's permanent-local. Therefore, we cycle
 ;; prompts the user for confirmation when deleting a non-empty frame
 (define-key global-map [remap delete-frame] #'doom/delete-frame)
 ;; simple name in frame title
-(setq-default frame-title-format '("DOOM Emacs"))
+(setq-default frame-title-format '("vim"))
 ;; auto-enabled in Emacs 25+; I'll do it myself
 (global-eldoc-mode -1)
 ;; a good indicator that Emacs isn't frozen
