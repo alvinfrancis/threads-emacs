@@ -394,33 +394,6 @@ the command buffer."
   (setq multi-term-buffer-name "doom:terminal"))
 
 
-(after! neotree
-  ;; Neotree has its own window/popup management built-in, which is difficult to
-  ;; police. For example, switching perspectives will cause neotree to forget it
-  ;; is a neotree pane.
-  ;;
-  ;; By handing neotree over to shackle, which is better integrated into the
-  ;; rest of my config (and persp-mode), this is no longer a problem.
-  (set! :popup " *NeoTree*" :align neo-window-position :size neo-window-width :static t)
-
-  (defun +evil-neotree-display-fn (buf _alist)
-    "Hand neotree off to shackle."
-    (let ((win (doom-popup-buffer buf)))
-      (setq neo-global--buffer (window-buffer win)
-            neo-global--window win)))
-  (setq neo-display-action '(+evil-neotree-display-fn))
-
-  (defun +evil|neotree-fix-popup ()
-    "Repair neotree state whenever its popup state is restored. This ensures
-that `doom*popup-save' won't break it."
-    (when (equal (buffer-name) neo-buffer-name)
-      (setq neo-global--window (selected-window))
-      ;; Fix neotree shrinking when closing nearby vertical splits
-      (when neo-window-fixed-size
-        (doom-resize-window neo-global--window neo-window-width t t))))
-  (add-hook 'doom-popup-mode-hook #'+evil|neotree-fix-popup))
-
-
 (after! persp-mode
   (defun doom*persp-mode-restore-popups (&rest _)
     "Restore popup windows when loading a perspective from file."
