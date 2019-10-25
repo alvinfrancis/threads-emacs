@@ -23,8 +23,10 @@
 (def-package! evil
   :init
   (setq evil-want-C-u-scroll t
+        evil-want-C-d-scroll t
         evil-want-visual-char-semi-exclusive t
         evil-want-Y-yank-to-eol t
+        evil-move-cursor-back nil
         evil-magic t
         evil-echo-state t
         evil-indent-convert-tabs t
@@ -149,6 +151,14 @@ across windows."
   (evil-set-command-properties
    '+evil:mc :move-point nil :ex-arg 'global-match :ex-bang t :evil-mc t)
 
+  (evil-define-motion evil-jump-up (count)
+    (evil-previous-visual-line (* (or count 1) 5)))
+  (evil-define-motion evil-jump-down (count)
+    (evil-next-visual-line (* (or count 1) 5)))
+  (evil-define-operator evil-toggle-comment (beg end)
+    "Comment operator that can work with evil-motions."
+    (comment-or-uncomment-region beg end))
+
   ;; Move to new split -- setting `evil-split-window-below' &
   ;; `evil-vsplit-window-right' to non-nil mimics this, but that doesn't update
   ;; window history. That means when you delete a new split, Emacs leaves you on
@@ -166,11 +176,6 @@ across windows."
 (def-package! evil-commentary
   :commands (evil-commentary evil-commentary-yank evil-commentary-line)
   :config (evil-commentary-mode 1))
-
-
-(def-package! evil-easymotion
-  :after evil-snipe
-  :commands evilem-create)
 
 
 (def-package! evil-embrace
@@ -230,7 +235,7 @@ across windows."
   :commands evil-escape-mode
   :init
   (setq evil-escape-excluded-states '(normal visual multiedit emacs motion)
-        evil-escape-key-sequence "jk"
+        evil-escape-key-sequence "jj"
         evil-escape-delay 0.25)
   (add-hook 'doom-post-init-hook #'evil-escape-mode)
   :config
@@ -249,20 +254,6 @@ across windows."
   (add-hook '+evil-esc-hook #'+evil|escape-exchange))
 
 
-(def-package! evil-matchit
-  :commands (evilmi-jump-items evilmi-text-object global-evil-matchit-mode)
-  :config (global-evil-matchit-mode 1)
-  :init
-  (map! [remap evil-jump-item] #'evilmi-jump-items
-        :textobj "%" #'evilmi-text-object #'evilmi-text-object)
-  :config
-  (defun +evil|simple-matchit ()
-    "A hook to force evil-matchit to favor simple bracket jumping. Helpful when
-the new algorithm is confusing, like in python or ruby."
-    (setq-local evilmi-always-simple-jump t))
-  (add-hook 'python-mode-hook #'+evil|simple-matchit))
-
-
 (def-package! evil-multiedit
   :commands (evil-multiedit-match-all
              evil-multiedit-match-and-next
@@ -274,58 +265,6 @@ the new algorithm is confusing, like in python or ruby."
              evil-multiedit-prev
              evil-multiedit-abort
              evil-multiedit-ex-match))
-
-
-(def-package! evil-mc
-  :commands (evil-mc-make-cursor-here evil-mc-make-all-cursors
-             evil-mc-undo-all-cursors evil-mc-pause-cursors
-             evil-mc-resume-cursors evil-mc-make-and-goto-first-cursor
-             evil-mc-make-and-goto-last-cursor
-             evil-mc-make-cursor-move-next-line
-             evil-mc-make-cursor-move-prev-line evil-mc-make-cursor-at-pos
-             evil-mc-has-cursors-p evil-mc-make-and-goto-next-cursor
-             evil-mc-skip-and-goto-next-cursor evil-mc-make-and-goto-prev-cursor
-             evil-mc-skip-and-goto-prev-cursor evil-mc-make-and-goto-next-match
-             evil-mc-skip-and-goto-next-match evil-mc-skip-and-goto-next-match
-             evil-mc-make-and-goto-prev-match evil-mc-skip-and-goto-prev-match)
-  :init
-  (defvar evil-mc-key-map (make-sparse-keymap))
-  :config
-  (global-evil-mc-mode +1)
-
-  ;; Add custom commands to whitelisted commands
-  (dolist (fn '(doom/deflate-space-maybe doom/inflate-space-maybe
-                doom/backward-to-bol-or-indent doom/forward-to-last-non-comment-or-eol
-                doom/backward-kill-to-bol-and-indent doom/newline-and-indent))
-    (push (cons fn '((:default . evil-mc-execute-default-call)))
-          evil-mc-custom-known-commands))
-
-  ;; disable evil-escape in evil-mc; causes unwanted text on invocation
-  (push 'evil-escape-mode evil-mc-incompatible-minor-modes)
-
-  (defun +evil|escape-multiple-cursors ()
-    "Clear evil-mc cursors and restore state."
-    (when (evil-mc-has-cursors-p)
-      (evil-mc-undo-all-cursors)
-      (evil-mc-resume-cursors)
-      t))
-  (add-hook '+evil-esc-hook #'+evil|escape-multiple-cursors))
-
-
-(def-package! evil-snipe
-  :commands (evil-snipe-mode evil-snipe-override-mode
-             evil-snipe-local-mode evil-snipe-override-local-mode)
-  :init
-  (setq evil-snipe-smart-case t
-        evil-snipe-scope 'line
-        evil-snipe-repeat-scope 'visible
-        evil-snipe-char-fold t
-        evil-snipe-disabled-modes '(magit-mode elfeed-show-mode elfeed-search-mode)
-        evil-snipe-aliases '((?\[ "[[{(]")
-                             (?\] "[]})]")
-                             (?\; "[;:]")))
-  (add-hook 'doom-post-init-hook #'evil-snipe-mode)
-  (add-hook 'doom-post-init-hook #'evil-snipe-override-mode))
 
 
 (def-package! evil-surround
