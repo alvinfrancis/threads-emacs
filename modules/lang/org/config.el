@@ -30,10 +30,6 @@
   (setq org-tags-exclude-from-inheritance '("crypt")
         org-crypt-key user-mail-address))
 
-(def-package! org-bullets
-  :commands org-bullets-mode)
-
-
 ;;
 ;; Bootstrap
 ;;
@@ -53,7 +49,6 @@
 
 (add-hook! org-mode
   #'(doom|disable-line-numbers  ; no line numbers
-     org-bullets-mode           ; "prettier" bullets
      org-indent-mode            ; margin-based indentation
      toc-org-enable             ; auto-table of contents
      visual-line-mode           ; line wrapping
@@ -134,11 +129,11 @@ unfold to point on startup."
    org-footnote-auto-label 'plain
    org-hidden-keywords nil
    org-hide-emphasis-markers nil
-   org-hide-leading-stars t
-   org-hide-leading-stars-before-indent-mode t
+   org-hide-leading-stars nil
+   org-hide-leading-stars-before-indent-mode nil
    org-image-actual-width nil
-   org-indent-indentation-per-level 2
-   org-indent-mode-turns-on-hiding-stars t
+   org-indent-indentation-per-level 0
+   org-indent-mode-turns-on-hiding-stars nil
    org-pretty-entities nil
    org-pretty-entities-include-sub-superscripts t
    org-priority-faces
@@ -199,7 +194,7 @@ between the two."
         :ni "C-S-j" #'org-metadown
 
         :n  [tab]     #'+org/toggle-fold
-        :i  [tab]     #'+org/indent-or-next-field-or-yas-expand
+        :i  [tab]     #'org-cycle
         :i  [backtab] #'+org/dedent-or-prev-field
 
         :ni [M-return]   (λ! (+org/insert-item 'below))
