@@ -59,3 +59,5 @@
   (add-hook 'dired-initial-position-hook #'dired-k)
   (add-hook 'dired-after-readin-hook #'dired-k-no-revert))
 
+(def-package! diredfl
+  :after dired)

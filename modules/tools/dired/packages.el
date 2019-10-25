@@ -2,4 +2,4 @@
 ;;; emacs/dired/packages.el
 
 (package! dired-k)
-
+(package! diredfl)
