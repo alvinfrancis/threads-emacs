@@ -1,7 +1,7 @@
 .local/
 .cask/
 var/
-/init.el
+# /init.el
 modules/private/
 
 # emacs tempfiles that shouldn't be there
