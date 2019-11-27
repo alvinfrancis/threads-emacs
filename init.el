@@ -3,7 +3,7 @@
 (require 'core (concat user-emacs-directory "core/core"))
 
 (doom! :feature
-      ;debugger          ; FIXME stepping through code, to help you add bugs
+       ; debugger          ; FIXME stepping through code, to help you add bugs
        eval              ; run code, run (also, repls)
        evil              ; come to the dark side, we have cookies
        ; file-templates    ; auto-snippets for empty files
@@ -17,7 +17,7 @@
        tabs
 
        :completion
-       ; company           ; the ultimate code completion backend
+       company           ; the ultimate code completion backend
        ; ivy               ; a search engine for love and life
        helm              ; the *other* search engine for love and life
        ; ido               ; the other *other* search engine...
@@ -40,7 +40,7 @@
        electric-indent   ; smarter, keyword-based electric-indent
        eshell            ; a consistent, cross-platform shell (WIP)
        ; gist              ; interacting with github gists
-       imenu             ; an imenu sidebar and searchable code index
+       ; imenu             ; an imenu sidebar and searchable code index
        ; impatient-mode    ; show off code over HTTP
        ; macos             ; MacOS-specific commands
        ; make              ; run make tasks from Emacs
@@ -66,6 +66,7 @@
        ; hy                ; readability of scheme w/ speed of python
        ; (java +meghanada) ; the poster child for carpal tunnel syndrome
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
+       lisp
        ; julia             ; a better, faster MATLAB
        ; latex             ; writing papers in Emacs has never been so fun
        ; ledger            ; an accounting system in Emacs
