@@ -13,7 +13,7 @@
   (add-hook 'doom-pre-reload-theme-hook #'+doom|reload-theme)
 
   ;; improve integration w/ org-mode
-  (add-hook 'doom-init-ui-hook #'doom-themes-org-config)
+  ; (add-hook 'doom-init-ui-hook #'doom-themes-org-config)
 
   ;; blink mode-line on errors
   ;; FIXME Breaks modeline
