@@ -11,7 +11,7 @@
        ; services          ; TODO managing external services & code builders
        ; snippets          ; my elves. They type so I don't have to
        ; spellcheck        ; tasing you for misspelling mispelling
-       ; syntax-checker    ; tasing you for every semicolon you forget
+       syntax-checker    ; tasing you for every semicolon you forget
        version-control   ; remember, remember that commit in November
        ; workspaces        ; tab emulation, persistence & separate workspaces
        tabs
@@ -74,23 +74,23 @@
        markdown          ; writing docs for people to ignore
        ; ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
-        +attach          ; custom attachment system
+        ;; +attach          ; custom attachment system
         +babel           ; running code in org
-        +capture         ; org-capture in and outside of Emacs
-        +export          ; centralized export system + more backends
-        +present         ; Emacs for presentations
+        ;; +capture         ; org-capture in and outside of Emacs
+        ;; +export          ; centralized export system + more backends
+        ;; +present         ; Emacs for presentations
         ;; TODO +publish
         )
        ; perl              ; write code no one else can comprehend
        ; php               ; make php less awful to work with
        ; plantuml          ; diagrams for confusing people more
        ; purescript        ; javascript, but functional
-       ; python            ; beautiful is better than ugly
+       python            ; beautiful is better than ugly
        rest              ; Emacs as a REST client
        ; ruby              ; 1.step do {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        ; rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ; scala             ; java, but good
-       ; sh                ; she sells (ba|z)sh shells on the C xor
+       ;; sh                ; she sells (ba|z)sh shells on the C xor
        ; swift             ; who asked for emoji variables?
        ; typescript        ; javascript, but better
        web               ; the tubes
