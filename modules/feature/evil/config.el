@@ -26,6 +26,7 @@
         evil-want-C-d-scroll t
         evil-want-visual-char-semi-exclusive t
         evil-want-Y-yank-to-eol t
+        evil-move-beyond-eol t
         evil-move-cursor-back nil
         evil-magic t
         evil-echo-state t
