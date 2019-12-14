@@ -23,9 +23,7 @@
         helm-find-files-doc-header nil
         ;; Don't override evil-ex's completion
         helm-mode-handle-completion-in-region nil
-        helm-candidate-number-limit 50
-        ;; Don't wrap item cycling
-        helm-move-to-line-cycle-in-source t)
+        helm-candidate-number-limit 50)
 
   :config
   (load "helm-autoloads" nil t)
