@@ -89,9 +89,9 @@ module to be loaded."
   (< (point) eshell-last-output-end))
 
 (defun +eshell--current-git-branch ()
-    (let ((branch (car (loop for match in (split-string (shell-command-to-string "git branch") "\n")
-                             when (string-match "^\*" match)
-                             collect match))))
+    (let ((branch (car (cl-loop for match in (split-string (shell-command-to-string "git branch") "\n")
+                                when (string-match "^\*" match)
+                                collect match))))
       (if (not (eq branch nil))
           (concat " [" (substring branch 2) "]")
         "")))
