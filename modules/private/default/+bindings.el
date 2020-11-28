@@ -402,9 +402,6 @@
       ;; evil-exchange
       :n  "gx"  #'evil-exchange
 
-      ;; evil-matchit
-      :nv [tab] #'+evil/matchit-or-toggle-fold
-
       ;; evil-magit
       (:after evil-magit
         :map (magit-status-mode-map magit-revision-mode-map)
