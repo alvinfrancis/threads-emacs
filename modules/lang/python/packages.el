@@ -4,7 +4,6 @@
 ;; requires: python jedi setuptools
 
 (package! anaconda-mode)
-(package! nose)
 (package! pip-requirements)
 
 (when (featurep! :completion company)
