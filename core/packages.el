@@ -27,7 +27,6 @@
 (package! ace-window)
 (package! avy)
 (package! command-log-mode)
-(package! editorconfig)
 (package! pcre2el)
 (package! smart-forward)
 (package! smartparens)
