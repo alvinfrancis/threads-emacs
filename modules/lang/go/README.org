@@ -37,6 +37,11 @@ brew install go
 sudo pacman --needed --noconfirm -S go
 #+END_SRC
 
+*** Ubuntu
+#+BEGIN_SRC
+sudo apt-get install golang
+#+END_SRC
+
 ** Dependencies
 This module requires a valid ~GOPATH~, and the following Go packages:
 
