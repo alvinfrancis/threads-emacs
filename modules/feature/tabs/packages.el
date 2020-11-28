@@ -2,3 +2,4 @@
 ;;; feature/tabs/packages.el
 
 (package! elscreen)
+;; (package! centaur-tabs)

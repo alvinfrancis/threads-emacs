@@ -22,3 +22,23 @@
   (defalias #'+tabs/switch-left #'elscreen-previous)
   (defalias #'+tabs/switch-right #'elscreen-next)
   (elscreen-start))
+
+;; (def-package! centaur-tabs
+;;   :init
+;;   (setq centaur-tabs-set-icons t
+;;         centaur-tabs-gray-out-icons 'buffer
+;;         centaur-tabs-set-bar 'left
+;;         centaur-tabs-set-modified-marker t
+;;         centaur-tabs-close-button "✕"
+;;         centaur-tabs-modified-marker "⬤"
+;;         ;; Scrolling (with the mouse wheel) past the end of the tab list
+;;         ;; replaces the tab list with that of another Doom workspace. This
+;;         ;; prevents that.
+;;         centaur-tabs-cycle-scope 'tabs
+;;         centaur-tabs--buffer-show-groups t
+;;         )
+;;   (defalias #'+tabs/display #'centaur-tabs-local-mode)
+;;   (defalias #'+tabs/switch-left #'centaur-tabs-backward)
+;;   (defalias #'+tabs/switch-right #'centaur-tabs-forward)
+;;   :config
+;;   (centaur-tabs-mode t))
