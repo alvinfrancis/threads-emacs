@@ -92,19 +92,6 @@
     :prompt "Refactor: "))
 
 
-(def-package! tern
-  :hook (js2-mode . tern-mode)
-  :config
-  (advice-add #'tern-project-dir :override #'doom-project-root))
-
-
-(def-package! company-tern
-  :when (featurep! :completion company)
-  :after tern
-  :config
-  (set! :company-backend 'js2-mode '(company-tern)))
-
-
 (def-package! rjsx-mode
   :commands rjsx-mode
   :mode "\\.jsx$"
