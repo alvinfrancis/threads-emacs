@@ -3,4 +3,4 @@
 
 (package! doom-themes)
 (package! solaire-mode)
-
+(package! ewal-doom-themes)

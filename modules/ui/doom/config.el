@@ -22,6 +22,9 @@
   )
 
 
+(def-package! ewal-doom-themes)
+
+
 (def-package! solaire-mode
   :hook (after-change-major-mode . turn-on-solaire-mode)
   :hook (doom-popup-mode . turn-off-solaire-mode)
