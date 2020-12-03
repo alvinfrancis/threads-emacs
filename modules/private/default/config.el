@@ -32,6 +32,7 @@
         ;; prompt for the key passphrase.
         epa-pinentry-mode 'loopback))
 
+(add-hook! 'before-save-hook #'whitespace-cleanup)
 
 (defun doom*hide-vertical-border (&rest _)
   "Hide vertical border."
