@@ -39,7 +39,8 @@
         ;; more vim-like behavior
         evil-symbol-word-search t
         ;; don't activate mark on shift-click
-        shift-select-mode nil)
+        shift-select-mode nil
+        evil-undo-system 'undo-tree)
 
   :config
   (add-hook 'doom-init-hook #'evil-mode)
