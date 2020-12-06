@@ -8,18 +8,14 @@
     js
     latex
     ledger
-    lilypond
     lisp
     matlab
     plantuml
     python
     restclient ; ob-restclient
     ruby
-    rust       ; ob-rust
     shell
-    sqlite
-    sql-mode   ; ob-sql-mode
-    translate) ; ob-translate
+    )
   "A list of org-babel languages to load.")
 
 
@@ -41,6 +37,7 @@
   ;; In a recent update, `org-babel-get-header' was removed from org-mode, which
   ;; is something a fair number of babel plugins use. So until those plugins
   ;; update, this polyfill will do:
+  ;; TODO: check if still necessary
   (defun org-babel-get-header (params key &optional others)
     (cl-loop with fn = (if others #'not #'identity)
              for p in params

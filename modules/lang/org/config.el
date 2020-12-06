@@ -1,57 +1,24 @@
 ;;; lang/org/config.el -*- lexical-binding: t; -*-
 
-(defvar +org-dir (expand-file-name "~/work/org/")
+(defvar +org-dir (expand-file-name "~/Documents/org/")
   "The directory where org files are kept.")
 
-;; Ensure ELPA org is prioritized above built-in org.
-(when-let* ((path (locate-library "org" nil doom--package-load-path)))
-  (setq load-path (delete path load-path))
-  (push (file-name-directory path) load-path))
+(if (featurep! +babel) (load! +babel))
 
-;; Sub-modules
-(if (featurep! +attach)  (load! +attach))
-(if (featurep! +babel)   (load! +babel))
-(if (featurep! +capture) (load! +capture))
-(if (featurep! +export)  (load! +export))
-(if (featurep! +present) (load! +present))
-;; TODO (if (featurep! +publish) (load! +publish))
+;; (after! org
+;;   ;; Occasionally, Emacs encounters an error loading the built-in org, aborting
+;;   ;; the load. This results in a broken, partially loaded state. This require
+;;   ;; tries to set it straight.
+;;   (require 'org)
 
+;;   (defvaralias 'org-directory '+org-dir)
 
-;;
-;; Plugins
-;;
-
-(def-package! toc-org
-  :commands toc-org-enable)
-
-(def-package! org-crypt ; built-in
-  :commands org-crypt-use-before-save-magic
-  :config
-  (setq org-tags-exclude-from-inheritance '("crypt")
-        org-crypt-key user-mail-address))
-
-;;
-;; Bootstrap
-;;
-
-(after! org
-  ;; Occasionally, Emacs encounters an error loading the built-in org, aborting
-  ;; the load. This results in a broken, partially loaded state. This require
-  ;; tries to set it straight.
-  (require 'org)
-
-  (defvaralias 'org-directory '+org-dir)
-
-  (org-crypt-use-before-save-magic)
-  (+org-init-ui)
-  (+org-init-keybinds)
-  (+org-hacks))
+;;   (org-crypt-use-before-save-magic)
+;;   (+org-init-ui)
+;;   (+org-init-keybinds))
 
 (add-hook! org-mode
-  #'(doom|disable-line-numbers  ; no line numbers
-     org-indent-mode            ; margin-based indentation
-     toc-org-enable             ; auto-table of contents
-     visual-line-mode           ; line wrapping
+  #'(visual-line-mode           ; line wrapping
 
      +org|enable-auto-reformat-tables
      +org|enable-auto-update-cookies
@@ -59,6 +26,25 @@
      +org|unfold-to-2nd-level-or-point
      +org|show-paren-mode-compatibility
      ))
+
+(def-package! org
+  :init
+  (setq org-fontify-quote-and-verse-blocks t
+        org-src-fontify-natively t
+        org-tags-exclude-from-inheritance (quote ("crypt"))
+        org-crypt-key "alvin.francis.dumalus@gmail.com"
+        org-hide-emphasis-markers t
+        org-adapt-indentation nil
+        org-imenu-depth 3)
+
+  (add-hook! org-mode
+  #'(visual-line-mode           ; line wrapping
+
+     +org|enable-auto-reformat-tables
+     +org|enable-auto-update-cookies
+     +org|smartparens-compatibility-config
+     +org|unfold-to-2nd-level-or-point
+     +org|show-paren-mode-compatibility)))
 
 
 ;;
@@ -109,68 +95,6 @@ unfold to point on startup."
 `org-indent-mode', so we simply turn off show-paren-mode altogether."
   (set (make-local-variable 'show-paren-mode) nil))
 
-
-;;
-(defun +org-init-ui ()
-  "Configures the UI for `org-mode'."
-  (setq-default
-   org-adapt-indentation nil
-   org-agenda-dim-blocked-tasks nil
-   org-agenda-files (directory-files +org-dir t "\\.org$" t)
-   org-agenda-inhibit-startup t
-   org-agenda-skip-unavailable-files nil
-   org-cycle-include-plain-lists t
-   org-cycle-separator-lines 1
-   org-entities-user '(("flat"  "\\flat" nil "" "" "266D" "♭") ("sharp" "\\sharp" nil "" "" "266F" "♯"))
-   ;; org-ellipsis " ... "
-   org-fontify-done-headline t
-   org-fontify-quote-and-verse-blocks t
-   org-fontify-whole-heading-line t
-   org-footnote-auto-label 'plain
-   org-hidden-keywords nil
-   org-hide-emphasis-markers nil
-   org-hide-leading-stars nil
-   org-hide-leading-stars-before-indent-mode nil
-   org-image-actual-width nil
-   org-indent-indentation-per-level 0
-   org-indent-mode-turns-on-hiding-stars nil
-   org-pretty-entities nil
-   org-pretty-entities-include-sub-superscripts t
-   org-priority-faces
-   `((?a . ,(face-foreground 'error))
-     (?b . ,(face-foreground 'warning))
-     (?c . ,(face-foreground 'success)))
-   org-startup-folded t
-   org-startup-indented t
-   org-startup-with-inline-images nil
-   org-tags-column 0
-   org-todo-keywords
-   '((sequence "[ ](t)" "[-](p)" "[?](m)" "|" "[X](d)")
-     (sequence "TODO(T)" "|" "DONE(D)")
-     (sequence "NEXT(n)" "ACTIVE(a)" "WAITING(w)" "LATER(l)" "|" "CANCELLED(c)"))
-   org-use-sub-superscripts '{}
-   outline-blank-line t
-
-   ;; LaTeX previews are too small and usually render to light backgrounds, so
-   ;; this enlargens them and ensures their background (and foreground) match the
-   ;; current theme.
-   org-preview-latex-image-directory (concat doom-cache-dir "org-latex/")
-   org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
-   org-format-latex-options
-   (plist-put org-format-latex-options
-              :background (face-attribute (or (cadr (assq 'default face-remapping-alist))
-                                              'default)
-                                          :background nil t)))
-
-  ;; Custom links
-  (org-link-set-parameters
-   "org"
-   :complete (lambda () (+org-link-read-file "org" +org-dir))
-   :follow   (lambda (link) (find-file (expand-file-name link +org-dir)))
-   :face     (lambda (link)
-               (if (file-exists-p (expand-file-name link +org-dir))
-                   'org-link
-                 'error))))
 
 (defun +org-init-keybinds ()
   "Sets up org-mode and evil keybindings. Tries to fix the idiosyncrasies
@@ -231,30 +155,3 @@ between the two."
             :e "C-k" #'org-agenda-previous-item
             :e "C-n" #'org-agenda-next-item
             :e "C-p" #'org-agenda-previous-item))))
-
-;;
-(defun +org-hacks ()
-  "Getting org to behave."
-  ;; Don't open separate windows
-  (push '(file . find-file) org-link-frame-setup)
-
-  ;; Let OS decide what to do with files when opened
-  (setq org-file-apps
-        `(("\\.org$" . emacs)
-          (t . ,(cond (IS-MAC "open -R \"%s\"")
-                      (IS-LINUX "xdg-open \"%s\"")))))
-
-  (defun +org|remove-occur-highlights ()
-    "Remove org occur highlights on ESC in normal mode."
-    (when (and (derived-mode-p 'org-mode)
-               org-occur-highlights)
-      (org-remove-occur-highlights)))
-  (add-hook '+evil-esc-hook #'+org|remove-occur-highlights)
-
-  (after! recentf
-    ;; Don't clobber recentf with agenda files
-    (defun +org-is-agenda-file (filename)
-      (cl-find (file-truename filename) org-agenda-files
-               :key #'file-truename
-               :test #'equal))
-    (add-to-list 'recentf-exclude #'+org-is-agenda-file)))
