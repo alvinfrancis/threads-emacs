@@ -17,16 +17,6 @@
 ;;   (+org-init-ui)
 ;;   (+org-init-keybinds))
 
-(add-hook! org-mode
-  #'(visual-line-mode           ; line wrapping
-
-     +org|enable-auto-reformat-tables
-     +org|enable-auto-update-cookies
-     +org|smartparens-compatibility-config
-     +org|unfold-to-2nd-level-or-point
-     +org|show-paren-mode-compatibility
-     ))
-
 (def-package! org
   :init
   (setq org-fontify-quote-and-verse-blocks t
@@ -40,8 +30,6 @@
   (add-hook! org-mode
   #'(visual-line-mode           ; line wrapping
 
-     +org|enable-auto-reformat-tables
-     +org|enable-auto-update-cookies
      +org|smartparens-compatibility-config
      +org|unfold-to-2nd-level-or-point
      +org|show-paren-mode-compatibility)))
@@ -78,17 +66,6 @@ unfold to point on startup."
       (sp-local-pair "/" nil :unless '(sp-point-after-word-p sp-point-before-word-p +org-sp-point-in-checkbox-p))
       (sp-local-pair "~" nil :unless '(sp-point-after-word-p sp-point-before-word-p))
       (sp-local-pair "=" nil :unless '(sp-point-after-word-p sp-point-before-word-p)))))
-
-(defun +org|enable-auto-reformat-tables ()
-  "Realign tables exiting insert mode (`evil-mode')."
-  (when (featurep 'evil)
-    (add-hook 'evil-insert-state-exit-hook #'+org|realign-table-maybe nil t)))
-
-(defun +org|enable-auto-update-cookies ()
-  "Update statistics cookies when saving or exiting insert mode (`evil-mode')."
-  (when (featurep 'evil)
-    (add-hook 'evil-insert-state-exit-hook #'+org|update-cookies nil t))
-  (add-hook 'before-save-hook #'+org|update-cookies nil t))
 
 (defun +org|show-paren-mode-compatibility ()
   "`show-paren-mode' causes flickering with indentation margins made by
