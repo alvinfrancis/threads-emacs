@@ -2,4 +2,4 @@
 ;;; lang/clojure/packages.el
 
 (package! cider)
-
+(package! flycheck-clj-kondo)

@@ -1,5 +1,7 @@
 ;;; lang/clojure/config.el -*- lexical-binding: t; -*-
 
+(def-package! flycheck-clj-kondo)
+
 (def-package! clojure-mode
   :mode "\\.clj$"
   :mode ("\\.cljs$" . clojurescript-mode)
