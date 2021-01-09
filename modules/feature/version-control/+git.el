@@ -27,7 +27,7 @@
   (set! :popup "^\\*git-gutter.+\\*$" :regexp t :size 15 :noselect t)
 
   ;; Update git-gutter on focus (in case I was using git externally)
-  (add-hook 'focus-in-hook #'git-gutter:update-all-windows)
+  (add-function :after after-focus-change-function #'git-gutter:update-all-windows)
 
   (after! evil
     (defun +version-control|update-git-gutter ()

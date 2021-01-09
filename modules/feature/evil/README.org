@@ -5,7 +5,6 @@ This holy module brings the vim experience to Emacs.
 * Table of Contents :TOC:
 - [[#removing-evil-mode][Removing evil-mode]]
 - [[#features][Features]]
-  - [[#multiple-cursors][Multiple-cursors]]
   - [[#a-hybrid-code-folding-system][A hybrid code-folding system]]
   - [[#hacks][Hacks]]
   - [[#differences-from-vim][Differences from vim]]

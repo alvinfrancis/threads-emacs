@@ -115,7 +115,6 @@ base by `doom!' and for calculating how many packages exist.")
       quelpa-verbose doom-debug-mode
       quelpa-dir (expand-file-name "quelpa" doom-packages-dir)
 
-      byte-compile-dynamic nil
       byte-compile-verbose doom-debug-mode
       byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
 

@@ -30,7 +30,7 @@
   (setq epa-file-encrypt-to (or epa-file-encrypt-to user-mail-address)
         ;; With GPG 2.1, this forces gpg-agent to use the Emacs minibuffer to
         ;; prompt for the key passphrase.
-        epa-pinentry-mode 'loopback))
+        epg-pinentry-mode 'loopback))
 
 (add-hook! 'before-save-hook #'whitespace-cleanup)
 

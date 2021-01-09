@@ -54,7 +54,7 @@
   (interactive)
   (projectile-invalidate-cache nil)
   (projectile-reset-cached-project-root)
-  (dolist (fn projectile-project-root-files-functions)
+  (dolist (fn projectile-project-root-functions)
     (remhash (format "%s-%s" fn default-directory) projectile-project-root-cache)))
 
 (defun doom-project-p ()
@@ -86,6 +86,8 @@ they are absolute."
         projectile-require-project-root
         projectile-cached-buffer-file-name
         projectile-cached-project-root)
+    ;; silence unused lexical variable warnin
+    (ignore projectile-cached-buffer-file-name projectile-cached-project-root)
     (call-interactively
      ;; completion modules may remap this command
      (or (command-remapping #'projectile-find-file)

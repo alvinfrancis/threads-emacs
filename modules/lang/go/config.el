@@ -11,7 +11,6 @@
       (warn "go-mode: couldn't find goimports; no code formatting/fixed imports on save")
     (add-hook! go-mode (add-hook 'before-save-hook #'gofmt-before-save nil t)))
 
-  (set! :repl 'go-mode #'gorepl-run)
   (set! :jump 'go-mode
     :definition #'go-guru-definition
     :references #'go-guru-referrers
@@ -76,13 +75,6 @@
   :config
   (unless (executable-find "guru")
     (warn "go-mode: couldn't find guru, refactoring commands won't work")))
-
-
-(def-package! gorepl-mode
-  :commands (gorepl-run gorepl-run-load-current-file)
-  :config
-  (unless (executable-find "gore")
-    (warn "go-mode: couldn't find gore, REPL support disabled")))
 
 
 (def-package! company-go

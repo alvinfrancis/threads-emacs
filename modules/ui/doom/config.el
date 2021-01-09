@@ -4,9 +4,7 @@
 (def-package! doom-themes
   :config
   (unless doom-theme
-    (setq doom-theme 'doom-one)
-    (after! solaire-mode
-      (add-hook 'doom-init-ui-hook #'solaire-mode-swap-bg t)))
+    (setq doom-theme 'doom-one))
 
   ;; Ensure `doom/reload-load-path' reloads common faces
   (defun +doom|reload-theme () (load "doom-themes-common.el" nil t))

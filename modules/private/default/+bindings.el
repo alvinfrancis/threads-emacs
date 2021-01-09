@@ -434,18 +434,6 @@
           "C-n" #'evil-multiedit-next
           "C-p" #'evil-multiedit-prev))
 
-      ;; evil-snipe
-      (:after evil-snipe
-        (:after evil-easymotion
-          ;; Binding to switch to evil-easymotion/avy after a snipe
-          :map evil-snipe-parent-transient-map
-          "C-;" (λ! (require 'evil-easymotion)
-                    (call-interactively
-                     (evilem-create #'evil-snipe-repeat
-                                    :bind ((evil-snipe-scope 'whole-buffer)
-                                           (evil-snipe-enable-highlight)
-                                           (evil-snipe-enable-incremental-highlight)))))))
-
       ;; evil-surround
       :v  "S"  #'evil-surround-region
       :o  "s"  #'evil-surround-edit

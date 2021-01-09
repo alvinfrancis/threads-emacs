@@ -121,9 +121,9 @@ If INSTALLED-ONLY-P, only return packages that are installed."
     (mapcar #'package-desc-name (package--used-elsewhere-p desc nil t))))
 
 ;;;###autoload
-(defun doom-get-dependencies-for (name &optional only)
+(defun doom-get-dependencies-for (name)
   "Return a list of dependencies for a package."
-  (package--get-deps name only))
+  (package--get-deps (list name)))
 
 ;;;###autoload
 (defun doom-get-outdated-packages (&optional include-frozen-p)

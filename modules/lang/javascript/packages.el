@@ -12,7 +12,3 @@
 (package! web-beautify)
 (package! skewer-mode)
 (package! eslintd-fix)
-
-(when (featurep! :feature jump)
-  (package! xref-js2))
-

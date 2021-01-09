@@ -55,7 +55,7 @@
       (setq +doom-modeline-current-window win))))
 
 (add-hook 'window-configuration-change-hook #'+doom-modeline|set-selected-window)
-(add-hook 'focus-in-hook #'+doom-modeline|set-selected-window)
+(add-function :after after-focus-change-function #'+doom-modeline|set-selected-window)
 (advice-add #'handle-switch-frame :after #'+doom-modeline|set-selected-window)
 (advice-add #'select-window :after #'+doom-modeline|set-selected-window)
 

@@ -4,7 +4,6 @@
 (package! go-eldoc)
 (package! go-guru)
 (package! go-mode)
-(package! gorepl-mode)
 
 (when (featurep! :completion company)
   (package! company-go))

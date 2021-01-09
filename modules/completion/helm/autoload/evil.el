@@ -20,8 +20,8 @@
                    +helm--file-last-query))
         (helm-ag-command-option (concat helm-ag-command-option " " (string-join options " "))))
     (setq helm-ag--last-query query)
-    (helm-attrset 'search-this-file nil helm-ag-source)
-    (helm-attrset 'name (helm-ag--helm-header helm-ag--default-directory) helm-ag-source)
+    (helm-set-attr 'search-this-file nil helm-ag-source)
+    (helm-set-attr 'name (helm-ag--helm-header helm-ag--default-directory) helm-ag-source)
     (helm :sources '(helm-ag-source)
           :input query
           :buffer "*helm-ag*"
