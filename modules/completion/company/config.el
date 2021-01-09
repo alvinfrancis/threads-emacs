@@ -26,6 +26,9 @@ MODES should be one major-mode symbol or a list of them."
   :commands (company-mode global-company-mode company-complete
              company-complete-common company-manual-begin company-grab-line)
   :config
+  (map! :map company-active-map
+        [remap evil-complete-previous] #'company-select-previous-or-abort
+        [remap evil-complete-next]     #'company-select-next-or-abort)
   (setq company-idle-delay nil
         company-tooltip-limit 10
         company-dabbrev-downcase nil
