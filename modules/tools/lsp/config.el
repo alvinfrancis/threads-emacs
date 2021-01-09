@@ -1,44 +1,12 @@
 ;;; tools/lsp/config.el -*- lexical-binding: t; -*-
 
-(defvar +lsp--default-read-process-output-max nil)
-(defvar +lsp--default-gcmh-high-cons-threshold nil)
-(defvar +lsp--optimization-init-p nil)
-
-(define-minor-mode +lsp-optimization-mode
-  "Deploys universal GC and IPC optimizations for `lsp-mode' and `eglot'."
-  :global t
-  :init-value nil
-  (if (not +lsp-optimization-mode)
-      (setq-default read-process-output-max +lsp--default-read-process-output-max
-                    gcmh-high-cons-threshold +lsp--default-gcmh-high-cons-threshold
-                    +lsp--optimization-init-p nil)
-    ;; Only apply these settings once!
-    (unless +lsp--optimization-init-p
-      (setq +lsp--default-read-process-output-max
-            ;; DEPRECATED Remove check when 26 support is dropped
-            (if (boundp 'read-process-output-max)
-                (default-value 'read-process-output-max))
-            +lsp--default-gcmh-high-cons-threshold
-            (default-value 'gcmh-high-cons-threshold))
-      ;; `read-process-output-max' is only available on recent development
-      ;; builds of Emacs 27 and above.
-      (setq-default read-process-output-max (* 1024 1024))
-      ;; REVIEW LSP causes a lot of allocations, with or without Emacs 27+'s
-      ;;        native JSON library, so we up the GC threshold to stave off
-      ;;        GC-induced slowdowns/freezes. Doom uses `gcmh' to enforce its
-      ;;        GC strategy, so we modify its variables rather than
-      ;;        `gc-cons-threshold' directly.
-      (setq-default gcmh-high-cons-threshold (* 2 +lsp--default-gcmh-high-cons-threshold))
-      (gcmh-set-high-threshold)
-      (setq +lsp--optimization-init-p t))))
-
 (defvar +lsp-company-backends 'company-capf
   "The backends to prepend to `company-backends' in `lsp-mode' buffers.
 Can be a list of backends; accepts any value `company-backends' accepts.")
 
 
 (def-package! lsp-mode
-  :commands lsp-install-server
+  :commands (lsp-mode lsp-install-server)
   :init
   ;; Don't touch ~/.emacs.d, which could be purged without warning
   (setq lsp-session-file (concat doom-etc-dir "lsp-session")
@@ -83,8 +51,7 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
       (when-let (path (buffer-file-name (buffer-base-buffer)))
         (if-let (root (lsp--calculate-root (lsp-session) path))
             (lsp--info "Guessed project root is %s" (abbreviate-file-name root))
-          (lsp--info "Could not guess project root."))))
-    #'+lsp-optimization-mode)
+          (lsp--info "Could not guess project root.")))))
 
   (add-hook! 'lsp-completion-mode-hook
     (defun +lsp-init-company-backends-h ()
