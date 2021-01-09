@@ -118,7 +118,6 @@
           :desc "Swiper"                :nv "/" #'swiper
           :desc "Imenu"                 :nv "i" #'imenu
           :desc "Imenu across buffers"  :nv "I" #'imenu-anywhere
-          :desc "Online providers"      :nv "o" #'+jump/online-select
           :desc "Project"               :nv "p" #'helm-projectile-ag)
 
 
@@ -171,8 +170,6 @@
                                             :v  "e" #'+eval/region
           :desc "Evaluate & replace region" :nv "E" #'+eval:replace-region
           :desc "Build tasks"               :nv "b" #'+eval/build
-          :desc "Jump to definition"        :n  "d" #'+jump/definition
-          :desc "Jump to references"        :n  "D" #'+jump/references
           :desc "Open REPL"                 :n  "r" #'+eval/open-repl
                                             :v  "r" #'+eval:repl)
 
@@ -217,9 +214,6 @@
           :desc "Describe face"         :n  "F" #'describe-face
           :desc "Describe DOOM setting" :n  "s" #'doom/describe-setting
           :desc "Describe DOOM module"  :n  "d" #'doom/describe-module
-          :desc "Find definition"       :n  "." #'+jump/definition
-          :desc "Find references"       :n  "/" #'+jump/references
-          :desc "Find documentation"    :n  "h" #'+jump/documentation
           :desc "What face"             :n  "'" #'doom/what-face
           :desc "What minor modes"      :n  ";" #'doom/what-minor-mode
           :desc "Info"                  :n  "i" #'info
@@ -309,9 +303,6 @@
       :n  "[w" #'+workspace/switch-left
       :m  "gt" #'+workspace/switch-right
       :m  "gT" #'+workspace/switch-left
-      :m  "gd" #'+jump/definition
-      :m  "gD" #'+jump/references
-      :m  "gh" #'+jump/documentation
       :n  "gp" #'+evil/reselect-paste
       :n  "gr" #'+eval:region
       :n  "gR" #'+eval/buffer
