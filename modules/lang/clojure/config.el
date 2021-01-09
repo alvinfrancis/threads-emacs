@@ -14,7 +14,11 @@
         [remap eval-buffer]          #'cider-eval-buffer
         (:localleader
           :n "c" #'cider-jack-in
-          :n "b" #'cider-swith-to-repl-buffer)))
+          :n "C" #'cider-connect
+          :n "z" #'cider-switch-to-repl-buffer))
+  (map! :map cider-repl-mode-map
+        (:localleader
+          :n "z" #'cider-switch-to-last-clojure-buffer)))
 
 
 (def-package! cider
