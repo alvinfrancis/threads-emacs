@@ -4,20 +4,7 @@
 (def-package! doom-themes
   :config
   (unless doom-theme
-    (setq doom-theme 'doom-one))
-
-  ;; Ensure `doom/reload-load-path' reloads common faces
-  (defun +doom|reload-theme () (load "doom-themes-common.el" nil t))
-  (add-hook 'doom-pre-reload-theme-hook #'+doom|reload-theme)
-
-  ;; improve integration w/ org-mode
-  ; (add-hook 'doom-init-ui-hook #'doom-themes-org-config)
-
-  ;; blink mode-line on errors
-  ;; FIXME Breaks modeline
-  ;; (add-hook 'doom-init-ui-hook #'doom-themes-visual-bell-config)
-
-  )
+    (setq doom-theme 'doom-one)))
 
 
 (def-package! ewal-doom-themes)
