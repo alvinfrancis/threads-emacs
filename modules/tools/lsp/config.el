@@ -6,7 +6,7 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
 
 
 (def-package! lsp-mode
-  :commands (lsp-mode lsp-install-server)
+  :commands (lsp lsp-install-server)
   :init
   ;; Don't touch ~/.emacs.d, which could be purged without warning
   (setq lsp-session-file (concat doom-etc-dir "lsp-session")
@@ -25,6 +25,13 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
         lsp-enable-text-document-color nil)
   ;; Reduce unexpected modifications to code
   (setq lsp-enable-on-type-formatting nil)
+  ;; Make breadcrumbs opt-in; they're redundant with the modeline and imenu
+  (setq lsp-headerline-breadcrumb-enable nil)
+
+  ;; Problem with autoloading the lsp-modeline minor mode
+  (setq lsp-modeline-workspace-status-enable nil
+        lsp-modeline-diagnostics-enable nil
+        lsp-modeline-code-actions-enable nil)
 
   ;; Let doom bind the lsp keymap.
   (when (featurep! :config default +bindings)
