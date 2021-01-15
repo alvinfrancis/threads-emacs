@@ -7,3 +7,5 @@
 
 (when (featurep! :completion helm)
   (package! helm-lsp))
+
+(package! lsp-treemacs)

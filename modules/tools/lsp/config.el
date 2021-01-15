@@ -6,7 +6,7 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
 
 
 (def-package! lsp-mode
-  :commands (lsp lsp-install-server)
+  :commands (lsp lsp-install-server lsp-lens-mode)
   :init
   ;; Don't touch ~/.emacs.d, which could be purged without warning
   (setq lsp-session-file (concat doom-etc-dir "lsp-session")
@@ -33,9 +33,8 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
         lsp-modeline-diagnostics-enable nil
         lsp-modeline-code-actions-enable nil)
 
-  ;; Let doom bind the lsp keymap.
-  (when (featurep! :config default +bindings)
-    (setq lsp-keymap-prefix nil))
+  ;; TODO: move to config bindings
+  (setq lsp-keymap-prefix (concat doom-localleader-key " l"))
 
   :config
   (setq lsp-intelephense-storage-path (concat doom-cache-dir "lsp-intelephense/")
@@ -70,7 +69,7 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
 
 
 (def-package! lsp-ui
-  :defer t
+  :commands (lsp-ui)
   :config
   (setq lsp-ui-doc-max-height 8
         lsp-ui-doc-max-width 35
