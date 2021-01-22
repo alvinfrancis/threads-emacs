@@ -576,8 +576,8 @@ Returns \"\" to not break --no-window-system."
 ;;
 
 (def-modeline! main
-  (bar matches " " buffer-info "  %l:%c %p  " selection-info)
-  (buffer-encoding major-mode vcs flycheck))
+  (bar matches " " buffer-info "  %l:%c " selection-info)
+  (major-mode vcs flycheck))
 
 (def-modeline! minimal
   (bar matches " " buffer-info)
