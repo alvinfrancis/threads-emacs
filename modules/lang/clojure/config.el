@@ -9,11 +9,11 @@
   :mode ("\\.cljs$" . clojurescript-mode)
   :config
   (when (featurep! :tools lsp)
-    (add-hook! '(clojure-mode-local-vars-hook
-                 clojurec-mode-local-vars-hook
-                 clojurescript-mode-local-vars-hook)
-      (defun +clojure-disable-lsp-indentation-h ()
-        (setq-local lsp-enable-indentation nil))))
+    (add-hook!
+      '(clojure-mode-hook
+        clojurec-mode-hook
+        clojurescript-mode-hook)
+      (setq-local lsp-enable-indentation nil)))
   (map! :map clojure-mode-map
         [remap eval-last-sexp]       #'cider-eval-last-sexp
         [remap eval-print-last-sexp] #'cider-eval-print-last-sexp
