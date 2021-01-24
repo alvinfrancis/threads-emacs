@@ -30,8 +30,7 @@
 
 
 (def-package! cider
-  ;; NOTE: if you don't have an org directory set (the dir doesn't exist), cider jack in won't work.
-  :commands (cider-jack-in cider-mode cider-jack-in-clojurescript cider-connect-clj cider-connect-cljs)
+  :commands (cider-jack-in cider-mode cider-jack-in-clj cider-jack-in-cljs cider-connect-clj cider-connect-cljs)
   :config
   (setq nrepl-hide-special-buffers t
         cider-repl-display-help-banner nil
