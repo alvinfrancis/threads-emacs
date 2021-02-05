@@ -119,3 +119,6 @@
 (def-package! helm-describe-modes :commands helm-describe-modes)
 
 (def-package! swiper :commands (swiper swiper-all))
+
+(def-package! helm-xref
+  :after helm)
