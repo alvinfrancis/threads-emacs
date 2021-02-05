@@ -2,4 +2,5 @@
 ;;; lang/clojure/packages.el
 
 (package! cider)
-(package! flycheck-clj-kondo)
+(when (featurep! :feature syntax-checker)
+  (package! flycheck-clj-kondo))

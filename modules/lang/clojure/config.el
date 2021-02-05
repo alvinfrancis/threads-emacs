@@ -1,7 +1,7 @@
 ;;; lang/clojure/config.el -*- lexical-binding: t; -*-
 
 (def-package! flycheck-clj-kondo
-  :when (featurep! :checkers syntax)
+  :when (featurep! :feature syntax-checker)
   :after flycheck)
 
 (def-package! clojure-mode
