@@ -6,7 +6,7 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
 
 
 (def-package! lsp-mode
-  :commands (lsp lsp-install-server lsp-lens-mode)
+  :commands (lsp lsp-deferred lsp-install-server lsp-lens-mode)
   :init
   ;; Don't touch ~/.emacs.d, which could be purged without warning
   (setq lsp-session-file (concat doom-etc-dir "lsp-session")
