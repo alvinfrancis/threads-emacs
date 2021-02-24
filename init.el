@@ -18,7 +18,7 @@
        :completion
        company           ; the ultimate code completion backend
        ; ivy               ; a search engine for love and life
-       helm              ; the *other* search engine for love and life
+       (helm +childframe)  ; the *other* search engine for love and life
        ; ido               ; the other *other* search engine...
 
        :ui
@@ -63,6 +63,7 @@
        (org              ; organize your plain life in plain text
         +babel           ; running code in org
         )
+       plantuml
        python            ; beautiful is better than ugly
        rest              ; Emacs as a REST client
        scala             ; java, but good
