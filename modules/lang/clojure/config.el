@@ -30,7 +30,7 @@
 
 
 (def-package! cider
-  :commands (cider-jack-in cider-mode cider-jack-in-clj cider-jack-in-cljs cider-connect-clj cider-connect-cljs)
+  :commands (cider-jack-in cider-mode cider-jack-in-clj cider-jack-in-cljs cider-connect-clj cider-connect-cljs cider-scratch)
   :config
   (setq nrepl-hide-special-buffers t
         cider-repl-display-help-banner nil
