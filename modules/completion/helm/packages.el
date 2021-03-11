@@ -11,3 +11,5 @@
 (package! helm-swoop)
 (package! helm-xref)
 (package! swiper)
+(when (featurep! +childframe)
+  (package! posframe))
