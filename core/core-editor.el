@@ -145,12 +145,7 @@ fundamental-mode) for performance sake."
 ;; Branching undo
 (def-package! undo-tree
   :config
-  (add-hook 'doom-init-hook #'global-undo-tree-mode)
-  ;; persistent undo history is known to cause undo history corruption, which
-  ;; can be very destructive! So disable it!
-  (setq undo-tree-auto-save-history nil
-        undo-tree-history-directory-alist
-        (list (cons "." (concat doom-cache-dir "undo-tree-hist/")))))
+  (add-hook 'doom-init-hook #'global-undo-tree-mode))
 
 
 ;;
