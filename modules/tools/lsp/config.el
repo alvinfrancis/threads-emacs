@@ -6,7 +6,7 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
 
 
 (def-package! lsp-mode
-  :commands (lsp lsp-deferred lsp-install-server lsp-lens-mode)
+  :commands (lsp lsp-deferred lsp-install-server)
   :init
   ;; Don't touch ~/.emacs.d, which could be purged without warning
   (setq lsp-session-file (concat doom-etc-dir "lsp-session")
@@ -24,15 +24,9 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
   (setq lsp-enable-folding nil
         lsp-enable-indentation nil
         lsp-enable-text-document-color nil)
+
   ;; Reduce unexpected modifications to code
   (setq lsp-enable-on-type-formatting nil)
-  ;; Make breadcrumbs opt-in; they're redundant with the modeline and imenu
-  (setq lsp-headerline-breadcrumb-enable nil)
-
-  ;; Problem with autoloading the lsp-modeline minor mode
-  (setq lsp-modeline-workspace-status-enable nil
-        lsp-modeline-diagnostics-enable nil
-        lsp-modeline-code-actions-enable nil)
 
   ;; TODO: move to config bindings
   (setq lsp-keymap-prefix (concat doom-localleader-key " l"))
@@ -67,6 +61,24 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
              (cons +lsp-company-backends
                    (remove +lsp-company-backends
                            (remq 'company-capf company-backends))))))))
+
+(def-package! lsp-lens
+  :commands (lsp-lens-mode))
+
+(def-package! lsp-diagnostics
+  :commands (lsp-diagnostics-mode))
+
+(def-package! lsp-headerline
+  :commands (lsp-headerline-breadcrumb-mode)
+  :init
+  (setq lsp-headerline-breadcrumb-enable nil))
+
+(def-package! lsp-modeline
+  :commands (lsp-modeline-code-actions-mode lsp-modeline-diagnostics-mode)
+  :init
+  (setq lsp-modeline-workspace-status-enable nil
+        lsp-modeline-diagnostics-enable nil
+        lsp-modeline-code-actions-enable nil))
 
 
 (def-package! lsp-ui
