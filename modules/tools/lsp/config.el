@@ -101,14 +101,7 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
         "j"   #'lsp-ui-peek--select-next
         "k"   #'lsp-ui-peek--select-prev
         "C-k" #'lsp-ui-peek--select-prev-file
-        "C-j" #'lsp-ui-peek--select-next-file)
-
-  ;; (when (featurep! +peek)
-  ;;   (set-lookup-handlers! 'lsp-ui-mode :async t
-  ;;     :definition 'lsp-ui-peek-find-definitions
-  ;;     :implementations 'lsp-ui-peek-find-implementation
-  ;;     :references 'lsp-ui-peek-find-references))
-  )
+        "C-j" #'lsp-ui-peek--select-next-file))
 
 
 (def-package! helm-lsp
