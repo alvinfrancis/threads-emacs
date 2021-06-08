@@ -188,3 +188,5 @@
 (def-project-mode! +javascript-eslintd-fix-mode
   :add-hooks (eslintd-fix-mode))
 
+(def-package! prettier-js
+  :commands (prettier-js))

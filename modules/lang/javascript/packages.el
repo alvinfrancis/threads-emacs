@@ -12,3 +12,4 @@
 (package! web-beautify)
 (package! skewer-mode)
 (package! eslintd-fix)
+(package! prettier-js)

@@ -9,6 +9,9 @@
   :mode "\\.mustache$"
   :mode "\\.tsx$"
   :mode "wp-content/themes/.+/.+\\.php$"
+  :init
+  (setq-default web-mode-markup-indent-offset 2
+                web-mode-code-indent-offset 2)
   :config
   (add-hook 'web-mode-hook #'turn-off-smartparens-mode)
   (set! :company-backend 'web-mode '(company-web-html company-yasnippet))
