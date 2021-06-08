@@ -22,6 +22,7 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
 
   ;; Disable features that have great potential to be slow.
   (setq lsp-enable-folding nil
+        lsp-enable-indentation nil
         lsp-enable-text-document-color nil)
   ;; Reduce unexpected modifications to code
   (setq lsp-enable-on-type-formatting nil)
