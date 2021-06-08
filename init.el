@@ -3,7 +3,6 @@
 (require 'core (concat user-emacs-directory "core/core"))
 
 (doom! :feature
-       ; debugger          ; FIXME stepping through code, to help you add bugs
        eval              ; run code, run (also, repls)
        evil              ; come to the dark side, we have cookies
        ; file-templates    ; auto-snippets for empty files
