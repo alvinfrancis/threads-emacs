@@ -70,7 +70,7 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
 
 
 (def-package! lsp-ui
-  :commands (lsp-ui)
+  :commands (lsp-ui-mode)
   :config
   (setq lsp-ui-doc-max-height 8
         lsp-ui-doc-max-width 35
