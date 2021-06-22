@@ -27,6 +27,7 @@
         org-adapt-indentation nil
         org-imenu-depth 3)
 
+  (require 'org-tempo)
   (add-hook! org-mode
   #'(visual-line-mode           ; line wrapping
 
