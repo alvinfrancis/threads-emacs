@@ -190,3 +190,6 @@
 
 (def-package! prettier-js
   :commands (prettier-js))
+
+(def-package! prettier
+  :commands (prettier-mode))
