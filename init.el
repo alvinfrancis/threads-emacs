@@ -57,6 +57,7 @@
        go                ; the hipster dialect
        ; (java +meghanada) ; the poster child for carpal tunnel syndrome
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
+       typescript
        lisp
        markdown          ; writing docs for people to ignore
        (org              ; organize your plain life in plain text
