@@ -15,7 +15,8 @@
   :config
   (add-hook 'web-mode-hook #'turn-off-smartparens-mode)
   (set! :company-backend 'web-mode '(company-web-html company-yasnippet))
-  (setq web-mode-enable-html-entities-fontification t)
+  (setq web-mode-enable-html-entities-fontification t
+        web-mode-enable-auto-quoting nil)
 
   (map! :map web-mode-map
         (:localleader :n "rt" #'web-mode-element-rename)
