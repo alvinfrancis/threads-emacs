@@ -3,3 +3,5 @@
 
 (package! sbt-mode)
 (package! scala-mode)
+(when (featurep! :tools lsp)
+  (package! lsp-metals))

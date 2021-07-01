@@ -5,3 +5,5 @@
   :config (setq scala-indent:align-parameters t))
 
 (def-package! sbt-mode :after scala-mode)
+
+(def-package! lsp-metals)
