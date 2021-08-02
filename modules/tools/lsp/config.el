@@ -4,7 +4,6 @@
   "The backends to prepend to `company-backends' in `lsp-mode' buffers.
 Can be a list of backends; accepts any value `company-backends' accepts.")
 
-
 (def-package! lsp-mode
   :commands (lsp lsp-deferred lsp-install-server)
   :init
@@ -27,11 +26,14 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
 
   ;; Reduce unexpected modifications to code
   (setq lsp-enable-on-type-formatting nil)
-
-  ;; TODO: move to config bindings
-  (setq lsp-keymap-prefix (concat doom-localleader-key " l"))
+  (setq lsp-keymap-prefix nil)
 
   :config
+  ;; TODO: move to config bindings?
+  (map! :map lsp-mode-map
+        :localleader
+        :nv "l" lsp-command-map)
+
   (setq lsp-intelephense-storage-path (concat doom-cache-dir "lsp-intelephense/")
         lsp-clients-emmy-lua-jar-path (concat lsp-server-install-dir "EmmyLua-LS-all.jar")
         lsp-xml-jar-file              (concat lsp-server-install-dir "org.eclipse.lsp4xml-0.3.0-uber.jar")
