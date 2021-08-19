@@ -106,6 +106,37 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
         "C-j" #'lsp-ui-peek--select-next-file))
 
 
+(def-package! lsp-javascript
+  :after lsp-mode
+  :config
+  ;; NOTE: Overriding tls client configuration here
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection (lambda ()
+                                                            `(,(lsp-package-path 'typescript-language-server)
+                                                              ;; NOTE: The following lines were causing EPIPE errors on startup
+                                                              ;; "--tsserver-path"
+                                                              ;; ,(lsp-package-path 'typescript)
+                                                              ,@lsp-clients-typescript-server-args)))
+                    :activation-fn 'lsp-typescript-javascript-tsx-jsx-activate-p
+                    :priority -2
+                    :completion-in-comments? t
+                    :initialization-options (lambda ()
+                                              (list :plugins lsp-clients-typescript-plugins
+                                                    :logVerbosity lsp-clients-typescript-log-verbosity
+                                                    :tsServerPath (lsp-package-path 'typescript)))
+                    :ignore-messages '("readFile .*? requested by TypeScript but content not available")
+                    :server-id 'ts-ls
+                    :request-handlers (ht ("_typescript.rename" #'lsp-javascript--rename))
+                    :download-server-fn (lambda (_client callback error-callback _update?)
+                                          (lsp-package-ensure
+                                           'typescript
+                                           (-partial #'lsp-package-ensure
+                                                     'typescript-language-server
+                                                     callback
+                                                     error-callback)
+                                           error-callback)))))
+
+
 (def-package! helm-lsp
   :when (featurep! :completion helm)
   :commands helm-lsp-workspace-symbol helm-lsp-global-workspace-symbol)
