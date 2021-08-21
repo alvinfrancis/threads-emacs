@@ -1,9 +1,5 @@
 ;;; tools/lsp/config.el -*- lexical-binding: t; -*-
 
-(defvar +lsp-company-backends 'company-capf
-  "The backends to prepend to `company-backends' in `lsp-mode' buffers.
-Can be a list of backends; accepts any value `company-backends' accepts.")
-
 (def-package! lsp-mode
   :commands (lsp lsp-deferred lsp-install-server)
   :init
@@ -54,15 +50,7 @@ Can be a list of backends; accepts any value `company-backends' accepts.")
       (when-let (path (buffer-file-name (buffer-base-buffer)))
         (if-let (root (lsp--calculate-root (lsp-session) path))
             (lsp--info "Guessed project root is %s" (abbreviate-file-name root))
-          (lsp--info "Could not guess project root.")))))
-
-  (add-hook! 'lsp-completion-mode-hook
-    (defun +lsp-init-company-backends-h ()
-      (when lsp-completion-mode
-        (set (make-local-variable 'company-backends)
-             (cons +lsp-company-backends
-                   (remove +lsp-company-backends
-                           (remq 'company-capf company-backends))))))))
+          (lsp--info "Could not guess project root."))))))
 
 (def-package! lsp-lens
   :commands (lsp-lens-mode))
