@@ -54,7 +54,7 @@
        clojure           ; java with a lisp
        data              ; config/data formats
        emacs-lisp        ; drown in parentheses
-       go                ; the hipster dialect
+       go                ; the hipster dialect TODO: remove/rely on lsp
        ; (java +meghanada) ; the poster child for carpal tunnel syndrome
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
        typescript

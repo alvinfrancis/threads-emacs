@@ -61,27 +61,3 @@
         "t" #'+go/test-menu
         :n "gr" #'go-play-buffer
         :v "gr" #'go-play-region))
-
-
-(def-package! go-eldoc
-  :hook (go-mode . go-eldoc-setup))
-
-
-(def-package! go-guru
-  :commands (go-guru-describe go-guru-freevars go-guru-implements go-guru-peers
-             go-guru-referrers go-guru-definition go-guru-pointsto
-             go-guru-callstack go-guru-whicherrs go-guru-callers go-guru-callees
-             go-guru-expand-region)
-  :config
-  (unless (executable-find "guru")
-    (warn "go-mode: couldn't find guru, refactoring commands won't work")))
-
-
-(def-package! company-go
-  :init (setq command-go-gocode-command "gocode")
-  :when (featurep! :completion company)
-  :after go-mode
-  :config
-  (if (executable-find command-go-gocode-command)
-      (set! :company-backend 'go-mode '(company-go))
-    (warn "go-mode: couldn't find gocode, code completion won't work")))
