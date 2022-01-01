@@ -9,8 +9,6 @@
   (package! git-gutter-fringe)
   (package! git-link)
   (package! git-timemachine)
-  (package! gitconfig-mode)
-  (package! gitignore-mode)
   (package! magit))
 
 ;;; TODO +hg
