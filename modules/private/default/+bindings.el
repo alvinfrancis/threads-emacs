@@ -401,11 +401,10 @@
       :v  "M-D"   #'evil-multiedit-match-and-prev
       :nv "C-M-d" #'evil-multiedit-restore
       (:after evil-multiedit
-        (:map evil-multiedit-state-map
+        (:map evil-multiedit-mode-map
           "M-d" #'evil-multiedit-match-and-next
           "M-D" #'evil-multiedit-match-and-prev
-          "RET" #'evil-multiedit-toggle-or-restrict-region)
-        (:map (evil-multiedit-state-map evil-multiedit-insert-state-map)
+          "RET" #'evil-multiedit-toggle-or-restrict-region
           "C-n" #'evil-multiedit-next
           "C-p" #'evil-multiedit-prev))
 
