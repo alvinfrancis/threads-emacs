@@ -23,7 +23,7 @@
   (setq org-src-fontify-natively t      ; make code pretty
         org-src-preserve-indentation t  ; use native major-mode indentation
         org-src-tab-acts-natively t
-        org-src-window-setup 'current-window
+        org-src-window-setup 'plain
         org-confirm-babel-evaluate nil) ; you don't need my permission
 
   (org-babel-do-load-languages
