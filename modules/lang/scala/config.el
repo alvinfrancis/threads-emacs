@@ -2,7 +2,8 @@
 
 (def-package! scala-mode
   :mode "\\.s\\(cala\\|bt\\)$"
-  :config (setq scala-indent:align-parameters t))
+  :config (setq scala-indent:align-parameters t
+                scala-indent:step 2))
 
 (def-package! sbt-mode :after scala-mode)
 
