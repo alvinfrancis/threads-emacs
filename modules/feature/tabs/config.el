@@ -1,6 +1,7 @@
 ;;; feature/tabs/config.el -*- lexical-binding: t; -*-
 
 (def-package! tab-bar
+  :after doom-modeline
   :init
   (defun +tab-bar/tab-name ()
     (let* ((buffer-name (concat " "

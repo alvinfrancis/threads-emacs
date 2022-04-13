@@ -7,7 +7,6 @@
     haskell
     js
     latex
-    ledger
     lisp
     matlab
     plantuml
