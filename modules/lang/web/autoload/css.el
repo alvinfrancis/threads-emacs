@@ -7,6 +7,20 @@
 ;; TODO (defun +css/sass-build ())
 
 ;;;###autoload
+(defun +css/toggle-px-rem ()
+  "Toggles thing at point between rems and pixels."
+  (interactive)
+  (let ((text (thing-at-point 'sexp))
+        (location (bounds-of-thing-at-point 'sexp)))
+    (cond
+     ((s-ends-with? "rem" text)
+      (delete-region (car location) (cdr location))
+      (insert (format "%dpx" (* 16 (string-to-number text)))))
+     ((s-ends-with? "px" text)
+      (delete-region (car location) (cdr location))
+      (insert (format "%.10frem" (/ (string-to-number text) 16.0)))))))
+
+;;;###autoload
 (defun +css/toggle-inline-or-block ()
   "Toggles between a bracketed block and inline block."
   (interactive)

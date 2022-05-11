@@ -12,7 +12,8 @@
 (map! :map* (css-mode-map scss-mode-map less-css-mode-map)
       :n "M-R" #'+css/web-refresh-browser
       (:localleader
-        :n  "rb" #'+css/toggle-inline-or-block))
+        :n  "rb" #'+css/toggle-inline-or-block
+        :n  "gr" #'+css/toggle-px-rem))
 
 
 ;;
