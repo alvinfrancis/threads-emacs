@@ -86,8 +86,6 @@ they are absolute."
         projectile-require-project-root
         projectile-cached-buffer-file-name
         projectile-cached-project-root)
-    ;; silence unused lexical variable warnin
-    (ignore projectile-cached-buffer-file-name projectile-cached-project-root)
     (call-interactively
      ;; completion modules may remap this command
      (or (command-remapping #'projectile-find-file)

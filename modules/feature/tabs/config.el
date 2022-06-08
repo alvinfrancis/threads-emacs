@@ -45,7 +45,9 @@
        buffer-name)))
 
   (setq tab-bar-close-button-show nil
-        tab-bar-new-button-show nil
+        tab-bar-format '(tab-bar-format-history
+                         tab-bar-format-tabs
+                         tab-bar-separator)
         tab-bar-show 1
         tab-bar-tab-name-function #'+tab-bar/tab-name
         tab-bar-separator ""

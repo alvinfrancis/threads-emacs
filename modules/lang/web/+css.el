@@ -50,6 +50,7 @@
 (def-package! less-css-mode
   :mode "\\.less$")
 
+(def-package! sws-mode)
 
 (def-package! stylus-mode
   :mode "\\.styl$"

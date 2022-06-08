@@ -240,7 +240,8 @@ If TRUNCATE-TAIL is t also truncate the parent directory of the file."
                               'face (if file-faces `(:inherit ,file-faces)))))))))
 
 (defun +doom-modeline--buffer-file-name-relative (&optional include-project)
-  "Propertized `buffer-file-name' showing directories relative to project's root only."
+  "Propertized `buffer-file-name' showing directories relative to project's root
+only."
   (let ((root (doom-project-root))
         (active (active)))
     (if (null root)

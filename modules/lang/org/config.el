@@ -78,7 +78,7 @@ unfold to point on startup."
   "Sets up org-mode and evil keybindings. Tries to fix the idiosyncrasies
 between the two."
   (map! :map org-mode-map
-        "RET" #'org-return-indent
+        "RET" (lambda () (interactive) (org-return t))
         "C-c C-S-l" #'+org/remove-link
         :n "C-c C-i" #'org-toggle-inline-images
 

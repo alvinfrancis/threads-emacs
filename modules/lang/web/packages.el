@@ -19,5 +19,6 @@
 ;; +css.el
 (package! less-css-mode)
 (package! sass-mode)
+(package! sws-mode)
 (package! stylus-mode)
 

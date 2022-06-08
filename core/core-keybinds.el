@@ -166,7 +166,7 @@ Flags
     (:map* [KEYMAP(s)] [...])  same as :map, but deferred
     (:prefix [PREFIX] [...])   assign prefix to all inner keybindings
     (:after [FEATURE] [...])   apply keybinds when [FEATURE] loads
-    (:local [...])             make bindings buffer local; incompatible with keymaps!
+    (:local [...])             buffer local bindings; incompatible with keymaps!
 
 Conditional keybinds
     (:when [CONDITION] [...])
@@ -175,7 +175,8 @@ Conditional keybinds
 Example
     (map! :map magit-mode-map
           :m \"C-r\" 'do-something           ; assign C-r in motion state
-          :nv \"q\" 'magit-mode-quit-window  ; assign to 'q' in normal and visual states
+          :nv \"q\" 'magit-mode-quit-window  ; assign to 'q' in normal and
+                                             ; visual states
           \"C-x C-r\" 'a-global-keybind
 
           (:when IS-MAC

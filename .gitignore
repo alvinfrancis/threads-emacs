@@ -15,6 +15,7 @@ tramp
 smex-items
 network-security.data
 /session*
+/eln-cache/
 
 # compiled files
 *.elc

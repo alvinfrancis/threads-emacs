@@ -5,15 +5,6 @@
   (add-hook 'git-commit-mode-hook #'evil-insert-state))
 
 
-(def-package! gitconfig-mode
-  :mode "/\\.?git/?config$"
-  :mode "/\\.gitmodules$")
-
-
-(def-package! gitignore-mode
-  :mode "/\\.gitignore$")
-
-
 (def-package! git-gutter-fringe
   :commands git-gutter-mode
   :init

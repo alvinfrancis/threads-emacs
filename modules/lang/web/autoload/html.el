@@ -71,8 +71,10 @@ character.")
   text)
 
 (defun +web--entities-region (beg end &optional decode-p)
-  "HTML encode/decode the selected region. Based on Xah's replace HTML named entities
-function @ http://ergoemacs.org/emacs/elisp_replace_html_entities_command.html"
+  "HTML encode/decode the selected region.
+
+Based on Xah's replace HTML named entities function @
+http://ergoemacs.org/emacs/elisp_replace_html_entities_command.html"
   (save-restriction
     (narrow-to-region beg end)
     (seq-doseq (rep +web-entities-list)

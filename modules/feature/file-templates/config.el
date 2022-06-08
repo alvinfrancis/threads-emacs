@@ -50,8 +50,7 @@
 
   (mapc #'+file-templates-add
         ;; General
-        '(("/\\.gitignore$"                  "__"               gitignore-mode)
-          ("/Dockerfile$"                    "__"               dockerfile-mode)
+        '(("/Dockerfile$"                    "__"               dockerfile-mode)
           ("/docker-compose.yml$"            "__"               yaml-mode)
           ;; C/C++
           ("\\.h$"                           "__h"              c-mode)

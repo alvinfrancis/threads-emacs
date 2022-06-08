@@ -144,6 +144,8 @@ fundamental-mode) for performance sake."
 
 ;; Branching undo
 (def-package! undo-tree
+  :init
+  (setq undo-tree-history-directory-alist `(("." . ,(concat doom-cache-dir "undo/"))))
   :config
   (add-hook 'doom-init-hook #'global-undo-tree-mode))
 
