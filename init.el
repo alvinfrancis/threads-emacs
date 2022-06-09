@@ -63,7 +63,6 @@
         +babel           ; running code in org
         )
        plantuml
-       ;; python            ; beautiful is better than ugly
        rest              ; Emacs as a REST client
        scala             ; java, but good
        ;; sh                ; she sells (ba|z)sh shells on the C xor
