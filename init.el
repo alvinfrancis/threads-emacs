@@ -1,3 +1,4 @@
+;; -*- no-byte-compile: t; -*-
 ;;; init.el -*- lexical-binding: t; -*-
 
 (require 'core (concat user-emacs-directory "core/core"))
@@ -38,6 +39,7 @@
        electric-indent   ; smarter, keyword-based electric-indent
        eshell            ; a consistent, cross-platform shell (WIP)
        lsp
+       debugger
        ; gist              ; interacting with github gists
        ; imenu             ; an imenu sidebar and searchable code index
        ; impatient-mode    ; show off code over HTTP
@@ -64,7 +66,7 @@
         +babel           ; running code in org
         )
        plantuml
-       python            ; beautiful is better than ugly
+       ;; python            ; beautiful is better than ugly
        rest              ; Emacs as a REST client
        scala             ; java, but good
        ;; sh                ; she sells (ba|z)sh shells on the C xor
