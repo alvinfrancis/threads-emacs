@@ -52,7 +52,7 @@
   (defun +emacs-lisp|init-flycheck ()
     "Initialize flycheck-mode if not in emacs.d."
     (when (and buffer-file-name
-               (not (file-in-directory-p buffer-file-name doom-emacs-dir)))
+               (not (file-in-directory-p buffer-file-name threads-emacs-dir)))
       (flycheck-mode +1))))
 
 

@@ -94,7 +94,7 @@ clipboard. Helpful when filing bug reports!"
   (interactive)
   (with-temp-buffer
     (message "Producing information about your system...")
-    (call-process (expand-file-name "bin/doom-doctor" doom-emacs-dir) nil t)
+    (call-process (expand-file-name "bin/doom-doctor" threads-emacs-dir) nil t)
     (ansi-color-apply-on-region (point-min) (point-max))
     (kill-new (buffer-string))
     (message "Done. Copied to clipboard!")))

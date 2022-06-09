@@ -71,8 +71,8 @@ interactive session."
 
 ;;;###autoload
 (defmacro debug! (message &rest args)
-  "Out a debug message if `doom-debug-mode' is non-nil. Otherwise, ignore this."
-  (when doom-debug-mode
+  "Out a debug message if `threads-debug-mode' is non-nil. Otherwise, ignore this."
+  (when threads-debug-mode
     `(message ,message ,@args)))
 
 ;;;###autoload

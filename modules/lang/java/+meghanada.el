@@ -4,7 +4,7 @@
 (def-package! meghanada
   :hook (java-mode . meghanada-mode)
   :config
-  (setq meghanada-server-install-dir (concat doom-etc-dir "meghanada-server/")
+  (setq meghanada-server-install-dir (concat threads-etc-dir "meghanada-server/")
         meghanada-use-company (featurep! :completion company)
         meghanada-use-flycheck (featurep! :feature syntax-checker)
         meghanada-use-eldoc t

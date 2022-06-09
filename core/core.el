@@ -2,15 +2,15 @@
 
 ;;; Naming conventions:
 ;;
-;;   doom-...   public variables or non-interactive functions
-;;   doom--...  private anything (non-interactive), not safe for direct use
-;;   doom/...   an interactive function; safe for M-x or keybinding
-;;   doom//...  an interactive function for managing/maintaining Doom itself
-;;   doom:...   an evil operator, motion or command
-;;   doom|...   hook function
-;;   doom*...   advising functions
-;;   doom@...   a hydra command
-;;   ...!       a macro or function that configures DOOM
+;;   threads-...   public variables or non-interactive functions
+;;   threads--...  private anything (non-interactive), not safe for direct use
+;;   threads/...   an interactive function; safe for M-x or keybinding
+;;   threads//...  an interactive function for managing/maintaining Threads itself
+;;   threads:...   an evil operator, motion or command
+;;   threads|...   hook function
+;;   threads*...   advising functions
+;;   threads@...   a hydra command
+;;   ...!       a macro or function that configures Threads
 ;;   =...       an interactive command that starts an app module
 ;;   %...       functions used for in-snippet logic
 ;;   +...       Any of the above but part of a module, e.g. `+emacs-lisp|init-hook'
@@ -18,42 +18,39 @@
 ;; Autoloaded functions are in core/autoload/*.el and modules/*/*/autoload.el or
 ;; modules/*/*/autoload/*.el.
 
-(defvar doom-version "2.0.9"
-  "Current version of DOOM emacs.")
-
-(defvar doom-debug-mode (or (getenv "DEBUG") init-file-debug)
-  "If non-nil, all doom functions will be verbose. Set DEBUG=1 in the command
+(defvar threads-debug-mode (or (getenv "DEBUG") init-file-debug)
+  "If non-nil, all threads functions will be verbose. Set DEBUG=1 in the command
 line or use --debug-init to enable this.")
 
-(defvar doom-emacs-dir (file-truename user-emacs-directory)
+(defvar threads-emacs-dir (file-truename user-emacs-directory)
   "The path to this emacs.d directory.")
 
-(defvar doom-core-dir (concat doom-emacs-dir "core/")
+(defvar threads-core-dir (concat threads-emacs-dir "core/")
   "Where essential files are stored.")
 
-(defvar doom-modules-dir (concat doom-emacs-dir "modules/")
+(defvar threads-modules-dir (concat threads-emacs-dir "modules/")
   "Where configuration modules are stored.")
 
-(defvar doom-local-dir (concat doom-emacs-dir ".local/")
+(defvar threads-local-dir (concat threads-emacs-dir ".local/")
   "Root directory for local Emacs files. Use this as permanent storage for files
 that are safe to share across systems (if this config is symlinked across
 several computers).")
 
-(defvar doom-etc-dir (concat doom-local-dir "etc/")
+(defvar threads-etc-dir (concat threads-local-dir "etc/")
   "Directory for non-volatile storage.
 
 Use this for files that don't change much, like servers binaries, external
 dependencies or long-term shared data.")
 
-(defvar doom-cache-dir (concat doom-local-dir "cache/")
+(defvar threads-cache-dir (concat threads-local-dir "cache/")
   "Directory for volatile storage.
 
 Use this for files that change often, like cache files.")
 
-(defvar doom-packages-dir (concat doom-local-dir "packages/")
+(defvar threads-packages-dir (concat threads-local-dir "packages/")
   "Where package.el and quelpa plugins (and their caches) are stored.")
 
-(defvar doom-autoload-file (concat doom-local-dir "autoloads.el")
+(defvar threads-autoload-file (concat threads-local-dir "autoloads.el")
   "Where `doom//reload-autoloads' will generate its autoloads file.")
 
 (defgroup doom nil
@@ -81,9 +78,9 @@ melodramatic ex-vimmer disappointed with the text-editor status quo."
  compilation-scroll-output t
  confirm-nonexistent-file-or-buffer t
  enable-recursive-minibuffers nil
- debug-on-error (and (not noninteractive) doom-debug-mode)
+ debug-on-error (and (not noninteractive) threads-debug-mode)
  idle-update-delay 2              ; update ui less often
- load-prefer-newer (or noninteractive doom-debug-mode)
+ load-prefer-newer (or noninteractive threads-debug-mode)
  ;; keep the point out of the minibuffer
  minibuffer-prompt-properties '(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)
  ;; History & backup settings (save nothing, that's what git is for)
@@ -92,21 +89,21 @@ melodramatic ex-vimmer disappointed with the text-editor status quo."
  history-length 500
  make-backup-files nil
  ;; files
- abbrev-file-name             (concat doom-local-dir "abbrev.el")
- auto-save-list-file-name     (concat doom-cache-dir "autosave")
- backup-directory-alist       (list (cons "." (concat doom-cache-dir "backup/")))
- pcache-directory             (concat doom-cache-dir "pcache/")
- mc/list-file                 (concat doom-etc-dir "mc-lists.el")
- server-auth-dir              (concat doom-cache-dir "server/")
- shared-game-score-directory  (concat doom-etc-dir "shared-game-score/")
- tramp-auto-save-directory    (concat doom-cache-dir "tramp-auto-save/")
+ abbrev-file-name             (concat threads-local-dir "abbrev.el")
+ auto-save-list-file-name     (concat threads-cache-dir "autosave")
+ backup-directory-alist       (list (cons "." (concat threads-cache-dir "backup/")))
+ pcache-directory             (concat threads-cache-dir "pcache/")
+ mc/list-file                 (concat threads-etc-dir "mc-lists.el")
+ server-auth-dir              (concat threads-cache-dir "server/")
+ shared-game-score-directory  (concat threads-etc-dir "shared-game-score/")
+ tramp-auto-save-directory    (concat threads-cache-dir "tramp-auto-save/")
  tramp-backup-directory-alist backup-directory-alist
- tramp-persistency-file-name  (concat doom-cache-dir "tramp-persistency.el")
- url-cache-directory          (concat doom-cache-dir "url/")
- url-configuration-directory  (concat doom-etc-dir "url/"))
+ tramp-persistency-file-name  (concat threads-cache-dir "tramp-persistency.el")
+ url-cache-directory          (concat threads-cache-dir "url/")
+ url-configuration-directory  (concat threads-etc-dir "url/"))
 
 ;; move custom defs out of init.el
-(setq custom-file (concat doom-etc-dir "custom.el"))
+(setq custom-file (concat threads-etc-dir "custom.el"))
 (load custom-file t t)
 
 ;; be quiet at startup; don't load or display anything unnecessary
@@ -156,7 +153,7 @@ ability to invoke the debugger in debug mode."
           file-name-handler-alist nil))
 
   (require 'cl-lib)
-  (load (concat doom-core-dir "core-packages") nil t)
+  (load (concat threads-core-dir "core-packages") nil t)
   (setq load-path (eval-when-compile (doom-initialize t)
                                      (doom-initialize-load-path t))
         doom--package-load-path (eval-when-compile doom--package-load-path))
@@ -164,9 +161,9 @@ ability to invoke the debugger in debug mode."
   (load! core-lib)
   (load! core-os) ; consistent behavior across OSes
   (condition-case-unless-debug ex
-      (require 'autoloads doom-autoload-file t)
+      (require 'autoloads threads-autoload-file t)
     ('error
-     (lwarn 'doom-autoloads :warning
+     (lwarn 'threads-autoloads :warning
             "%s in autoloads.el -> %s"
             (car ex) (error-message-string ex))))
 

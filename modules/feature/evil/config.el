@@ -280,7 +280,7 @@ across windows."
 (def-package! evil-vimish-fold
   :commands evil-vimish-fold-mode
   :init
-  (setq vimish-fold-dir (concat doom-cache-dir "vimish-fold/")
+  (setq vimish-fold-dir (concat threads-cache-dir "vimish-fold/")
         vimish-fold-indication-mode 'right-fringe)
   (add-hook 'doom-post-init-hook #'evil-vimish-fold-mode t))
 

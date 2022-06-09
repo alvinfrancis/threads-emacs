@@ -15,7 +15,7 @@ modes are active and the buffer is read-only.")
  ;; Save clipboard contents into kill-ring before replacing them
  save-interprogram-paste-before-kill t
  ;; Bookmarks
- bookmark-default-file (concat doom-etc-dir "bookmarks")
+ bookmark-default-file (concat threads-etc-dir "bookmarks")
  bookmark-save-flag t
  ;; Formatting
  delete-trailing-lines nil
@@ -95,18 +95,18 @@ fundamental-mode) for performance sake."
 (electric-indent-mode -1)
 
 ;; savehist / saveplace
-(setq savehist-file (concat doom-cache-dir "savehist")
+(setq savehist-file (concat threads-cache-dir "savehist")
       savehist-save-minibuffer-history t
       savehist-autosave-interval nil ; save on kill only
       savehist-additional-variables '(kill-ring search-ring regexp-search-ring)
-      save-place-file (concat doom-cache-dir "saveplace"))
+      save-place-file (concat threads-cache-dir "saveplace"))
 (add-hook! 'doom-init-hook #'(savehist-mode save-place-mode))
 
 ;; Keep track of recently opened files
 (def-package! recentf
   :hook (doom-init . recentf-mode)
   :config
-  (setq recentf-save-file (concat doom-cache-dir "recentf")
+  (setq recentf-save-file (concat threads-cache-dir "recentf")
         recentf-max-menu-items 0
         recentf-max-saved-items 300
         recentf-filename-handlers '(file-truename)
@@ -114,7 +114,7 @@ fundamental-mode) for performance sake."
         (list "^/tmp/" "^/ssh:" "\\.?ido\\.last$" "\\.revive$" "/TAGS$"
               "^/var/folders/.+$"
               ;; ignore private DOOM temp files (but not all of them)
-              (concat "^" (file-truename doom-local-dir)))))
+              (concat "^" (file-truename threads-local-dir)))))
 
 
 ;;
@@ -145,7 +145,7 @@ fundamental-mode) for performance sake."
 ;; Branching undo
 (def-package! undo-tree
   :init
-  (setq undo-tree-history-directory-alist `(("." . ,(concat doom-cache-dir "undo/"))))
+  (setq undo-tree-history-directory-alist `(("." . ,(concat threads-cache-dir "undo/"))))
   :config
   (add-hook 'doom-init-hook #'global-undo-tree-mode))
 

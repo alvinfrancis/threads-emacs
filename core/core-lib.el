@@ -147,7 +147,7 @@ compilation."
 
 (defmacro quiet! (&rest forms)
   "Run FORMS without making any noise."
-  `(if doom-debug-mode
+  `(if threads-debug-mode
        (progn ,@forms)
      (let ((old-fn (symbol-function 'write-region)))
        (cl-letf* ((standard-output (lambda (&rest _)))
@@ -304,7 +304,7 @@ Do not use this for configuring Doom core."
   (let ((fn (cdr (assq keyword doom-settings))))
     (if fn
         (apply fn values)
-      (when doom-debug-mode
+      (when threads-debug-mode
         (message "No setting found for %s" keyword)
         nil))))
 

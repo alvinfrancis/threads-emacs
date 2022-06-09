@@ -3,9 +3,9 @@
 (def-package! projectile
   :hook (doom-init . projectile-mode)
   :init
-  (setq projectile-cache-file (concat doom-cache-dir "projectile.cache")
+  (setq projectile-cache-file (concat threads-cache-dir "projectile.cache")
         projectile-indexing-method 'alien
-        projectile-known-projects-file (concat doom-cache-dir "projectile.projects")
+        projectile-known-projects-file (concat threads-cache-dir "projectile.projects")
         projectile-require-project-root nil
         projectile-globally-ignored-files '(".DS_Store" "Icon" "TAGS")
         projectile-globally-ignored-file-suffixes '(".elc" ".pyc" ".o"))
@@ -19,7 +19,7 @@
 
   (setq projectile-globally-ignored-directories
         (append projectile-globally-ignored-directories
-                (list (abbreviate-file-name doom-local-dir) ".sync"))
+                (list (abbreviate-file-name threads-local-dir) ".sync"))
         projectile-other-file-alist
         (append projectile-other-file-alist
                 '(("css"  . ("scss" "sass" "less" "styl"))

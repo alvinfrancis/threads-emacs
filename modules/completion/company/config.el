@@ -50,7 +50,7 @@ MODES should be one major-mode symbol or a list of them."
 (def-package! company-statistics
   :after company
   :config
-  (setq company-statistics-file (concat doom-cache-dir "company-stats-cache.el"))
+  (setq company-statistics-file (concat threads-cache-dir "company-stats-cache.el"))
   (quiet! (company-statistics-mode +1)))
 
 

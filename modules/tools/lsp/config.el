@@ -4,8 +4,8 @@
   :commands (lsp lsp-deferred lsp-install-server)
   :init
   ;; Don't touch ~/.emacs.d, which could be purged without warning
-  (setq lsp-session-file (concat doom-etc-dir "lsp-session")
-        lsp-server-install-dir (concat doom-etc-dir "lsp/"))
+  (setq lsp-session-file (concat threads-etc-dir "lsp-session")
+        lsp-server-install-dir (concat threads-etc-dir "lsp/"))
   ;; Don't auto-kill LSP server after last workspace buffer is killed, because I
   ;; will do it for you, after `+lsp-defer-shutdown' seconds.
   (setq lsp-keep-workspace-alive nil)
@@ -30,7 +30,7 @@
         :localleader
         :nv "l" lsp-command-map)
 
-  (setq lsp-intelephense-storage-path (concat doom-cache-dir "lsp-intelephense/")
+  (setq lsp-intelephense-storage-path (concat threads-cache-dir "lsp-intelephense/")
         lsp-clients-emmy-lua-jar-path (concat lsp-server-install-dir "EmmyLua-LS-all.jar")
         lsp-xml-jar-file              (concat lsp-server-install-dir "org.eclipse.lsp4xml-0.3.0-uber.jar")
         lsp-groovy-server-file        (concat lsp-server-install-dir "groovy-language-server-all.jar"))

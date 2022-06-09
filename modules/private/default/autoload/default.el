@@ -32,9 +32,9 @@
 (+default--def-browse-in! templates +file-templates-dir)
 
 ;;;###autoload (autoload '+default/find-in-emacsd "private/default/autoload/default" nil t)
-(+default--def-find-in!   emacsd doom-emacs-dir)
+(+default--def-find-in!   emacsd threads-emacs-dir)
 ;;;###autoload (autoload '+default/browse-emacsd "private/default/autoload/default" nil t)
-(+default--def-browse-in! emacsd doom-emacs-dir)
+(+default--def-browse-in! emacsd threads-emacs-dir)
 
 ;;;###autoload (autoload '+default/find-in-notes "private/default/autoload/default" nil t)
 (+default--def-find-in!   notes +org-dir)

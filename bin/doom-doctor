@@ -8,7 +8,7 @@
 ;; In case it isn't defined (in really old versions of Emacs, like the one that
 ;; ships with MacOS).
 (defvar user-emacs-directory (expand-file-name "~/.emacs.d/"))
-(defvar doom-debug-mode (getenv "DEBUG"))
+(defvar threads-debug-mode (getenv "DEBUG"))
 
 (unless (equal (expand-file-name user-emacs-directory)
                (expand-file-name "~/.emacs.d/"))
@@ -103,7 +103,7 @@
   (msg! "Compiled with:\n%s" (indented 2 (autofill system-configuration-features))))
 (msg! "uname -a:\n%s\n" (indented 2 (autofill (sh "uname -a"))))
 
-(let (doom-core-packages doom-debug-mode)
+(let (doom-core-packages threads-debug-mode)
   (condition-case ex
       (progn
         (let ((inhibit-message t)
@@ -111,7 +111,7 @@
           (load "~/.emacs.d/init.el" nil t))
         (doom-initialize-packages)
         (doom|finalize)
-        (success! "Attempt to load DOOM: success! Loaded v%s" doom-version)
+        (success! "Attempt to load DOOM: success!")
         (when (executable-find "git")
           (msg! "Revision %s\n"
                 (ignore-errors
@@ -234,7 +234,7 @@
                (`timeout (error! "Timed out trying to contact %s" ex))
                (_
                 (error! "Failed to validate %s" url)
-                (when doom-debug-mode
+                (when threads-debug-mode
                   (explain! (pp-to-string it)))))))
          (dolist (url '("https://self-signed.badssl.com"
                         "https://wrong.host.badssl.com/"))
@@ -276,7 +276,7 @@
 
 ;; --- report! ------------------------------------------------
 
-(when doom-debug-mode
+(when threads-debug-mode
   (msg! "\n====\nHave some debug information:\n")
 
   (when (bound-and-true-p doom-modules)
@@ -301,9 +301,9 @@
   (msg! "  + byte-compiled files:\n%s"
         (indented 4
           (columns 2 39
-            (let ((files (append (directory-files-recursively doom-core-dir ".elc$")
-                                 (directory-files-recursively doom-modules-dir ".elc$"))))
-              (or (and files (mapcar (lambda (file) (file-relative-name file doom-emacs-dir))
+            (let ((files (append (directory-files-recursively threads-core-dir ".elc$")
+                                 (directory-files-recursively threads-modules-dir ".elc$"))))
+              (or (and files (mapcar (lambda (file) (file-relative-name file threads-emacs-dir))
                                      (nreverse files)))
                   (list "n/a"))))))
 
@@ -320,7 +320,7 @@
     (success! "Everything seems fine, happy Emacs'ing!")
   (message "\n----")
   (warn! "There were issues!")
-  (unless doom-debug-mode
+  (unless threads-debug-mode
     (msg! "\nHopefully these can help you find problems. If not, run this doctor again with DEBUG=1:")
     (msg! "\n  DEBUG=1 make doctor\n")
     (msg! "And file a bug report with its output at https://github.com/hlissner/.emacs.d/issues")))

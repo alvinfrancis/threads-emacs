@@ -18,7 +18,7 @@ If neither is available, run all tests in all enabled modules."
         (cond ((and argv (equal (car argv) "--"))
                (cl-loop for arg in (cdr argv)
                         if (equal arg "core")
-                         do (push (expand-file-name "test/" doom-core-dir) targets)
+                         do (push (expand-file-name "test/" threads-core-dir) targets)
                         else
                          collect
                          (cl-destructuring-bind (car &optional cdr) (split-string arg "/" t)
@@ -41,7 +41,7 @@ If neither is available, run all tests in all enabled modules."
                      doom-modules)
                  (load (expand-file-name "init.test.el" user-emacs-directory) nil t)
                  (setq modules (doom-module-pairs)
-                       targets (list (expand-file-name "test/" doom-core-dir))))))
+                       targets (list (expand-file-name "test/" threads-core-dir))))))
         ;; resolve targets to a list of test files and load them
         (cl-loop with targets =
                  (append targets
@@ -51,7 +51,7 @@ If neither is available, run all tests in all enabled modules."
                                   else
                                   nconc
                                   (cl-loop with module-name = (substring (symbol-name module) 1)
-                                           with module-path = (expand-file-name module-name doom-modules-dir)
+                                           with module-path = (expand-file-name module-name threads-modules-dir)
                                            for path in (directory-files module-path t "^\\w")
                                            collect (expand-file-name "test/" path))))
                  for dir in targets
@@ -89,7 +89,7 @@ If neither is available, run all tests in all enabled modules."
       (setq body `(,@body @after)))
     `(ert-deftest
          ,(cl-loop with path = (file-relative-name (file-name-sans-extension load-file-name)
-                                                   doom-emacs-dir)
+                                                   threads-emacs-dir)
                    for (rep . with) in '(("/test/" . "/") ("/" . ":"))
                    do (setq path (replace-regexp-in-string rep with path t t))
                    finally return (intern (format "%s::%s" path name)))

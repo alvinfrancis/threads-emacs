@@ -58,7 +58,7 @@ list of the package."
               ('quelpa
                (let ((recipe (plist-get (cdr (assq name doom-packages)) :recipe))
                      (dir (expand-file-name (symbol-name name) quelpa-build-dir))
-                     (inhibit-message (not doom-debug-mode))
+                     (inhibit-message (not threads-debug-mode))
                      (quelpa-upgrade-p t))
                  (if-let* ((ver (quelpa-checkout recipe dir)))
                      (version-to-list ver)
@@ -154,7 +154,7 @@ Used by `doom//packages-update'."
                `(lambda ()
                   (setq user-emacs-directory ,user-emacs-directory)
                   (let ((noninteractive t))
-                    (load ,(expand-file-name "core.el" doom-core-dir)))
+                    (load ,(expand-file-name "core.el" threads-core-dir)))
                   (doom-package-outdated-p ',pkg)))
               futures))
       (delq nil
@@ -257,7 +257,7 @@ example; the package name can be omitted)."
     (when (doom-package-different-backend-p name)
       (doom-delete-package name t))
     (user-error "%s is already installed" name))
-  (let* ((inhibit-message (not doom-debug-mode))
+  (let* ((inhibit-message (not threads-debug-mode))
          (plist (or plist (cdr (assq name doom-packages))))
          (recipe (plist-get plist :recipe))
          quelpa-upgrade-p)
@@ -276,7 +276,7 @@ package.el as appropriate."
   (when (doom-package-different-backend-p name)
     (user-error "%s's backend has changed and must be uninstalled first" name))
   (when (or force-p (doom-package-outdated-p name))
-    (let ((inhibit-message (not doom-debug-mode))
+    (let ((inhibit-message (not threads-debug-mode))
           (desc (cadr (assq name package-alist))))
       (pcase (doom-package-backend name)
         ('quelpa
@@ -301,7 +301,7 @@ package.el as appropriate."
   "Uninstalls package NAME if it exists, and clears it from `quelpa-cache'."
   (unless (package-installed-p name)
     (user-error "%s isn't installed" name))
-  (let ((inhibit-message (not doom-debug-mode))
+  (let ((inhibit-message (not threads-debug-mode))
         quelpa-p)
     (unless (quelpa-setup-p)
       (error "Could not initialize QUELPA"))
@@ -351,7 +351,7 @@ package.el as appropriate."
            (message! (yellow "Aborted!")))
 
           (t
-           (doom-refresh-packages doom-debug-mode)
+           (doom-refresh-packages threads-debug-mode)
            (dolist (pkg packages)
              (message! "Installing %s" (car pkg))
              (doom--condition-case!
@@ -374,7 +374,7 @@ package.el as appropriate."
 (defun doom//packages-update ()
   "Interactive command for updating packages."
   (interactive)
-  (doom-refresh-packages doom-debug-mode)
+  (doom-refresh-packages threads-debug-mode)
   (message! "Looking for outdated packages...")
   (let ((packages (sort (doom-get-outdated-packages) #'doom--sort-alpha)))
     (cond ((not packages)

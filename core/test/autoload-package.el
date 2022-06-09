@@ -5,16 +5,16 @@
   (package-desc-create :name name :version version :reqs reqs))
 
 (defmacro with-packages!! (packages package-descs &rest body)
-`(let* ((doom-packages-dir ,(expand-file-name "packages/" (file-name-directory load-file-name)))
-        (package-user-dir ,(expand-file-name "elpa" doom-packages-dir))
-        (quelpa-dir ,(expand-file-name "quelpa" doom-packages-dir)))
-   ;; (make-directory doom-packages-dir t)
+`(let* ((threads-packages-dir ,(expand-file-name "packages/" (file-name-directory load-file-name)))
+        (package-user-dir ,(expand-file-name "elpa" threads-packages-dir))
+        (quelpa-dir ,(expand-file-name "quelpa" threads-packages-dir)))
+   ;; (make-directory threads-packages-dir t)
    (let ((doom-packages ,packages)
          (package-alist ,package-descs)
          doom-core-packages)
      (cl-letf (((symbol-function 'doom-initialize-packages) (lambda (&rest _))))
        ,@body))
-   ;; (delete-directory doom-packages-dir t)
+   ;; (delete-directory threads-packages-dir t)
    ))
 
 

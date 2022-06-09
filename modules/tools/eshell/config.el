@@ -10,7 +10,7 @@
 (def-package! eshell ; built-in
   :commands eshell-mode
   :init
-  (setq eshell-directory-name (concat doom-etc-dir "/eshell")
+  (setq eshell-directory-name (concat threads-etc-dir "/eshell")
         eshell-scroll-to-bottom-on-input 'all
         eshell-scroll-to-bottom-on-output 'all
         eshell-buffer-shorthand t
@@ -22,7 +22,7 @@
         eshell-glob-case-insensitive t
         eshell-error-if-no-glob t
         ;; em-alias
-        eshell-aliases-file (concat doom-local-dir ".eshell-aliases"))
+        eshell-aliases-file (concat threads-local-dir ".eshell-aliases"))
 
   :config
   (set! :evil-state 'eshell-mode 'insert)

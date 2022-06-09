@@ -7,7 +7,7 @@
       global-auto-revert-non-file-buffers t
       auto-revert-verbose nil
       ;; files
-      image-dired-dir (concat doom-cache-dir "image-dired/")
+      image-dired-dir (concat threads-cache-dir "image-dired/")
       image-dired-db-file (concat image-dired-dir "image-dired/db.el")
       image-dired-gallery-dir (concat image-dired-dir "gallery/")
       image-dired-temp-image-file (concat image-dired-dir "temp-image")

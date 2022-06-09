@@ -1,6 +1,6 @@
 ;;; core/autoload/scratch.el -*- lexical-binding: t; -*-
 
-(defvar doom-scratch-files-dir (concat doom-etc-dir "scratch/")
+(defvar doom-scratch-files-dir (concat threads-etc-dir "scratch/")
   "Where to store project scratch files, created by
 `doom/open-project-scratch-buffer'.")
 
