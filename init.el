@@ -6,7 +6,6 @@
 (doom! :feature
        eval              ; run code, run (also, repls)
        evil              ; come to the dark side, we have cookies
-       ; file-templates    ; auto-snippets for empty files
        ; services          ; TODO managing external services & code builders
        ; snippets          ; my elves. They type so I don't have to
        ; spellcheck        ; tasing you for misspelling mispelling
