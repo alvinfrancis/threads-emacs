@@ -10,7 +10,6 @@
        ; spellcheck        ; tasing you for misspelling mispelling
        syntax-checker    ; tasing you for every semicolon you forget
        version-control   ; remember, remember that commit in November
-       ; workspaces        ; tab emulation, persistence & separate workspaces
        tabs
 
        :completion
