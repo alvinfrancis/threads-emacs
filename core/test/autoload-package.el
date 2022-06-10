@@ -2,7 +2,7 @@
 ;;; core/test/autoload-package.el
 
 (defun -pkg (name version &optional reqs)
-  (package-desc-create :name name :version version :reqs reqs))
+  (package-desc-create :name name :version version :reqs reqs :dir (expand-file-name (symbol-name name) package-user-dir)))
 
 (defmacro with-packages!! (packages package-descs &rest body)
 `(let* ((threads-packages-dir ,(expand-file-name "packages/" (file-name-directory load-file-name)))
