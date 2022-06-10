@@ -67,7 +67,7 @@
 If STRICT-P, return nil if no project was found, otherwise return
 `default-directory'."
   (let (projectile-require-project-root)
-    (projectile-project-root)))
+    (projectile-acquire-root)))
 
 (defalias 'doom-project-expand #'projectile-expand-root)
 
