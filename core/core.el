@@ -51,7 +51,7 @@ Use this for files that change often, like cache files.")
   "Where package.el and quelpa plugins (and their caches) are stored.")
 
 (defvar threads-autoload-file (concat threads-local-dir "autoloads.el")
-  "Where `doom//reload-autoloads' will generate its autoloads file.")
+  "Where `threads//reload-autoloads' will generate its autoloads file.")
 
 (defgroup threads nil
           ""
@@ -153,9 +153,9 @@ ability to invoke the debugger in debug mode."
 
   (require 'cl-lib)
   (load (concat threads-core-dir "core-packages") nil t)
-  (setq load-path (eval-when-compile (doom-initialize t)
-                                     (doom-initialize-load-path t))
-        doom--package-load-path (eval-when-compile doom--package-load-path))
+  (setq load-path (eval-when-compile (threads-initialize t)
+                                     (threads-initialize-load-path t))
+        threads--package-load-path (eval-when-compile threads--package-load-path))
 
   (load! core-lib)
   (load! core-os) ; consistent behavior across OSes
@@ -186,7 +186,7 @@ ability to invoke the debugger in debug mode."
           file-name-handler-alist threads--file-name-handler-alist)
     t)
 
-  (add-hook! '(emacs-startup-hook doom-reload-hook)
+  (add-hook! '(emacs-startup-hook threads-reload-hook)
     #'threads|finalize))
 
 

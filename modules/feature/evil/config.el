@@ -5,7 +5,7 @@
 
 (def-setting! :evil-state (modes state)
   "Set the initialize STATE of MODE using `evil-set-initial-state'."
-  (let ((unquoted-modes (doom-unquote modes)))
+  (let ((unquoted-modes (threads-unquote modes)))
     (if (listp unquoted-modes)
         `(progn
            ,@(cl-loop for mode in unquoted-modes

@@ -22,9 +22,9 @@
   "Declare :words (list of strings) or :chars (lists of chars) in MODES that
 trigger electric indentation."
   (declare (indent 1))
-  (let ((modes (doom-enlist (doom-unquote modes)))
-        (chars (doom-unquote (plist-get plist :chars)))
-        (words (doom-unquote (plist-get plist :words))))
+  (let ((modes (threads-enlist (threads-unquote modes)))
+        (chars (threads-unquote (plist-get plist :chars)))
+        (words (threads-unquote (plist-get plist :words))))
     (when (or chars words)
       (let ((fn-name (intern (format "doom--init-electric-%s" (mapconcat #'symbol-name modes "-")))))
         `(progn

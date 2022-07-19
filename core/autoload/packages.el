@@ -3,33 +3,33 @@
 (require 'use-package)
 (require 'quelpa)
 
-(defvar doom--last-refresh nil)
+(defvar threads--last-refresh nil)
 
 ;;;###autoload
-(defun doom-refresh-packages (&optional force-p)
+(defun threads-refresh-packages (&optional force-p)
   "Refresh ELPA packages."
   (when force-p
-    (doom-refresh-clear-cache))
+    (threads-refresh-clear-cache))
   (unless (or (persistent-soft-fetch 'last-pkg-refresh "emacs")
-              doom--refreshed-p)
+              threads--refreshed-p)
     (condition-case-unless-debug ex
         (progn
           (message "Refreshing package archives")
           (package-refresh-contents)
           (persistent-soft-store 'last-pkg-refresh t "emacs" 900))
-    ('error
-     (doom-refresh-clear-cache)
-     (message "Failed to refresh packages: (%s) %s"
-              (car ex) (error-message-string ex))))))
+      ('error
+       (threads-refresh-clear-cache)
+       (message "Failed to refresh packages: (%s) %s"
+                (car ex) (error-message-string ex))))))
 
 ;;;###autoload
-(defun doom-refresh-clear-cache ()
-  "Clear the cache for `doom-refresh-packages'."
-  (setq doom--refreshed-p nil)
+(defun threads-refresh-clear-cache ()
+  "Clear the cache for `threads-refresh-packages'."
+  (setq threads--refreshed-p nil)
   (persistent-soft-store 'last-pkg-refresh nil "emacs"))
 
 ;;;###autoload
-(defun doom-package-backend (name &optional noerror)
+(defun threads-package-backend (name &optional noerror)
   "Get which backend the package NAME was installed with. Can either be elpa or
 quelpa. Throws an error if NOERROR is nil and the package isn't installed."
   (cl-assert (symbolp name) t)
@@ -45,18 +45,18 @@ quelpa. Throws an error if NOERROR is nil and the package isn't installed."
          (error "%s package is not installed" name))))
 
 ;;;###autoload
-(defun doom-package-outdated-p (name)
+(defun threads-package-outdated-p (name)
   "Determine whether NAME (a symbol) is outdated or not. If outdated, returns a
 list, whose car is NAME, and cdr the current version list and latest version
 list of the package."
   (cl-assert (symbolp name) t)
-  (doom-initialize-packages)
+  (threads-initialize-packages)
   (when-let* ((desc (cadr (assq name package-alist))))
     (let* ((old-version (package-desc-version desc))
            (new-version
-            (pcase (doom-package-backend name)
+            (pcase (threads-package-backend name)
               ('quelpa
-               (let ((recipe (plist-get (cdr (assq name doom-packages)) :recipe))
+               (let ((recipe (plist-get (cdr (assq name threads-packages)) :recipe))
                      (dir (expand-file-name (symbol-name name) quelpa-build-dir))
                      (inhibit-message (not threads-debug-mode))
                      (quelpa-upgrade-p t))
@@ -72,27 +72,27 @@ list of the package."
         (list name old-version new-version)))))
 
 ;;;###autoload
-(defun doom-package-prop (name prop)
+(defun threads-package-prop (name prop)
   "Return PROPerty in NAME's plist."
   (cl-assert (symbolp name) t)
   (cl-assert (keywordp prop) t)
-  (doom-initialize-packages)
-  (plist-get (cdr (assq name doom-packages)) prop))
+  (threads-initialize-packages)
+  (plist-get (cdr (assq name threads-packages)) prop))
 
 ;;;###autoload
-(defun doom-package-different-backend-p (name)
+(defun threads-package-different-backend-p (name)
   "Return t if NAME (a package's symbol) has a new backend than what it was
 installed with. Returns nil otherwise, or if package isn't installed."
   (cl-assert (symbolp name) t)
-  (doom-initialize-packages)
+  (threads-initialize-packages)
   (and (package-installed-p name)
-       (let* ((plist (cdr (assq name doom-packages)))
-              (old-backend (doom-package-backend name 'noerror))
+       (let* ((plist (cdr (assq name threads-packages)))
+              (old-backend (threads-package-backend name 'noerror))
               (new-backend (if (plist-get plist :recipe) 'quelpa 'elpa)))
          (not (eq old-backend new-backend)))))
 
 ;;;###autoload
-(defun doom-get-packages (&optional installed-only-p)
+(defun threads-get-packages (&optional installed-only-p)
   "Retrieves a list of explicitly installed packages (i.e. non-dependencies).
 Each element is a cons cell, whose car is the package symbol and whose cdr is
 the quelpa recipe (if any).
@@ -100,49 +100,49 @@ the quelpa recipe (if any).
 BACKEND can be 'quelpa or 'elpa, and will instruct this function to return only
 the packages relevant to that backend.
 
-Warning: this function is expensive; it re-evaluates all of doom's config files.
+Warning: this function is expensive; it re-evaluates all of Threads' config files.
 Be careful not to use it in a loop.
 
 If INSTALLED-ONLY-P, only return packages that are installed."
-  (doom-initialize-packages t)
-  (cl-loop with packages = (append doom-core-packages (mapcar #'car doom-packages))
+  (threads-initialize-packages t)
+  (cl-loop with packages = (append threads-core-packages (mapcar #'car threads-packages))
            for sym in (cl-delete-duplicates packages)
            if (and (or (not installed-only-p)
                        (package-installed-p sym))
-                   (or (assq sym doom-packages)
+                   (or (assq sym threads-packages)
                        (and (assq sym package-alist)
                             (list sym))))
            collect it))
 
 ;;;###autoload
-(defun doom-get-depending-on (name)
+(defun threads-get-depending-on (name)
   "Return a list of packages that depend on the package named NAME."
   (when-let* ((desc (cadr (assq name package-alist))))
     (mapcar #'package-desc-name (package--used-elsewhere-p desc nil t))))
 
 ;;;###autoload
-(defun doom-get-dependencies-for (name)
+(defun threads-get-dependencies-for (name)
   "Return a list of dependencies for a package."
   (package--get-deps (list name)))
 
 ;;;###autoload
-(defun doom-get-outdated-packages (&optional include-frozen-p)
+(defun threads-get-outdated-packages (&optional include-frozen-p)
   "Return a list of packages that are out of date. Each element is a list,
 containing (PACKAGE-SYMBOL OLD-VERSION-LIST NEW-VERSION-LIST).
 
 If INCLUDE-FROZEN-P is non-nil, check frozen packages as well.
 
-Used by `doom//packages-update'."
+Used by `threads//packages-update'."
   (let (quelpa-pkgs elpa-pkgs)
     ;; Separate quelpa from elpa packages
-    (dolist (pkg (doom-get-packages t))
+    (dolist (pkg (threads-get-packages t))
       (let ((sym (car pkg)))
-        (when (and (or (not (doom-package-prop sym :freeze))
+        (when (and (or (not (threads-package-prop sym :freeze))
                        include-frozen-p)
-                   (not (doom-package-prop sym :ignore))
-                   (not (doom-package-different-backend-p sym)))
+                   (not (threads-package-prop sym :ignore))
+                   (not (threads-package-different-backend-p sym)))
           (push sym
-                (if (eq (doom-package-backend sym) 'quelpa)
+                (if (eq (threads-package-backend sym) 'quelpa)
                     quelpa-pkgs
                   elpa-pkgs)))))
     ;; The bottleneck in this process is quelpa's version checks, so check them
@@ -155,29 +155,29 @@ Used by `doom//packages-update'."
                   (setq user-emacs-directory ,user-emacs-directory)
                   (let ((noninteractive t))
                     (load ,(expand-file-name "core.el" threads-core-dir)))
-                  (doom-package-outdated-p ',pkg)))
+                  (threads-package-outdated-p ',pkg)))
               futures))
       (delq nil
-            (append (mapcar #'doom-package-outdated-p elpa-pkgs)
+            (append (mapcar #'threads-package-outdated-p elpa-pkgs)
                     (mapcar #'async-get (reverse futures)))))))
 
 ;;;###autoload
-(defun doom-get-orphaned-packages ()
+(defun threads-get-orphaned-packages ()
   "Return a list of symbols representing packages that are no longer needed or
 depended on.
 
-Used by `doom//packages-autoremove'."
-  (doom-initialize-packages t)
+Used by `threads//packages-autoremove'."
+  (threads-initialize-packages t)
   (let ((package-selected-packages
-         (append (mapcar #'car doom-packages) doom-core-packages)))
+         (append (mapcar #'car threads-packages) threads-core-packages)))
     (append (package--removable-packages)
             (cl-loop for pkg in package-selected-packages
-                     if (and (doom-package-different-backend-p pkg)
+                     if (and (threads-package-different-backend-p pkg)
                              (not (package-built-in-p pkg)))
                      collect pkg))))
 
 ;;;###autoload
-(defun doom-get-missing-packages (&optional include-ignored-p)
+(defun threads-get-missing-packages (&optional include-ignored-p)
   "Return a list of requested packages that aren't installed or built-in, but
 are enabled (with a `package!' directive). Each element is a list whose CAR is
 the package symbol, and whose CDR is a plist taken from that package's
@@ -186,19 +186,19 @@ the package symbol, and whose CDR is a plist taken from that package's
 If INCLUDE-IGNORED-P is non-nil, includes missing packages that are ignored,
 i.e. they have an :ignore property.
 
-Used by `doom//packages-install'."
-  (cl-loop for desc in (doom-get-packages)
+Used by `threads//packages-install'."
+  (cl-loop for desc in (threads-get-packages)
            for (name . plist) = desc
            if (and (or include-ignored-p
                        (not (plist-get plist :ignore)))
                    (or (plist-get plist :pin)
                        (not (assq name package--builtins)))
                    (or (not (assq name package-alist))
-                       (doom-package-different-backend-p name)))
+                       (threads-package-different-backend-p name)))
            collect desc))
 
 ;;;###autoload
-(defun doom*package-delete (desc &rest _)
+(defun threads*package-delete (desc &rest _)
   "Update `quelpa-cache' upon a successful `package-delete'."
   (let ((name (package-desc-name desc)))
     (when (and (not (package-installed-p name))
@@ -211,11 +211,11 @@ Used by `doom//packages-install'."
           (delete-directory path t))))))
 
 ;;; Private functions
-(defsubst doom--sort-alpha (it other)
+(defsubst threads--sort-alpha (it other)
   (string-lessp (symbol-name (car it))
                 (symbol-name (car other))))
 
-(defun doom--packages-choose (prompt)
+(defun threads--packages-choose (prompt)
   (let ((table (cl-loop for pkg in package-alist
                         unless (package-built-in-p (cdr pkg))
                         collect (cons (package-desc-full-name (cdr pkg))
@@ -225,21 +225,21 @@ Used by `doom//packages-install'."
                                  nil t)
                 table))))
 
-(defmacro doom--condition-case! (&rest body)
+(defmacro threads--condition-case! (&rest body)
   `(condition-case-unless-debug ex
        (condition-case ex2
            (progn ,@body)
          ('file-error
           (message! (bold (red "  FILE ERROR: %s" (error-message-string ex2))))
           (message! "  Trying again...")
-          (quiet! (doom-refresh-packages t))
+          (quiet! (threads-refresh-packages t))
           ,@body))
      ('user-error
       (message! (bold (red "  ERROR: (%s) %s"
                            (car ex)
                            (error-message-string ex)))))
      ('error
-      (doom-refresh-clear-cache)
+      (threads-refresh-clear-cache)
       (message! (bold (red "  FATAL ERROR: (%s) %s"
                            (car ex)
                            (error-message-string ex)))))))
@@ -249,36 +249,36 @@ Used by `doom//packages-install'."
 ;; Main functions
 ;;
 
-(defun doom-install-package (name &optional plist)
+(defun threads-install-package (name &optional plist)
   "Installs package NAME with optional quelpa RECIPE (see `quelpa-recipe' for an
 example; the package name can be omitted)."
-  (doom-initialize-packages)
+  (threads-initialize-packages)
   (when (package-installed-p name)
-    (when (doom-package-different-backend-p name)
-      (doom-delete-package name t))
+    (when (threads-package-different-backend-p name)
+      (threads-delete-package name t))
     (user-error "%s is already installed" name))
   (let* ((inhibit-message (not threads-debug-mode))
-         (plist (or plist (cdr (assq name doom-packages))))
+         (plist (or plist (cdr (assq name threads-packages))))
          (recipe (plist-get plist :recipe))
          quelpa-upgrade-p)
     (if recipe
         (quelpa recipe)
       (package-install name))
     (when (package-installed-p name)
-      (cl-pushnew (cons name plist) doom-packages :test #'eq :key #'car)
+      (cl-pushnew (cons name plist) threads-packages :test #'eq :key #'car)
       t)))
 
-(defun doom-update-package (name &optional force-p)
+(defun threads-update-package (name &optional force-p)
   "Updates package NAME (a symbol) if it is out of date, using quelpa or
 package.el as appropriate."
   (unless (package-installed-p name)
     (user-error "%s isn't installed" name))
-  (when (doom-package-different-backend-p name)
+  (when (threads-package-different-backend-p name)
     (user-error "%s's backend has changed and must be uninstalled first" name))
-  (when (or force-p (doom-package-outdated-p name))
+  (when (or force-p (threads-package-outdated-p name))
     (let ((inhibit-message (not threads-debug-mode))
           (desc (cadr (assq name package-alist))))
-      (pcase (doom-package-backend name)
+      (pcase (threads-package-backend name)
         ('quelpa
          (or (quelpa-setup-p)
              (error "Failed to initialize quelpa"))
@@ -291,13 +291,13 @@ package.el as appropriate."
                      (package-compute-transaction (list archive) (package-desc-reqs archive))
                    (package-compute-transaction () (list (list archive))))))
            (package-download-transaction packages))))
-      (unless (doom-package-outdated-p name)
+      (unless (threads-package-outdated-p name)
         (when-let* ((old-dir (package-desc-dir desc)))
           (when (file-directory-p old-dir)
             (delete-directory old-dir t)))
         t))))
 
-(defun doom-delete-package (name &optional force-p)
+(defun threads-delete-package (name &optional force-p)
   "Uninstalls package NAME if it exists, and clears it from `quelpa-cache'."
   (unless (package-installed-p name)
     (user-error "%s isn't installed" name))
@@ -322,11 +322,11 @@ package.el as appropriate."
 ;;
 
 ;;;###autoload
-(defun doom//packages-install ()
+(defun threads//packages-install ()
   "Interactive command for installing missing packages."
   (interactive)
   (message! "Looking for packages to install...")
-  (let ((packages (doom-get-missing-packages)))
+  (let ((packages (threads-get-missing-packages)))
     (cond ((not packages)
            (message! (green "No packages to install!")))
 
@@ -338,7 +338,7 @@ package.el as appropriate."
                               (lambda (pkg)
                                 (format "+ %s (%s)"
                                         (car pkg)
-                                        (cond ((doom-package-different-backend-p (car pkg))
+                                        (cond ((threads-package-different-backend-p (car pkg))
                                                (if (plist-get (cdr pkg) :recipe)
                                                    "ELPA -> QUELPA"
                                                  "QUELPA -> ELPA"))
@@ -346,20 +346,20 @@ package.el as appropriate."
                                                "QUELPA")
                                               (t
                                                "ELPA"))))
-                              (sort (cl-copy-list packages) #'doom--sort-alpha)
+                              (sort (cl-copy-list packages) #'threads--sort-alpha)
                               "\n")))))
            (message! (yellow "Aborted!")))
 
           (t
-           (doom-refresh-packages threads-debug-mode)
+           (threads-refresh-packages threads-debug-mode)
            (dolist (pkg packages)
              (message! "Installing %s" (car pkg))
-             (doom--condition-case!
+             (threads--condition-case!
               (message! "%s%s"
                         (cond ((and (package-installed-p (car pkg))
-                                    (not (doom-package-different-backend-p (car pkg))))
+                                    (not (threads-package-different-backend-p (car pkg))))
                                (dark (white "⚠ ALREADY INSTALLED")))
-                              ((doom-install-package (car pkg) (cdr pkg))
+                              ((threads-install-package (car pkg) (cdr pkg))
                                (green "✓ DONE"))
                               (t
                                (red "✕ FAILED")))
@@ -368,15 +368,15 @@ package.el as appropriate."
                           ""))))
 
            (message! (bold (green "Finished!")))
-           (doom//reload-load-path)))))
+           (threads//reload-load-path)))))
 
 ;;;###autoload
-(defun doom//packages-update ()
+(defun threads//packages-update ()
   "Interactive command for updating packages."
   (interactive)
-  (doom-refresh-packages threads-debug-mode)
+  (threads-refresh-packages threads-debug-mode)
   (message! "Looking for outdated packages...")
-  (let ((packages (sort (doom-get-outdated-packages) #'doom--sort-alpha)))
+  (let ((packages (sort (threads-get-outdated-packages) #'threads--sort-alpha)))
     (cond ((not packages)
            (message! (green "Everything is up-to-date")))
 
@@ -401,21 +401,21 @@ package.el as appropriate."
           (t
            (dolist (pkg packages)
              (message! "Updating %s" (car pkg))
-             (doom--condition-case!
+             (threads--condition-case!
               (message!
-               (let ((result (doom-update-package (car pkg) t)))
+               (let ((result (threads-update-package (car pkg) t)))
                  (color (if result 'green 'red)
                         (if result "✓ DONE" "✕ FAILED"))))))
 
            (message! (bold (green "Finished!")))
-           (doom//reload-load-path)))))
+           (threads//reload-load-path)))))
 
 ;;;###autoload
-(defun doom//packages-autoremove ()
+(defun threads//packages-autoremove ()
   "Interactive command for auto-removing orphaned packages."
   (interactive)
   (message! "Looking for orphaned packages...")
-  (let ((packages (doom-get-orphaned-packages)))
+  (let ((packages (threads-get-orphaned-packages)))
     (cond ((not packages)
            (message! (green "No unused packages to remove")))
 
@@ -428,8 +428,8 @@ package.el as appropriate."
                   (mapconcat
                    (lambda (sym)
                      (format "+ %s (%s)" sym
-                             (let ((backend (doom-package-backend sym)))
-                               (if (doom-package-different-backend-p sym)
+                             (let ((backend (threads-package-backend sym)))
+                               (if (threads-package-different-backend-p sym)
                                    (if (eq backend 'quelpa)
                                        "QUELPA->ELPA"
                                      "ELPA->QUELPA")
@@ -440,16 +440,16 @@ package.el as appropriate."
 
           (t
            (dolist (pkg packages)
-             (doom--condition-case!
+             (threads--condition-case!
               (message!
-               (let ((result (doom-delete-package pkg t)))
+               (let ((result (threads-delete-package pkg t)))
                  (color (if result 'green 'red)
                         "%s %s"
                         (if result "✓ Removed" "✕ Failed to remove")
                         pkg)))))
 
            (message! (bold (green "Finished!")))
-           (doom//reload-load-path)))))
+           (threads//reload-load-path)))))
 
 
 ;;
@@ -457,31 +457,31 @@ package.el as appropriate."
 ;;
 
 ;;;###autoload
-(defalias 'doom/install-package #'package-install)
+(defalias 'threads/install-package #'package-install)
 
 ;;;###autoload
-(defun doom/reinstall-package (desc)
+(defun threads/reinstall-package (desc)
   "Reinstalls package package with optional quelpa RECIPE (see `quelpa-recipe' for
 an example; the package package can be omitted)."
   (declare (interactive-only t))
   (interactive
-   (list (doom--packages-choose "Reinstall package: ")))
+   (list (threads--packages-choose "Reinstall package: ")))
   (let ((package (package-desc-name desc)))
-    (doom-delete-package package t)
-    (doom-install-package package (cdr (assq package doom-packages)))))
+    (threads-delete-package package t)
+    (threads-install-package package (cdr (assq package threads-packages)))))
 
 ;;;###autoload
-(defun doom/delete-package (desc)
+(defun threads/delete-package (desc)
   "Prompts the user with a list of packages and deletes the selected package.
-Use this interactively. Use `doom-delete-package' for direct calls."
+Use this interactively. Use `threads-delete-package' for direct calls."
   (declare (interactive-only t))
   (interactive
-   (list (doom--packages-choose "Delete package: ")))
+   (list (threads--packages-choose "Delete package: ")))
   (let ((package (package-desc-name desc)))
     (if (package-installed-p package)
         (if (y-or-n-p (format "%s will be deleted. Confirm?" package))
             (message "%s %s"
-                     (if (doom-delete-package package t)
+                     (if (threads-delete-package package t)
                          "Deleted"
                        "Failed to delete")
                      package)
@@ -489,13 +489,13 @@ Use this interactively. Use `doom-delete-package' for direct calls."
       (message "%s isn't installed" package))))
 
 ;;;###autoload
-(defun doom/update-package (pkg)
+(defun threads/update-package (pkg)
   "Prompts the user with a list of outdated packages and updates the selected
-package. Use this interactively. Use `doom-update-package' for direct
+package. Use this interactively. Use `threads-update-package' for direct
 calls."
   (declare (interactive-only t))
   (interactive
-   (let* ((packages (doom-get-outdated-packages))
+   (let* ((packages (threads-get-outdated-packages))
           (package (if packages
                        (completing-read "Update package: "
                                         (mapcar #'car packages)
@@ -503,21 +503,21 @@ calls."
                      (user-error "All packages are up to date"))))
      (list (cdr (assq (car (assoc package package-alist)) packages)))))
   (cl-destructuring-bind (package old-version new-version) pkg
-    (if-let* ((desc (doom-package-outdated-p package)))
+    (if-let* ((desc (threads-package-outdated-p package)))
         (let ((old-v-str (package-version-join old-version))
               (new-v-str (package-version-join new-version)))
           (if (y-or-n-p (format "%s will be updated from %s to %s. Update?"
                                 package old-v-str new-v-str))
               (message "%s %s (%s => %s)"
-                       (if (doom-update-package package t) "Updated" "Failed to update")
+                       (if (threads-update-package package t) "Updated" "Failed to update")
                        package old-v-str new-v-str)
             (message "Aborted")))
       (message "%s is up-to-date" package))))
 
 ;;;###autoload
-(defun doom/refresh-packages (&optional force-p)
+(defun threads/refresh-packages (&optional force-p)
   "Synchronize package metadata with the sources in `package-archives'. If
 FORCE-P (the universal argument) is set, ignore the cache."
   (declare (interactive-only t))
   (interactive "P")
-  (doom-refresh-packages force-p))
+  (threads-refresh-packages force-p))

@@ -78,7 +78,7 @@ recognized by DOOM's popup system. They are:
 :static     If non-nil, don't treat this window like a popup. This makes it
             impervious to being automatically closed or tracked in popup
             history. Excellent for permanent sidebars."
-  (if (cl-every #'listp (mapcar #'doom-unquote rules))
+  (if (cl-every #'listp (mapcar #'threads-unquote rules))
       `(setq shackle-rules (nconc (list ,@rules) shackle-rules))
     `(push (list ,@rules) shackle-rules)))
 

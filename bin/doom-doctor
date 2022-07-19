@@ -22,7 +22,7 @@
     string))
 
 ;;
-(defvar doom-init-p nil)
+(defvar threads-init-p nil)
 (defvar doom-errors 0)
 (defmacro check! (cond &rest body)
   (declare (indent defun))
@@ -103,13 +103,13 @@
   (msg! "Compiled with:\n%s" (indented 2 (autofill system-configuration-features))))
 (msg! "uname -a:\n%s\n" (indented 2 (autofill (sh "uname -a"))))
 
-(let (doom-core-packages threads-debug-mode)
+(let (threads-core-packages threads-debug-mode)
   (condition-case ex
       (progn
         (let ((inhibit-message t)
               noninteractive)
           (load "~/.emacs.d/init.el" nil t))
-        (doom-initialize-packages)
+        (threads-initialize-packages)
         (threads|finalize)
         (success! "Attempt to load DOOM: success!")
         (when (executable-find "git")
@@ -279,14 +279,14 @@
 (when threads-debug-mode
   (msg! "\n====\nHave some debug information:\n")
 
-  (when (bound-and-true-p doom-modules)
+  (when (bound-and-true-p threads-modules)
     (msg! "  + enabled modules:\n%s"
           (indented 4
             (columns 3 23
               (mapcar (lambda (x) (format "+%s" x))
-                      (mapcar #'cdr (doom-module-pairs)))))))
+                      (mapcar #'cdr (threads-module-pairs)))))))
 
-  (when (and (bound-and-true-p doom-packages)
+  (when (and (bound-and-true-p threads-packages)
              (require 'package nil t))
     (msg! "  + enabled packages:\n%s"
           (indented 4
@@ -296,7 +296,7 @@
                               (let ((desc (cadr (assq pkg package-alist))))
                                 (when desc
                                   (package-desc-full-name desc))))
-                            (sort (mapcar #'car doom-packages) #'string-lessp)))))))
+                            (sort (mapcar #'car threads-packages) #'string-lessp)))))))
 
   (msg! "  + byte-compiled files:\n%s"
         (indented 4

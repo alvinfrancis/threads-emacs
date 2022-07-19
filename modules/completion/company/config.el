@@ -5,7 +5,7 @@
 
 MODES should be one major-mode symbol or a list of them."
   `(progn
-     ,@(cl-loop for mode in (doom-enlist (doom-unquote modes))
+     ,@(cl-loop for mode in (threads-enlist (threads-unquote modes))
                 for def-name = (intern (format "doom--init-company-%s" mode))
                 collect
                 `(defun ,def-name ()

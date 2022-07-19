@@ -10,14 +10,14 @@
 
 ;;;###autoload
 (defmacro +default--def-browse-in! (name dir)
-  (let ((prefix (cdr (doom-module-from-path (or load-file-name byte-compile-current-file)))))
+  (let ((prefix (cdr (threads-module-from-path (or load-file-name byte-compile-current-file)))))
     `(defun ,(intern (format "%s/browse-%s" prefix name)) ()
        (interactive)
        (doom-project-browse ,dir))))
 
 ;;;###autoload
 (defmacro +default--def-find-in! (name dir)
-  (let ((prefix (cdr (doom-module-from-path (or load-file-name byte-compile-current-file)))))
+  (let ((prefix (cdr (threads-module-from-path (or load-file-name byte-compile-current-file)))))
     `(defun ,(intern (format "+%s/find-in-%s" prefix name)) ()
        (interactive)
        (doom-project-find-file ,dir))))

@@ -44,7 +44,7 @@ function that creates and returns the REPL buffer."
    (quickrun-add-command MODE COMMAND :mode MODE).
 4. If MODE is not a string and COMMANd is a symbol, add it to
    `+eval-runners', which is used by `+eval/region'."
-  (let ((command (doom-unquote command)))
+  (let ((command (threads-unquote command)))
     (cond ((symbolp command)
            `(push (cons ,mode ',command) +eval-runners))
           ((stringp command)
@@ -56,7 +56,7 @@ function that creates and returns the REPL buffer."
           ((listp command)
            `(after! quickrun
               (quickrun-add-command
-                ,(symbol-name (doom-unquote mode))
+                ,(symbol-name (threads-unquote mode))
                 ',command :mode ,mode))))))
 
 (def-package! quickrun

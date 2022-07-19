@@ -13,7 +13,7 @@ If neither is available, run all tests in all enabled modules."
         ;; ensure DOOM is initialized
         (let (noninteractive)
           (load (expand-file-name "core/core.el" user-emacs-directory) nil t)
-          (doom-initialize-modules nil))
+          (threads-initialize-modules nil))
         ;; collect targets
         (cond ((and argv (equal (car argv) "--"))
                (cl-loop for arg in (cdr argv)
@@ -38,16 +38,16 @@ If neither is available, run all tests in all enabled modules."
 
               (t
                (let ((noninteractive t)
-                     doom-modules)
+                     threads-modules)
                  (load (expand-file-name "init.test.el" user-emacs-directory) nil t)
-                 (setq modules (doom-module-pairs)
+                 (setq modules (threads-module-pairs)
                        targets (list (expand-file-name "test/" threads-core-dir))))))
         ;; resolve targets to a list of test files and load them
         (cl-loop with targets =
                  (append targets
                          (cl-loop for (module . submodule) in modules
                                   if submodule
-                                  collect (doom-module-path module submodule "test/")
+                                  collect (threads-module-path module submodule "test/")
                                   else
                                   nconc
                                   (cl-loop with module-name = (substring (symbol-name module) 1)
@@ -80,7 +80,7 @@ If neither is available, run all tests in all enabled modules."
     (setq plist (reverse plist))
     (when (plist-get plist :skip)
       (setq body `((ert-skip nil) ,@body)))
-    (when-let* ((modes (doom-enlist (plist-get plist :minor-mode))))
+    (when-let* ((modes (threads-enlist (plist-get plist :minor-mode))))
       (dolist (mode modes)
         (setq body `((with-minor-mode!! ,mode ,@body)))))
     (when-let* ((before (plist-get plist :before)))

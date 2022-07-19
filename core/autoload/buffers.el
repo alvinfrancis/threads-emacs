@@ -78,7 +78,7 @@ If BUFFER-OR-NAME is omitted or nil, the current buffer is tested."
   "Return a list of buffers whose `major-mode' is `eq' to MODE(S).
 
 If DERIVED-P, test with `derived-mode-p', otherwise use `eq'."
-  (let ((modes (doom-enlist modes)))
+  (let ((modes (threads-enlist modes)))
     (cl-remove-if-not (if derived-p
                           (lambda (buf)
                             (with-current-buffer buf

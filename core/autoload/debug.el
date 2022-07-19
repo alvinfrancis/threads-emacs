@@ -11,9 +11,9 @@ whose car is the list of faces and cadr is the list of overlay faces."
          (faces (let ((face (get-text-property pos 'face)))
                   (if (keywordp (car-safe face))
                       (list face)
-                    (cl-loop for f in (doom-enlist face) collect f))))
+                    (cl-loop for f in (threads-enlist face) collect f))))
          (overlays (cl-loop for ov in (overlays-at pos (1+ pos))
-                            nconc (doom-enlist (overlay-get ov 'face)))))
+                            nconc (threads-enlist (overlay-get ov 'face)))))
     (cond ((called-interactively-p 'any)
            (message "%s %s\n%s %s"
                     (propertize "Faces:" 'face 'font-lock-comment-face)

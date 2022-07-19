@@ -31,20 +31,20 @@
 
 (defun doom--resolve-hook-forms (hooks)
   (cl-loop with quoted-p = (eq (car-safe hooks) 'quote)
-           for hook in (doom-enlist (doom-unquote hooks))
+           for hook in (threads-enlist (threads-unquote hooks))
            if (eq (car-safe hook) 'quote)
             collect (cadr hook)
            else if quoted-p
             collect hook
            else collect (intern (format "%s-hook" (symbol-name hook)))))
 
-(defun doom-unquote (exp)
+(defun threads-unquote (exp)
   "Return EXP unquoted."
   (while (memq (car-safe exp) '(quote function))
     (setq exp (cadr exp)))
   exp)
 
-(defun doom-enlist (exp)
+(defun threads-enlist (exp)
   "Return EXP wrapped in a list, or as-is if already a list."
   (if (listp exp) exp (list exp)))
 

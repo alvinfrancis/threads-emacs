@@ -104,7 +104,7 @@ fundamental-mode) for performance sake."
 
 ;; Keep track of recently opened files
 (def-package! recentf
-  :hook (doom-init . recentf-mode)
+  :hook (threads-init . recentf-mode)
   :config
   (setq recentf-save-file (concat threads-cache-dir "recentf")
         recentf-max-menu-items 0
@@ -125,7 +125,7 @@ fundamental-mode) for performance sake."
 
 ;; Auto-close delimiters and blocks as you type
 (def-package! smartparens
-  :hook (doom-init . smartparens-global-mode)
+  :hook (threads-init . smartparens-global-mode)
   :config
   (require 'smartparens-config)
 

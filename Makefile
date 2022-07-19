@@ -18,16 +18,16 @@ ce: compile-elpa
 
 ## Package management
 install: init.el .local/autoloads.el
-	@$(EMACS) -f doom//packages-install
+	@$(EMACS) -f threads//packages-install
 
 update: init.el .local/autoloads.el
-	@$(EMACS) -f doom//packages-update
+	@$(EMACS) -f threads//packages-update
 
 autoremove: init.el .local/autoloads.el
-	@$(EMACS) -f doom//packages-autoremove
+	@$(EMACS) -f threads//packages-autoremove
 
 autoloads: init.el
-	@$(EMACS) -f doom//reload-autoloads
+	@$(EMACS) -f threads//reload-autoloads
 
 
 ## Byte compilation
@@ -36,22 +36,22 @@ autoloads: init.el
 # compile-module
 # compile-module/submodule
 compile: init.el clean
-	@$(EMACS) -f doom//byte-compile
+	@$(EMACS) -f threads//byte-compile
 
 compile-core: init.el clean
-	@$(EMACS) -f doom//byte-compile-core
+	@$(EMACS) -f threads//byte-compile-core
 
 compile-elpa: init.el
-	@$(EMACS) -f doom//byte-recompile-plugins
+	@$(EMACS) -f threads//byte-recompile-plugins
 
 $(patsubst %, compile-%, $(MODULES)): init.el .local/autoloads.el
-	@$(EMACS) -f doom//byte-compile -- $(patsubst compile-%, %, $@)
+	@$(EMACS) -f threads//byte-compile -- $(patsubst compile-%, %, $@)
 
 recompile: init.el
-	@$(EMACS) -f doom//byte-compile -- -r
+	@$(EMACS) -f threads//byte-compile -- -r
 
 clean:
-	@$(EMACS) -f doom//clean-byte-compiled-files
+	@$(EMACS) -f threads//clean-byte-compiled-files
 
 
 ## Unit tests
@@ -84,6 +84,6 @@ init.el:
 	@$(error No init.el file; create one or copy init.example.el)
 
 .local/autoloads.el:
-	@$(EMACS) -f doom-initialize-autoloads
+	@$(EMACS) -f threads-initialize-autoloads
 
 .PHONY: all compile test testi clean

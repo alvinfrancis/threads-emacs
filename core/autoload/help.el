@@ -20,14 +20,14 @@ submodule in the format, e.g. ':feature evil')."
   (interactive
    ;; TODO try to read module from whole line
    (list (completing-read "Describe module: "
-                          (cl-loop for (module . sub) in (reverse (hash-table-keys doom-modules))
+                          (cl-loop for (module . sub) in (reverse (hash-table-keys threads-modules))
                                    collect (format "%s %s" module sub))
                           nil t)))
   (cl-destructuring-bind (category submodule)
       (mapcar #'intern (split-string module " "))
-    (unless (member (cons category submodule) (doom-module-pairs))
+    (unless (member (cons category submodule) (threads-module-pairs))
       (error "'%s' isn't a valid module" module))
-    (let ((doc-path (expand-file-name "README.org" (doom-module-path category submodule))))
+    (let ((doc-path (expand-file-name "README.org" (threads-module-path category submodule))))
       (unless (file-exists-p doc-path)
         (error "There is no documentation for this module"))
       (find-file doc-path))))

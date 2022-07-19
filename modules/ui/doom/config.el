@@ -17,7 +17,7 @@
   (setq solaire-mode-real-buffer-fn #'doom-real-buffer-p)
 
   ;; Prevent color glitches when reloading either DOOM or the theme
-  (add-hook! '(doom-init-ui-hook doom-reload-hook) #'solaire-mode-reset)
+  (add-hook! '(doom-init-ui-hook threads-reload-hook) #'solaire-mode-reset)
 
   (add-hook!
     (gist-mode twittering-mode mu4e-view-mode org-tree-slide-mode +regex-mode)

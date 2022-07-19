@@ -211,9 +211,9 @@ Example
           (:desc    (setq desc (pop rest)))
           (:map*    (setq doom--defer t) (push :map rest))
           (:map
-            (setq doom--keymaps (doom-enlist (pop rest))))
+            (setq doom--keymaps (threads-enlist (pop rest))))
           (:mode
-            (setq modes (doom-enlist (pop rest)))
+            (setq modes (threads-enlist (pop rest)))
             (unless doom--keymaps
               (setq doom--keymaps
                     (cl-loop for m in modes
