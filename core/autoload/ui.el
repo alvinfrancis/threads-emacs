@@ -75,7 +75,7 @@ windows (unlike `doom/window-zoom') Activate again to undo."
 (define-minor-mode doom-big-font-mode
   "A global mode that resizes the font, for streams, screen-sharing and
 presentations."
-  :group 'doom
+  :group 'threads
   :init-value nil
   :lighter " BIG"
   :global t

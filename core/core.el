@@ -53,9 +53,8 @@ Use this for files that change often, like cache files.")
 (defvar threads-autoload-file (concat threads-local-dir "autoloads.el")
   "Where `doom//reload-autoloads' will generate its autoloads file.")
 
-(defgroup doom nil
-  "DOOM Emacs, an Emacs configuration for a stubborn, shell-dwelling and
-melodramatic ex-vimmer disappointed with the text-editor status quo."
+(defgroup threads nil
+          ""
   :group 'emacs)
 
 
