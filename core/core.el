@@ -117,14 +117,14 @@ Use this for files that change often, like cache files.")
 
 ;; Custom init hooks; clearer than `after-init-hook', `emacs-startup-hook', and
 ;; `window-setup-hook'.
-(defvar doom-init-hook nil
-  "A list of hooks run when DOOM is initialized, before `doom-post-init-hook'.")
+(defvar threads-init-hook nil
+  "A list of hooks run when Threads is initialized, before `threads-post-init-hook'.")
 
-(defvar doom-post-init-hook nil
-  "A list of hooks run after DOOM initialization is complete, and after
-`doom-init-hook'.")
+(defvar threads-post-init-hook nil
+  "A list of hooks run after Threads initialization is complete, and after
+`threads-init-hook'.")
 
-(defun doom-try-run-hook (fn hook)
+(defun threads-try-run-hook (fn hook)
   "Runs a hook wrapped in a `condition-case-unless-debug' block; its objective
 is to include more information in the error message, without sacrificing your
 ability to invoke the debugger in debug mode."
@@ -142,11 +142,11 @@ ability to invoke the debugger in debug mode."
 ;;;
 ;; Initialize
 (eval-and-compile
-  (defvar doom--file-name-handler-alist file-name-handler-alist)
+  (defvar threads--file-name-handler-alist file-name-handler-alist)
   (unless (or after-init-time noninteractive)
     ;; One of the contributors to long startup times is the garbage collector,
     ;; so we up its memory threshold, temporarily. It is reset later in
-    ;; `doom|finalize'.
+    ;; `threads|finalize'.
     (setq gc-cons-threshold 402653184
           gc-cons-percentage 0.6
           file-name-handler-alist nil))
@@ -173,21 +173,21 @@ ability to invoke the debugger in debug mode."
     (load! core-projects)   ; making Emacs project-aware
     (load! core-keybinds))  ; centralized keybind system + which-key
 
-  (defun doom|finalize ()
-    "Run `doom-init-hook', `doom-post-init-hook' and reset `gc-cons-threshold',
+  (defun threads|finalize ()
+    "Run `threads-init-hook', `threads-post-init-hook' and reset `gc-cons-threshold',
 `gc-cons-percentage' and `file-name-handler-alist'."
     (unless (or (not after-init-time) noninteractive)
-      (dolist (hook '(doom-init-hook doom-post-init-hook))
-        (run-hook-wrapped hook #'doom-try-run-hook hook)))
+      (dolist (hook '(threads-init-hook threads-post-init-hook))
+        (run-hook-wrapped hook #'threads-try-run-hook hook)))
 
     ;; If you forget to reset this, you'll get stuttering and random freezes!
     (setq gc-cons-threshold 16777216
           gc-cons-percentage 0.1
-          file-name-handler-alist doom--file-name-handler-alist)
+          file-name-handler-alist threads--file-name-handler-alist)
     t)
 
   (add-hook! '(emacs-startup-hook doom-reload-hook)
-    #'doom|finalize))
+    #'threads|finalize))
 
 
 ;;
@@ -195,17 +195,18 @@ ability to invoke the debugger in debug mode."
 ;;
 
 ;; Automatic minor modes
-(defvar doom-auto-minor-mode-alist '()
+;; TODO: unused?
+(defvar threads-auto-minor-mode-alist '()
   "Alist mapping filename patterns to corresponding minor mode functions, like
 `auto-mode-alist'. All elements of this alist are checked, meaning you can
 enable multiple minor modes for the same regexp.")
 
-(defun doom|enable-minor-mode-maybe ()
-  "Check file name against `doom-auto-minor-mode-alist'."
+(defun threads|enable-minor-mode-maybe ()
+  "Check file name against `threads-auto-minor-mode-alist'."
   (when buffer-file-name
     (let ((name buffer-file-name)
           (remote-id (file-remote-p buffer-file-name))
-          (alist doom-auto-minor-mode-alist))
+          (alist threads-auto-minor-mode-alist))
       ;; Remove backup-suffixes from file name.
       (setq name (file-name-sans-versions name))
       ;; Remove remote file name identification.
@@ -216,9 +217,9 @@ enable multiple minor modes for the same regexp.")
         (if (string-match-p (caar alist) name)
             (funcall (cdar alist) 1))
         (setq alist (cdr alist))))))
-(add-hook 'find-file-hook #'doom|enable-minor-mode-maybe)
+(add-hook 'find-file-hook #'threads|enable-minor-mode-maybe)
 
-(defun doom*set-indirect-buffer-filename (orig-fn base-buffer name &optional clone)
+(defun threads*set-indirect-buffer-filename (orig-fn base-buffer name &optional clone)
   "In indirect buffers, `buffer-file-name' is nil, which can cause problems
 with functions that require it (like modeline segments)."
   (let ((file-name (buffer-file-name base-buffer))
@@ -229,13 +230,13 @@ with functions that require it (like modeline segments)."
           (setq buffer-file-name file-name
                 buffer-file-truename (file-truename file-name)))))
     buffer))
-(advice-add #'make-indirect-buffer :around #'doom*set-indirect-buffer-filename)
+(advice-add #'make-indirect-buffer :around #'threads*set-indirect-buffer-filename)
 
-(defun doom*no-authinfo-for-tramp (orig-fn &rest args)
+(defun threads*no-authinfo-for-tramp (orig-fn &rest args)
   "Don't look into .authinfo for local sudo TRAMP buffers."
   (let ((auth-sources (if (equal tramp-current-method "sudo") nil auth-sources)))
     (apply orig-fn args)))
-(advice-add #'tramp-read-passwd :around #'doom*no-authinfo-for-tramp)
+(advice-add #'tramp-read-passwd :around #'threads*no-authinfo-for-tramp)
 
 (provide 'core)
 ;;; core.el ends here

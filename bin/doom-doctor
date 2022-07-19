@@ -110,7 +110,7 @@
               noninteractive)
           (load "~/.emacs.d/init.el" nil t))
         (doom-initialize-packages)
-        (doom|finalize)
+        (threads|finalize)
         (success! "Attempt to load DOOM: success!")
         (when (executable-find "git")
           (msg! "Revision %s\n"

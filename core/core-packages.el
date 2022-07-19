@@ -48,7 +48,7 @@
 ;; See core/autoload/packages.el for more functions.
 
 (defvar doom-init-p nil
-  "Non-nil if doom is done initializing (once `doom-post-init-hook' is done). If
+  "Non-nil if doom is done initializing (once `threads-post-init-hook' is done). If
 this is nil after Emacs has started something is wrong.")
 
 (defvar doom-init-time nil
@@ -316,7 +316,7 @@ MODULES is an malformed plist of modules to load."
          (require 'server)
          (unless (server-running-p)
            (server-start)))
-       (add-hook 'doom-init-hook #'doom-packages--display-benchmark t)
+       (add-hook 'threads-init-hook #'doom-packages--display-benchmark t)
        (message "Doom modules initialized"))))
 
 (defmacro def-package! (name &rest plist)

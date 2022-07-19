@@ -100,7 +100,7 @@ fundamental-mode) for performance sake."
       savehist-autosave-interval nil ; save on kill only
       savehist-additional-variables '(kill-ring search-ring regexp-search-ring)
       save-place-file (concat threads-cache-dir "saveplace"))
-(add-hook! 'doom-init-hook #'(savehist-mode save-place-mode))
+(add-hook! 'threads-init-hook #'(savehist-mode save-place-mode))
 
 ;; Keep track of recently opened files
 (def-package! recentf
@@ -147,7 +147,7 @@ fundamental-mode) for performance sake."
   :init
   (setq undo-tree-history-directory-alist `(("." . ,(concat threads-cache-dir "undo/"))))
   :config
-  (add-hook 'doom-init-hook #'global-undo-tree-mode))
+  (add-hook 'threads-init-hook #'global-undo-tree-mode))
 
 
 ;;

@@ -153,7 +153,7 @@ recognized by DOOM's popup system. They are:
                    (set-process-query-on-exit-flag process nil))
                  t))))
 
-  (add-hook! doom-post-init
+  (add-hook! 'threads-post-init-hook
     (setq display-buffer-alist
           (cons '(doom-display-buffer-condition doom-display-buffer-action)
                 display-buffer-alist))

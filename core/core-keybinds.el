@@ -33,7 +33,7 @@
   ;; embolden local bindings
   (set-face-attribute 'which-key-local-map-description-face nil :weight 'bold)
   (which-key-setup-side-window-bottom)
-  (add-hook 'doom-init-hook #'which-key-mode))
+  (add-hook 'threads-init-hook #'which-key-mode))
 
 
 (def-package! hydra

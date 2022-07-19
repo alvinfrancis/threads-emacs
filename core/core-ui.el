@@ -199,7 +199,7 @@ local value, whether or not it's permanent-local. Therefore, we cycle
       (run-with-timer 0.1 nil #'doom|init-ui))))
 
 ;; register UI init hooks
-(add-hook 'doom-post-init-hook #'doom|init-ui)
+(add-hook 'threads-post-init-hook #'doom|init-ui)
 (add-hook! 'after-make-frame-functions #'(doom|init-ui doom|reload-ui-in-daemon))
 
 
@@ -214,7 +214,7 @@ local value, whether or not it's permanent-local. Therefore, we cycle
 ;; auto-enabled in Emacs 25+; I'll do it myself
 (global-eldoc-mode -1)
 ;; a good indicator that Emacs isn't frozen
-(add-hook 'doom-post-init-hook #'blink-cursor-mode)
+(add-hook 'threads-post-init-hook #'blink-cursor-mode)
 ;; standardize default fringe width
 (if (fboundp 'fringe-mode) (fringe-mode doom-fringe-size))
 ;; draw me like one of your French editors
@@ -226,7 +226,7 @@ local value, whether or not it's permanent-local. Therefore, we cycle
 (defun doom|no-fringes-in-minibuffer ()
   "Disable fringes in the minibuffer window."
   (set-window-fringes (minibuffer-window) 0 0 nil))
-(add-hook! '(doom-post-init-hook minibuffer-setup-hook)
+(add-hook! '(threads-post-init-hook minibuffer-setup-hook)
   #'doom|no-fringes-in-minibuffer)
 
 (defun doom|protect-visible-buffers ()
@@ -234,7 +234,7 @@ local value, whether or not it's permanent-local. Therefore, we cycle
 instead)."
   (not (delq (selected-window)
              (get-buffer-window-list nil nil t))))
-(add-hook! doom-post-init
+(add-hook! 'threads-post-init-hook
   (add-hook 'kill-buffer-query-functions #'doom|protect-visible-buffers))
 
 

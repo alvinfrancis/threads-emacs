@@ -98,7 +98,7 @@ bottom, which is easier on the eyes on big displays."
 
   :config
   (load "helm-autoloads" nil t)
-  (add-hook 'doom-init-hook #'helm-mode)
+  (add-hook 'threads-init-hook #'helm-mode)
 
   (defvar helm-projectile-find-file-map (make-sparse-keymap))
   (require 'helm-projectile)

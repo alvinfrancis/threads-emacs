@@ -43,7 +43,7 @@
         evil-undo-system 'undo-tree)
 
   :config
-  (add-hook 'doom-init-hook #'evil-mode)
+  (add-hook 'threads-init-hook #'evil-mode)
   (evil-select-search-module 'evil-search-module 'evil-search)
 
   (set! :popup
@@ -239,7 +239,7 @@ across windows."
   (setq evil-escape-excluded-states '(normal visual multiedit emacs motion)
         evil-escape-key-sequence "jj"
         evil-escape-delay 0.25)
-  (add-hook 'doom-post-init-hook #'evil-escape-mode)
+  (add-hook 'threads-post-init-hook #'evil-escape-mode)
   :config
   ;; no `evil-escape' in minibuffer
   (push #'minibufferp evil-escape-inhibit-functions)
@@ -282,7 +282,7 @@ across windows."
   :init
   (setq vimish-fold-dir (concat threads-cache-dir "vimish-fold/")
         vimish-fold-indication-mode 'right-fringe)
-  (add-hook 'doom-post-init-hook #'evil-vimish-fold-mode t))
+  (add-hook 'threads-post-init-hook #'evil-vimish-fold-mode t))
 
 
 ;; Without `evil-visualstar', * and # grab the word at point and search, no
