@@ -76,7 +76,7 @@ If STRICT-P, return nil if no project was found, otherwise return
 Paths are relative to the project root, unless they start with ./ or ../ (in
 which case they're relative to `default-directory'). If they start with a slash,
 they are absolute."
-  (doom--resolve-path-forms files (doom-project-root)))
+  (threads--resolve-path-forms files (doom-project-root)))
 
 (defun doom-project-find-file (dir)
   "Fuzzy-find a file under DIR."

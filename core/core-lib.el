@@ -16,7 +16,7 @@
 ;; Helpers
 ;;
 
-(defun doom--resolve-path-forms (paths &optional root)
+(defun threads--resolve-path-forms (paths &optional root)
   (cond ((stringp paths)
          `(file-exists-p
            (expand-file-name
@@ -26,17 +26,21 @@
                       (or root `(doom-project-root))))))
         ((listp paths)
          (cl-loop for i in paths
-                  collect (doom--resolve-path-forms i root)))
+                  collect (threads--resolve-path-forms i root)))
         (t paths)))
 
-(defun doom--resolve-hook-forms (hooks)
+(defun threads--resolve-hook-forms (hooks)
   (cl-loop with quoted-p = (eq (car-safe hooks) 'quote)
            for hook in (threads-enlist (threads-unquote hooks))
+
            if (eq (car-safe hook) 'quote)
-            collect (cadr hook)
+           collect (cadr hook)
+
            else if quoted-p
-            collect hook
-           else collect (intern (format "%s-hook" (symbol-name hook)))))
+           collect hook
+
+           else
+           collect (intern (format "%s-hook" (symbol-name hook)))))
 
 (defun threads-unquote (exp)
   "Return EXP unquoted."
@@ -48,7 +52,7 @@
   "Return EXP wrapped in a list, or as-is if already a list."
   (if (listp exp) exp (list exp)))
 
-(defun doom-resolve-vim-path (file-name)
+(defun threads-resolve-vim-path (file-name)
   "Take a path and resolve any vim-like filename modifiers in it. On top of the
 classical vim modifiers, this adds support for:
 
@@ -214,7 +218,7 @@ Body forms can access the hook's arguments through the let-bound variable
         (:append (setq append-p t))
         (:local  (setq local-p t))
         (:remove (setq hook-fn 'remove-hook))))
-    (let ((hooks (doom--resolve-hook-forms (pop args)))
+    (let ((hooks (threads--resolve-hook-forms (pop args)))
           (funcs
            (let ((val (car args)))
              (if (memq (car-safe val) '(quote function))
@@ -259,11 +263,11 @@ Body forms can access the hook's arguments through the let-bound variable
                                (not ,mode)
                                (and buffer-file-name (not (file-remote-p buffer-file-name)))
                                ,(if match `(if buffer-file-name (string-match-p ,match buffer-file-name)) t)
-                               ,(if files (doom--resolve-path-forms files) t)
+                               ,(if files (threads--resolve-path-forms files) t)
                                ,(or pred-form t))
                       (,mode 1)))
                   ,@(if (and modes (listp modes))
-                        (cl-loop for hook in (doom--resolve-hook-forms modes)
+                        (cl-loop for hook in (threads--resolve-hook-forms modes)
                                  collect `(add-hook ',hook ',hook-name))
                       `((add-hook 'after-change-major-mode-hook ',hook-name))))))
             (match

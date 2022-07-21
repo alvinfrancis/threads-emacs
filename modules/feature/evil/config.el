@@ -127,7 +127,7 @@ across windows."
 
   ;; monkey patch `evil-ex-replace-special-filenames' to add more ex
   ;; substitution flags to evil-mode
-  (advice-add #'evil-ex-replace-special-filenames :override #'doom-resolve-vim-path)
+  (advice-add #'evil-ex-replace-special-filenames :override #'threads-resolve-vim-path)
 
   ;; These arg types will highlight matches in the current buffer
   (evil-ex-define-argument-type buffer-match :runner +evil-ex-buffer-match)

@@ -3,18 +3,18 @@
 
 ;; --- Helpers ----------------------------
 
-;; `doom--resolve-path-forms'
+;; `threads--resolve-path-forms'
 (def-test! resolve-path-forms
   (should
-   (equal (doom--resolve-path-forms '(and "fileA" "fileB"))
+   (equal (threads--resolve-path-forms '(and "fileA" "fileB"))
           '(and (file-exists-p (expand-file-name "fileA" (doom-project-root)))
                 (file-exists-p (expand-file-name "fileB" (doom-project-root)))))))
 
-;; `doom--resolve-hook-forms'
+;; `threads--resolve-hook-forms'
 (def-test! resolve-hook-forms
-  (should (equal (doom--resolve-hook-forms '(js2-mode haskell-mode))
+  (should (equal (threads--resolve-hook-forms '(js2-mode haskell-mode))
                  '(js2-mode-hook haskell-mode-hook)))
-  (should (equal (doom--resolve-hook-forms '(quote (js2-mode-hook haskell-mode-hook)))
+  (should (equal (threads--resolve-hook-forms '(quote (js2-mode-hook haskell-mode-hook)))
                  '(js2-mode-hook haskell-mode-hook))))
 
 ;; `threads-unquote'
@@ -32,9 +32,9 @@
   (should (equal (threads-enlist 'a) '(a)))
   (should (equal (threads-enlist '(a)) '(a))))
 
-;; `doom-resolve-vim-path'
+;; `threads-resolve-vim-path'
 (def-test! resolve-vim-path
-  (cl-flet ((do-it #'doom-resolve-vim-path))
+  (cl-flet ((do-it #'threads-resolve-vim-path))
     ;; file modifiers
     (let ((buffer-file-name  "~/.emacs.d/test/modules/feature/test-evil.el")
           (default-directory "~/.emacs.d/test/modules/"))
