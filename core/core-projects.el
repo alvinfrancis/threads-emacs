@@ -1,7 +1,7 @@
 ;;; core-projects.el -*- lexical-binding: t; -*-
 
 (def-package! projectile
-  :hook (doom-init . projectile-mode)
+  :hook (threads-init . projectile-mode)
   :init
   (setq projectile-cache-file (concat threads-cache-dir "projectile.cache")
         projectile-indexing-method 'alien
