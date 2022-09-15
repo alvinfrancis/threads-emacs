@@ -555,22 +555,6 @@
       :v "C-u" #'undo-tree-undo
       :v "C-r" #'undo-tree-redo
 
-      ;; yasnippet
-      (:after yasnippet
-        (:map yas-keymap
-          "C-e"           #'+snippets/goto-end-of-field
-          "C-a"           #'+snippets/goto-start-of-field
-          "<M-right>"     #'+snippets/goto-end-of-field
-          "<M-left>"      #'+snippets/goto-start-of-field
-          "<M-backspace>" #'+snippets/delete-to-start-of-field
-          [escape]        #'evil-normal-state
-          [backspace]     #'+snippets/delete-backward-char
-          [delete]        #'+snippets/delete-forward-char-or-field)
-        (:map yas-minor-mode-map
-          :i "<tab>" yas-maybe-expand
-          :v "<tab>" #'+snippets/expand-on-region))
-
-
       ;; --- Major mode bindings --------------------------
       (:after markdown-mode
         (:map markdown-mode-map
