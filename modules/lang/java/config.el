@@ -26,3 +26,4 @@
   :config
   (set! :eval 'groovy-mode "groovy"))
 
+(def-package! lsp-java)
