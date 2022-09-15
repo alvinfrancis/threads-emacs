@@ -85,6 +85,8 @@
         :desc "Universal argument"      :nv "u"  #'universal-argument
         :desc "window"                  :n "w"  evil-window-map
 
+        :desc "Resume last search"      :n "'" #'helm-resume
+
         (:desc "Eval" :prefix "x"
           :desc "Eval expression"           :n "e" #'eval-last-sexp
           :desc "Evan and print expression" :n "p" #'eval-print-last-sexp
