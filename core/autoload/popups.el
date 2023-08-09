@@ -7,7 +7,8 @@ omitted."
   (when-let* ((target (or target (selected-window))))
     (cond ((bufferp target)
            (and (buffer-live-p target)
-                (buffer-local-value 'doom-popup-mode target)))
+                (with-current-buffer target
+                  (or doom-popup-mode (default-value 'doom-popup-mode)))))
           ((windowp target)
            (and (window-live-p target)
                 (window-parameter target 'popup))))))
@@ -84,7 +85,8 @@ window parameter."
          (or (window-parameter window-or-buffer 'popup)
              (doom-popup-properties (window-buffer window-or-buffer))))
         ((bufferp window-or-buffer)
-         (buffer-local-value 'doom-popup-rules window-or-buffer))))
+         (with-current-buffer window-or-buffer
+           (or doom-popup-rules (default-value 'doom-popup-rules))))))
 
 ;;;###autoload
 (defun doom-popup-property (prop &optional window)

@@ -66,7 +66,8 @@ real buffer is:
 
 If BUFFER-OR-NAME is omitted or nil, the current buffer is tested."
   (when-let* ((buf (ignore-errors (window-normalize-buffer buffer-or-name))))
-    (or (buffer-local-value 'doom-real-buffer-p buf)
+    (or (with-current-buffer buf
+          (or doom-real-buffer-p (default-value 'doom-real-buffer-p)))
         (run-hook-with-args-until-success 'doom-real-buffer-functions buf)
         (not (or (doom-popup-p buf)
                  (minibufferp buf)

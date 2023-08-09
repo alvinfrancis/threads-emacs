@@ -17,7 +17,9 @@ function that creates and returns the REPL buffer."
   `(push (cons ,mode ,command) +eval-repls))
 
 (set! :popup
-  '(:custom (lambda (b &rest _) (buffer-local-value '+eval-repl-mode b)))
+  '(:custom (lambda (b &rest _)
+              (with-current-buffer b
+                (or +eval-repl-mode (default-value '+eval-repl-mode)))))
   :size 16 :noesc t)
 
 

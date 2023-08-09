@@ -14,11 +14,13 @@
 
 (defun +impatient-mode--cleanup-impatient-mode ()
   (unless (cl-loop for buf in (doom-buffer-list)
-                   if (buffer-local-value 'impatient-mode buf)
+                   if (with-current-buffer buf
+                        (or impatient-mode (default-value 'impatient-mode)))
                    return t)
     (httpd-stop)
     (cl-loop for buf in (doom-buffer-list)
-             if (buffer-local-value 'impatient-mode buf)
+             if (with-current-buffer buf
+                  (or impatient-mode (default-value 'impatient-mode)))
              do
              (with-current-buffer buf
                (impatient-mode -1)))
