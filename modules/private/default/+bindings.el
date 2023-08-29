@@ -640,7 +640,7 @@
       ;;   c) do none of this when inside a string
       ;; :i "SPC"                          #'doom/inflate-space-maybe
       ;; :i [remap delete-backward-char]   #'doom/deflate-space-maybe
-      :i [remap newline]                #'doom/newline-and-indent
+      ;; :i [remap newline]                #'doom/newline-and-indent
 
       (:after org
         (:map org-mode-map
