@@ -1,7 +1,7 @@
 ;; -*- no-byte-compile: t; -*-
 ;;; completion/helm/packages.el
 
-(package! helm :recipe (:fetcher github :repo "emacs-helm/helm" :commit "v3.8.5"))
+(package! helm)
 (package! helm-ag)
 (package! helm-c-yasnippet)
 (package! helm-company)
