@@ -27,6 +27,7 @@
  (window-select +ace-window)  ; visually switch windows
 
  :tools
+ ai
  dired             ; making dired pretty [functional]
  electric-indent   ; smarter, keyword-based electric-indent
  eshell            ; a consistent, cross-platform shell (WIP)
