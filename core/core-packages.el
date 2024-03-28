@@ -538,7 +538,7 @@ This should be run whenever init.el or an autoload file is modified. Running
         (message
          (cond ((not (threads-packages--read-if-cookies file))
                 "⚠ Ignoring %s")
-               ((threads--update-file-autoloads file nil threads-autoload-file)
+               ((update-file-autoloads file nil threads-autoload-file)
                 "✕ Nothing in %s")
                (t
                 "✓ Scanned %s"))
