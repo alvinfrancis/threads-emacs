@@ -513,6 +513,7 @@ This should be run whenever init.el or an autoload file is modified. Running
   (interactive)
   ;; This function must not use autoloaded functions or external dependencies.
   ;; It must assume nothing is set up!
+  (require 'autoload)
   (if (not noninteractive)
       ;; This is done in another instance to protect the current session's
       ;; state. `threads-initialize-packages' will have side effects otherwise.
@@ -694,40 +695,6 @@ compiled packages.'"
 
 ;; It isn't safe to use `package-autoremove', so get rid of it
 (advice-add #'package-autoremove :override #'threads//packages-autoremove)
-
-;; NOTE: copied from autoload due to deprecation notice
-;; FIXME This command should be deprecated.
-;; See https://debbugs.gnu.org/22213#41
-;;;###autoload
-(defun threads--update-file-autoloads (file &optional save-after outfile)
-  "Update the autoloads for FILE.
-If prefix arg SAVE-AFTER is non-nil, save the buffer too.
-
-If FILE binds `generated-autoload-file' as a file-local variable,
-autoloads are written into that file.  Otherwise, the autoloads
-file is determined by OUTFILE.  If called interactively, prompt
-for OUTFILE; if called from Lisp with OUTFILE nil, use the
-existing value of `generated-autoload-file'.
-
-Return FILE if there was no autoload cookie in it, else nil."
-  (interactive (list (read-file-name "Update autoloads for file: ")
-                     current-prefix-arg
-                     (read-file-name "Write autoload definitions to file: ")))
-  (setq outfile (or outfile generated-autoload-file))
-  (let* ((autoload-modified-buffers nil)
-         ;; We need this only if the output file handles more than one input.
-         ;; See https://debbugs.gnu.org/22213#38 and subsequent.
-         (autoload-timestamps t)
-         (no-autoloads (autoload-generate-file-autoloads
-                        file nil
-                        (if (local-variable-p 'generated-autoload-file)
-                            generated-autoload-file
-                          outfile))))
-    (if autoload-modified-buffers
-        (if save-after (autoload-save-buffers))
-      (if (called-interactively-p 'interactive)
-          (message "Autoload section for %s is up to date." file)))
-    (if no-autoloads file)))
 
 (provide 'core-packages)
 ;;; core-packages.el ends here
