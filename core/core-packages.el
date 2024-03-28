@@ -537,8 +537,9 @@ This should be run whenever init.el or an autoload file is modified. Running
         (message
          (cond ((not (threads-packages--read-if-cookies file))
                 "⚠ Ignoring %s")
-               ((update-file-autoloads file nil threads-autoload-file)
-                "✕ Nothing in %s")
+               ;; TODO: update-file-autoloads is deprecated.  Consider removing autoload refresh altogether.
+               ;; ((update-file-autoloads file nil threads-autoload-file)
+               ;;  "✕ Nothing in %s")
                (t
                 "✓ Scanned %s"))
          (file-relative-name file threads-emacs-dir)))
