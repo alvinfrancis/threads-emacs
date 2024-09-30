@@ -9,6 +9,7 @@
   :mode "\\.mustache$"
   :mode "\\.tsx$"
   :mode "wp-content/themes/.+/.+\\.php$"
+  :hook (web-mode . lsp-deferred)
   :init
   (setq-default web-mode-markup-indent-offset 2
                 web-mode-code-indent-offset 2)

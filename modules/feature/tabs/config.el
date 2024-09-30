@@ -39,7 +39,7 @@
       (concat
        (when (display-graphic-p)
          (+tabs--make-xpm
-          nil
+          nil ;; no color as this is only used to extend the height and width of tabs
           +tabs-height
           +tabs-width))
        buffer-name)))
@@ -49,9 +49,10 @@
                          tab-bar-format-tabs
                          tab-bar-separator)
         tab-bar-show 1
-        tab-bar-tab-name-function #'+tab-bar/tab-name
         tab-bar-separator ""
         tab-bar-new-tab-to 'rightmost)
+  (customize-set-variable 'tab-bar-tab-name-function #'+tab-bar/tab-name)
+
 
   :config
   (defalias #'+tabs/display #'toggle-tab-bar-mode-from-frame)

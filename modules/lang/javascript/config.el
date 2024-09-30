@@ -16,6 +16,7 @@
 
   ;; Conform switch-case indentation to js2 normal indent
   (setq js-switch-indent-offset 'js2-basic-offset)
+  (setq js-indent-level 2)
 
   (sp-with-modes '(js2-mode rjsx-mode)
     (sp-local-pair "/* " " */" :post-handlers '(("| " "SPC"))))

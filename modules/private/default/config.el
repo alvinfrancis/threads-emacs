@@ -12,7 +12,7 @@
 ;; Config
 ;;
 
-(setq doom-font (font-spec :family "Monoid" :size 12)
+(setq doom-font (font-spec :family "Monoid" :size 14)
       doom-variable-pitch-font (font-spec :family "Monoid")
       doom-unicode-font (font-spec :family "DejaVu Sans Mono")
       doom-big-font (font-spec :family "Monoid" :size 19)
@@ -21,7 +21,9 @@
 
       scroll-margin 100          ; TODO: look into a better centering mechanism
       scroll-conservatively 100
-      +org-dir "~/Documents/org")
+      +org-dir "~/Documents/org"
+
+      warning-minimum-log-level :error)
 
 (after! helm-files
   (setq helm-ff-transformer-show-only-basename nil))
