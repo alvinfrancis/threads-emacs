@@ -32,17 +32,17 @@
 
 (def-package! tab-bar
   :init
-  (defun +tab-bar/tab-name ()
-    (let* ((buffer-name (concat " "
-                                (buffer-name (window-buffer (minibuffer-selected-window)))
-                                " ")))
-      (concat
-       (when (display-graphic-p)
-         (+tabs--make-xpm
-          nil ;; no color as this is only used to extend the height and width of tabs
-          +tabs-height
-          +tabs-width))
-       buffer-name)))
+  (defun +tab-bar/tab-name-format (name _tab _i)
+    (concat " " name " "))
+
+  (defun +tab-bar/tab-name-format-icons (name _tab _i)
+    (concat
+     (when (display-graphic-p)
+       (+tabs--make-xpm
+        nil ;; no color as this is only used to extend the height and width of tabs
+        +tabs-height
+        +tabs-width))
+     name))
 
   (setq tab-bar-close-button-show nil
         tab-bar-format '(tab-bar-format-history
@@ -50,8 +50,13 @@
                          tab-bar-separator)
         tab-bar-show 1
         tab-bar-separator ""
-        tab-bar-new-tab-to 'rightmost)
-  (customize-set-variable 'tab-bar-tab-name-function #'+tab-bar/tab-name)
+        tab-bar-new-tab-to 'rightmost
+        tab-bar-tab-name-format-functions '(tab-bar-tab-name-format-hints
+                                            tab-bar-tab-name-format-close-button
+                                            +tab-bar/tab-name-format
+                                            tab-bar-tab-name-format-face
+                                            ;; formatting the face on an XPM causes issues so we do it after
+                                            +tab-bar/tab-name-format-icons))
 
 
   :config
