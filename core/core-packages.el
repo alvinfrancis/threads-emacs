@@ -145,7 +145,7 @@ startup."
     ;; Also, in some edge cases involving package initialization during a
     ;; non-interactive session, `package-initialize' fails to fill `load-path'.
     (setq threads--package-load-path (directory-files package-user-dir t "^[^.]" t)
-          load-path (append threads--base-load-path threads--package-load-path))))
+          load-path (append threads--package-load-path threads--base-load-path))))
 
 (defun threads-initialize-autoloads ()
   "Ensures that `threads-autoload-file' exists and is loaded. Otherwise run
