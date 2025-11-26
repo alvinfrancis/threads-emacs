@@ -27,3 +27,4 @@ network-security.data
 # transient files
 *.cache-*
 *.log
+.cache/
