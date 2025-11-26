@@ -177,16 +177,6 @@ bottom, which is easier on the eyes on big displays."
   (setq helm-css-scss-split-direction #'split-window-vertically
         helm-css-scss-split-with-multiple-windows t))
 
-
-(def-package! helm-swoop ; https://github.com/ShingoFukuyama/helm-swoop
-  :commands (helm-swoop helm-multi-swoop helm-multi-swoop-all)
-  :config
-  (setq helm-swoop-use-line-number-face t
-        helm-swoop-candidate-number-limit 200
-        helm-swoop-speed-or-color t
-        helm-swoop-pre-input-function (lambda () "")))
-
-
 (def-package! helm-describe-modes :commands helm-describe-modes)
 
 (def-package! swiper :commands (swiper swiper-all))
