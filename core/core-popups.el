@@ -320,9 +320,6 @@ the command buffer."
   (setq-default helm-reuse-last-window-split-state t
                 helm-split-window-in-side-p t)
 
-  (after! helm-swoop
-    (setq helm-swoop-split-window-function #'pop-to-buffer))
-
   (after! helm-ag
     ;; This prevents helm-ag from switching between windows and buffers.
     (defun doom*helm-ag-edit-done (orig-fn &rest args)

@@ -62,7 +62,6 @@
        (ex! "agc[wd]"  #'+helm:ag-cwd)
        (ex! "rg"       #'+helm:rg)
        (ex! "rgc[wd]"  #'+helm:rg-cwd)
-       (ex! "sw[oop]"  #'+helm:swoop)
        (ex! "todo"     #'+helm:todo)))
 ;; Project tools
 (ex! "build"       #'+eval/build)
