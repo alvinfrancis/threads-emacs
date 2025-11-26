@@ -300,6 +300,7 @@ MODULES is an malformed plist of modules to load."
 (defmacro def-package! (name &rest plist)
   "A thin wrapper around `use-package'."
   ;; Ignore package if NAME is in `threads-disabled-packages'
+  (declare (indent 1))
   (when (and (memq name threads-disabled-packages)
              (not (memq :disabled plist)))
     (setq plist `(:disabled t ,@plist)))
@@ -695,6 +696,10 @@ compiled packages.'"
 
 ;; It isn't safe to use `package-autoremove', so get rid of it
 (advice-add #'package-autoremove :override #'threads//packages-autoremove)
+
+
+;; Proper indentation
+(put ':after 'lisp-indent-function 'defun)
 
 (provide 'core-packages)
 ;;; core-packages.el ends here
