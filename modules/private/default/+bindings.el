@@ -120,7 +120,7 @@
           :desc "Swiper"                :nv "/" #'swiper
           :desc "Imenu"                 :nv "i" #'imenu
           :desc "Imenu across buffers"  :nv "I" #'imenu-anywhere
-          :desc "Project"               :nv "p" #'helm-projectile-ag)
+          :desc "Project"               :nv "p" #'helm-projectile-grep)
 
 
         (:desc "tabs" :prefix "TAB"

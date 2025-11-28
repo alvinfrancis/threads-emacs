@@ -318,24 +318,7 @@ the command buffer."
   ;; `shackle-rules', open two splits side-by-side, move to the buffer on the
   ;; right and invoke helm. It will close all but the left-most buffer.
   (setq-default helm-reuse-last-window-split-state t
-                helm-split-window-in-side-p t)
-
-  (after! helm-ag
-    ;; This prevents helm-ag from switching between windows and buffers.
-    (defun doom*helm-ag-edit-done (orig-fn &rest args)
-      (cl-letf (((symbol-function 'select-window) #'ignore))
-        (apply orig-fn args))
-      (doom/popup-close))
-    (advice-add #'helm-ag--edit-commit :around #'doom*helm-ag-edit-done)
-    (advice-add #'helm-ag--edit-abort  :around #'doom*helm-ag-edit-done)
-
-    (defun doom*helm-ag-edit (orig-fn &rest args)
-      (cl-letf (((symbol-function 'other-window) #'ignore)
-                ((symbol-function 'switch-to-buffer) #'doom-popup-buffer))
-        (apply orig-fn args)
-        (with-current-buffer (get-buffer "*helm-ag-edit*")
-          (use-local-map helm-ag-edit-map))))
-    (advice-add #'helm-ag--edit :around #'doom*helm-ag-edit)))
+                helm-split-window-in-side-p t))
 
 
 (defsubst doom--switch-from-popup (location)

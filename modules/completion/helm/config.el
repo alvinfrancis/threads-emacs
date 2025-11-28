@@ -75,6 +75,9 @@ bottom, which is easier on the eyes on big displays."
 ;;
 
 (def-package! helm
+  :custom
+  (helm-projectile-set-input-automatically nil)
+  (helm-grep-file-path-style 'relative)
   :init
   (setq helm-quick-update t
         ;; Speedier without fuzzy matching

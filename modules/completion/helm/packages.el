@@ -2,7 +2,6 @@
 ;;; completion/helm/packages.el
 
 (package! helm)
-(package! helm-ag)
 (package! helm-c-yasnippet)
 (package! helm-company)
 (package! helm-css-scss)

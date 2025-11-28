@@ -4,6 +4,7 @@
   :hook (threads-init . projectile-mode)
   :init
   (setq projectile-cache-file (concat threads-cache-dir "projectile.cache")
+        projectile-use-git-grep t
         projectile-indexing-method 'alien
         projectile-known-projects-file (concat threads-cache-dir "projectile.projects")
         projectile-require-project-root nil

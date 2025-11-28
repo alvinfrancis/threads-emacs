@@ -58,8 +58,6 @@
        (ex! "sw[iper]" #'+ivy:swiper)
        (ex! "todo"     #'+ivy:todo))
       ((featurep! :completion helm)
-       (ex! "ag"       #'+helm:ag)
-       (ex! "agc[wd]"  #'+helm:ag-cwd)
        (ex! "rg"       #'+helm:rg)
        (ex! "rgc[wd]"  #'+helm:rg-cwd)
        (ex! "todo"     #'+helm:todo)))
