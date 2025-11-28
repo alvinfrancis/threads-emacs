@@ -2,6 +2,12 @@
 
 (def-package! lsp-mode
   :commands (lsp lsp-deferred lsp-install-server)
+  :custom
+  ;; Disable features that have great potential to be slow.
+  (lsp-enable-snippet nil)
+  (lsp-enable-folding nil)
+  (lsp-enable-indentation nil)
+  (lsp-enable-text-document-color nil)
   :init
   ;; Don't touch ~/.emacs.d, which could be purged without warning
   (setq lsp-session-file (concat threads-etc-dir "lsp-session")
@@ -16,9 +22,6 @@
   ;;      lsp-ui-doc, open in popup vs sideline, etc).
 
   ;; Disable features that have great potential to be slow.
-  (setq lsp-enable-folding nil
-        lsp-enable-indentation nil
-        lsp-enable-text-document-color nil)
 
   ;; Reduce unexpected modifications to code
   (setq lsp-enable-on-type-formatting nil)
