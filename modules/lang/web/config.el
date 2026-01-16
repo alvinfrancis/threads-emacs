@@ -35,14 +35,14 @@
   :when (+javascript-npm-dep-p 'angular))
 
 (def-project-mode! +web-jekyll-mode
-  :modes (web-mode js-mode coffee-mode css-mode haml-mode pug-mode)
+  :modes (web-mode js-mode coffee-mode css-mode haml-mode)
   :files (and "config.yml" (or "_layouts/" "_posts/"))
   :on-enter
   (when (eq major-mode 'web-mode)
     (web-mode-set-engine "django")))
 
 (def-project-mode! +web-wordpress-mode
-  :modes (php-mode web-mode css-mode haml-mode pug-mode)
+  :modes (php-mode web-mode css-mode haml-mode)
   :files (or "wp-config.php" "wp-config-sample.php"))
 
 (def-project-mode! +web-react-mode

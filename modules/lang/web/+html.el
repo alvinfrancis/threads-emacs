@@ -15,7 +15,7 @@
                 web-mode-code-indent-offset 2)
   :config
   (add-hook 'web-mode-hook #'turn-off-smartparens-mode)
-  (set! :company-backend 'web-mode '(company-web-html company-yasnippet))
+  (set! :company-backend 'web-mode '(company-web-html))
   (setq web-mode-enable-html-entities-fontification t
         web-mode-enable-auto-quoting nil)
 
@@ -39,10 +39,3 @@
 
 
 (def-package! haml-mode :mode "\\.haml$")
-
-
-(def-package! pug-mode
-  :mode "\\.jade$"
-  :mode "\\.pug$"
-  :config
-  (set! :company-backend 'pug-mode '(company-yasnippet)))

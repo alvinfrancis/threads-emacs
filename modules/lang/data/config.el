@@ -6,7 +6,7 @@
 (def-package! nxml-mode
   :mode "\\.plist$"
   :config
-  (set! :company-backend 'nxml-mode '(company-nxml company-yasnippet)))
+  (set! :company-backend 'nxml-mode '(company-nxml)))
 
 
 (def-package! toml-mode :mode "\\.toml$")

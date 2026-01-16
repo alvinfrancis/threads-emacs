@@ -318,10 +318,6 @@
 
 
       ;; --- Plugin bindings ------------------------------
-      ;; auto-yasnippet
-      ;; :i  [C-tab] #'aya-expand
-      ;; :nv [C-tab] #'aya-create
-
       ;; company-mode (vim-like omnicompletion)
       :i "C-SPC"  #'+company/complete
       (:prefix "C-x"
@@ -330,7 +326,6 @@
         :i "C-f"   #'company-files
         :i "C-]"   #'company-etags
         :i "s"     #'company-ispell
-        :i "C-s"   #'company-yasnippet
         :i "C-o"   #'company-capf
         :i "C-n"   #'company-dabbrev-code
         :i "C-p"   #'+company/dabbrev-code-previous)

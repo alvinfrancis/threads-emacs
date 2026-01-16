@@ -37,14 +37,14 @@
   :mode "\\.css$"
   :mode ("\\.scss$" . scss-mode)
   :config
-  (set! :company-backend '(css-mode scss-mode) '(company-css company-yasnippet))
+  (set! :company-backend '(css-mode scss-mode) '(company-css))
   (map! :map scss-mode-map :localleader "b" #'+css/scss-build))
 
 
 (def-package! sass-mode
   :mode "\\.sass$"
   :config
-  (set! :company-backend 'sass-mode '(company-css company-yasnippet))
+  (set! :company-backend 'sass-mode '(company-css))
   (map! :map scss-mode-map :localleader "b" #'+css/sass-build))
 
 

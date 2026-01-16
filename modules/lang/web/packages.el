@@ -11,7 +11,6 @@
 ;; +html.el
 (package! emmet-mode)
 (package! haml-mode)
-(package! pug-mode)
 (package! web-mode)
 (when (featurep! :completion company)
   (package! company-web))

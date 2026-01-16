@@ -41,9 +41,6 @@ MODES should be one major-mode symbol or a list of them."
         company-backends '(company-capf company-dabbrev company-ispell)
         company-transformers '(company-sort-by-occurrence))
 
-  (after! yasnippet
-    (nconc company-backends '(company-yasnippet)))
-
   (global-company-mode +1))
 
 
@@ -78,7 +75,6 @@ MODES should be one major-mode symbol or a list of them."
 ;;
 
 (autoload 'company-capf "company-capf")
-(autoload 'company-yasnippet "company-yasnippet")
 (autoload 'company-dabbrev "company-dabbrev")
 (autoload 'company-dabbrev-code "company-dabbrev-code")
 (autoload 'company-etags "company-etags")

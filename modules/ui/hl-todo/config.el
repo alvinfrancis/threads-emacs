@@ -11,5 +11,5 @@
   ;; Use a more primitive todo-keyword detection method in major modes that
   ;; don't use/have a valid syntax table entry for comments.
   (add-hook!
-    (pug-mode haml-mode)
+    (haml-mode)
     #'+hl-todo|use-face-detection))
