@@ -87,6 +87,9 @@
 
         :desc "Resume last search"      :n "'" #'helm-resume
 
+        (:desc "AI" :prefix "a"
+          :desc "gptel" :n "g" #'gptel)
+
         (:desc "Eval" :prefix "x"
           :desc "Eval expression"           :n "e" #'eval-last-sexp
           :desc "Evan and print expression" :n "p" #'eval-print-last-sexp
