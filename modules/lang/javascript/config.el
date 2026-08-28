@@ -1,7 +1,7 @@
 ;;; lang/javascript/config.el -*- lexical-binding: t; -*-
 
 (def-package! js2-mode
-  :mode "\\.js$"
+  :mode "\\.[c]*js$"
   :interpreter "node"
   :config
   (setq js2-skip-preprocessor-directives t
