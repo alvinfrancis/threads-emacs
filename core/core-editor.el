@@ -20,7 +20,7 @@ modes are active and the buffer is read-only.")
  ;; Formatting
  delete-trailing-lines nil
  fill-column 80
- sentence-end-double-space nil
+ sentence-end-double-space t
  word-wrap t
  ;; Scrolling
  hscroll-margin 1
