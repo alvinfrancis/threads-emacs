@@ -1,4 +1,4 @@
-;; -*- no-byte-compile: t; -*-
+;; -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;; app/email/packages.el
 
 (package! mu4e-maildirs-extension)

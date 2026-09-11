@@ -1,4 +1,4 @@
-;; -*- no-byte-compile: t; -*-
+;; -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;; tools/rgb/packages.el
 
 (package! rainbow-mode)

@@ -1,5 +1,4 @@
-;; -*- no-byte-compile: t; -*-
-;;; init.el -*- lexical-binding: t; -*-
+;;; init.el -*- lexical-binding: t; no-byte-compile: t; -*-
 
 (require 'core (concat user-emacs-directory "core/core"))
 

@@ -1,4 +1,4 @@
-;; -*- no-byte-compile: t; -*-
+;; -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;; lang/web/packages.el
 
 ;; requires js-beautify stylelint stylelint-scss

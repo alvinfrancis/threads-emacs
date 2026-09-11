@@ -1,4 +1,4 @@
-;; -*- no-byte-compile: t; -*-
+;; -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;; tools/debugger/packages.el
 
 ;; (when (package! realgud :pin "f73c039a340579a98e6716c901fd4e80e7eaa2eb")

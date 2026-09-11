@@ -36,13 +36,19 @@
     (concat " " name " "))
 
   (defun +tab-bar/tab-name-format-icons (name _tab _i)
+    ;; The XPM spacer must come *after* NAME: `tab-bar-auto-width' pads tabs
+    ;; with (apply #'propertize " " (text-properties-at 0 name)), so a leading
+    ;; XPM `display' property makes every padding char part of that same 3px
+    ;; image run.  The string's pixel width then never grows and the resize
+    ;; loop spins forever, hanging any (lookup-key global-map [tab-bar]) --
+    ;; e.g. `evil-read-key', which is how `f'/`t' motions froze on Emacs 31.
     (concat
+     name
      (when (display-graphic-p)
        (+tabs--make-xpm
         nil ;; no color as this is only used to extend the height and width of tabs
         +tabs-height
-        +tabs-width))
-     name))
+        +tabs-width))))
 
   (setq tab-bar-close-button-show nil
         tab-bar-format '(tab-bar-format-history

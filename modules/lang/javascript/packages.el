@@ -1,4 +1,4 @@
-;; -*- no-byte-compile: t; -*-
+;; -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;; lang/javascript/packages.el
 
 ;; requires node npm tern js-beautify eslint eslint-plugin-react

@@ -1,4 +1,4 @@
-;; -*- no-byte-compile: t; -*-
+;; -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;; ui/doom-modeline/packages.el
 
 ;;; These are the invisible dependencies
