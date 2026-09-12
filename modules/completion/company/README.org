@@ -3,7 +3,6 @@
 This module adds code-completion support, powered by [[https://github.com/company-mode/company-mode][company]].
 
 + Uses ~company-quickhelp~ for documentation tooltips
-+ Uses ~company-statistics~ to order results by usage frequency
 
 [[/../screenshots/company.png]]
 

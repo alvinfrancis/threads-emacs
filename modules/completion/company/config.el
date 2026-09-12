@@ -43,14 +43,6 @@ MODES should be one major-mode symbol or a list of them."
 
   (global-company-mode +1))
 
-
-(def-package! company-statistics
-  :after company
-  :config
-  (setq company-statistics-file (concat threads-cache-dir "company-stats-cache.el"))
-  (quiet! (company-statistics-mode +1)))
-
-
 ;; Looks ugly on OSX without emacs-mac build
 (def-package! company-quickhelp
   :after company
@@ -82,4 +74,3 @@ MODES should be one major-mode symbol or a list of them."
 (autoload 'company-files "company-files")
 (autoload 'company-gtags "company-gtags")
 (autoload 'company-ispell "company-ispell")
-

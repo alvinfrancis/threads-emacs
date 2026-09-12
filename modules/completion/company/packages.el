@@ -4,4 +4,3 @@
 (package! company)
 (package! company-dict)
 (package! company-quickhelp)
-(package! company-statistics)
