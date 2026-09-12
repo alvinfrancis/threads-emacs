@@ -595,7 +595,7 @@
         :n "]]"  #'vc-annotate-next-revision
         :n "[["  #'vc-annotate-prev-revision
         :n "TAB" #'vc-annotate-toggle-annotation-visibility
-        :n "RET" #'vc-annotate-find-revision-at-line))
+        :n "RET" #'vc-annotate-find-revision-at-line)))
 
 
 ;;
