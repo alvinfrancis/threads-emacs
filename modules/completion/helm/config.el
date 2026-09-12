@@ -164,14 +164,6 @@ bottom, which is easier on the eyes on big displays."
                 helm-boring-file-regexp-list)))
 
 
-(def-package! helm-ag
-  :defer t
-  :config
-  (map! :map helm-ag-edit-map
-        [remap doom/kill-this-buffer] #'helm-ag--edit-abort
-        [remap quit-window]           #'helm-ag--edit-abort))
-
-
 (def-package! helm-css-scss ; https://github.com/ShingoFukuyama/helm-css-scss
   :commands (helm-css-scss
              helm-css-scss-multi

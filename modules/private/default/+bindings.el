@@ -478,10 +478,6 @@
             "C-w" #'helm-find-files-up-one-level
             "TAB" #'helm-execute-persistent-action))
 
-        (:after helm-ag
-          (:map helm-ag-map
-            "<backtab>"  #'helm-ag-edit)))
-
       ;; hl-todo
       :m  "]t" #'hl-todo-next
       :m  "[t" #'hl-todo-previous
